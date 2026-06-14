@@ -1,7 +1,6 @@
-<%- include('partials/header') %>
+<%- include('partials/admin-header') %>
 
-<main class="bg-gray-50 min-h-screen font-sans py-12 px-6">
-    <div class="max-w-4xl mx-auto">
+<div class="flex-grow p-6 md:p-10 max-w-4xl w-full mx-auto">
 
         <!-- Page Header -->
         <div class="flex items-center justify-between mb-10">
@@ -83,7 +82,12 @@
                 <div>
                     <div class="flex items-center justify-between mb-4 border-b border-gray-100 pb-2">
                         <h4 class="text-xs uppercase font-extrabold text-blue-800 tracking-wider">3. Technical Specifications</h4>
-                        <button type="button" onclick="addSpecInput()" class="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1">➕ Add Spec</button>
+                        <button type="button" onclick="addSpecInput()" class="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                            <span>Add Spec</span>
+                        </button>
                     </div>
                     <div class="space-y-4">
                         <div>
@@ -104,7 +108,12 @@
                 <div>
                     <div class="flex items-center justify-between mb-4 border-b border-gray-100 pb-2">
                         <h4 class="text-xs uppercase font-extrabold text-blue-800 tracking-wider">4. Execution & Handover Steps</h4>
-                        <button type="button" onclick="addStepInput()" class="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1">➕ Add Step</button>
+                        <button type="button" onclick="addStepInput()" class="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                            <span>Add Step</span>
+                        </button>
                     </div>
                     <div id="stepsContainer" class="space-y-3">
                         <!-- step rows injected here -->
@@ -115,7 +124,12 @@
                 <div>
                     <div class="flex items-center justify-between mb-4 border-b border-gray-100 pb-2">
                         <h4 class="text-xs uppercase font-extrabold text-blue-800 tracking-wider">5. Inspections & Quality Audit Agencies</h4>
-                        <button type="button" onclick="addInspectionInput()" class="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1">➕ Add Inspection Agency</button>
+                        <button type="button" onclick="addInspectionInput()" class="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                            <span>Add Inspection Agency</span>
+                        </button>
                     </div>
                     <div id="inspectionsContainer" class="space-y-3">
                         <!-- inspection rows injected here -->
@@ -223,5 +237,6 @@
         addInspectionInput();
     <% } %>
 </script>
+</div>
 
-<%- include('partials/footer') %>
+<%- include('partials/admin-footer') %>

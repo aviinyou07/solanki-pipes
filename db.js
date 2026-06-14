@@ -56,11 +56,29 @@ const adminSchema = new mongoose.Schema({
     password: { type: String, required: true }
 });
 
+// Define Certification Schema
+const certificationSchema = new mongoose.Schema({
+    title: { type: String, required: true },
+    subtitle: { type: String, default: '' },
+    badgeText: { type: String, default: '' },
+    noteText: { type: String, default: '' },
+    link: { type: String, default: '' },
+    iconType: { 
+        type: String, 
+        enum: ['shield-check', 'badge-check', 'clipboard-check', 'office-building', 'file-text'], 
+        default: 'shield-check' 
+    },
+    createdDate: { type: Date, default: Date.now }
+});
+
 const Project = mongoose.model('Project', projectSchema);
 const Admin = mongoose.model('Admin', adminSchema);
+const Certification = mongoose.model('Certification', certificationSchema);
 
 module.exports = {
     mongoose,
     Project,
-    Admin
+    Admin,
+    Certification
 };
+

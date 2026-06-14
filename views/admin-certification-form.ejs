@@ -1,0 +1,86 @@
+<%- include('partials/admin-header') %>
+
+<div class="flex-grow p-6 md:p-10 max-w-3xl w-full mx-auto">
+
+        <!-- Page Header -->
+        <div class="flex items-center justify-between mb-10">
+            <div>
+                <a href="/admin/certifications" class="text-blue-700 hover:text-blue-900 text-sm font-semibold flex items-center gap-1 mb-3">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    Back to Certifications
+                </a>
+                <h1 class="text-3xl font-extrabold text-gray-900 uppercase tracking-tight"><%= certification ? 'Edit' : 'Add New' %> <span class="text-[#1E3A8A]">Certification</span></h1>
+            </div>
+        </div>
+
+        <!-- Form Card -->
+        <form action="<%= action %>" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div class="p-8 space-y-8">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Title -->
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Title *</label>
+                        <input type="text" name="title" required placeholder="e.g. BIS Licence, ISO 9001:2015" value="<%= certification ? certification.title : '' %>" class="w-full border border-gray-300 rounded-lg py-2.5 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                    </div>
+
+                    <!-- Subtitle -->
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Subtitle / Standard (Optional)</label>
+                        <input type="text" name="subtitle" placeholder="e.g. IS 4984:2016, IS 14333:2022" value="<%= certification ? certification.subtitle : '' %>" class="w-full border border-gray-300 rounded-lg py-2.5 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                    </div>
+
+                    <!-- Badge Text -->
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Highlight / Badge Text (Optional)</label>
+                        <input type="text" name="badgeText" placeholder="e.g. CM/L 9100182616, Quality Management" value="<%= certification ? certification.badgeText : '' %>" class="w-full border border-gray-300 rounded-lg py-2.5 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                    </div>
+
+                    <!-- Note Text -->
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Note / Info Text (Optional)</label>
+                        <input type="text" name="noteText" placeholder="e.g. (Water Supply), (System Certified)" value="<%= certification ? certification.noteText : '' %>" class="w-full border border-gray-300 rounded-lg py-2.5 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                    </div>
+
+                    <!-- Icon Type -->
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Icon Type *</label>
+                        <select name="iconType" required class="w-full border border-gray-300 rounded-lg py-2.5 px-3 focus:outline-none focus:border-blue-500 text-sm text-gray-700">
+                            <option value="shield-check" <%= certification && certification.iconType === 'shield-check' ? 'selected' : '' %>>🛡️ Shield Checkmark</option>
+                            <option value="badge-check" <%= certification && certification.iconType === 'badge-check' ? 'selected' : '' %>>🎗️ Ribbon Badge Checkmark</option>
+                            <option value="clipboard-check" <%= certification && certification.iconType === 'clipboard-check' ? 'selected' : '' %>>📋 Clipboard Checkmark</option>
+                            <option value="office-building" <%= certification && certification.iconType === 'office-building' ? 'selected' : '' %>>🏢 Building Icon</option>
+                            <option value="file-text" <%= certification && certification.iconType === 'file-text' ? 'selected' : '' %>>📄 Generic File/Doc</option>
+                        </select>
+                    </div>
+
+                    <!-- File Upload -->
+                    <div class="md:col-span-2 border-t border-gray-100 pt-6">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Certificate File (Upload PDF or Image)</label>
+                        <input type="file" name="file" accept="application/pdf,image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        <% if (certification && certification.link) { %>
+                            <p class="text-[10px] text-gray-400 mt-1">Current file link: <a href="<%= certification.link %>" target="_blank" class="text-blue-600 hover:underline"><%= certification.link %></a></p>
+                        <% } %>
+                    </div>
+
+                    <!-- Or enter manual link -->
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Or External / Existing Document Link (e.g. /images/bis4984.pdf)</label>
+                        <input type="text" name="externalLink" placeholder="e.g. /images/bis4984.pdf" value="<%= certification ? certification.link : '' %>" class="w-full border border-gray-300 rounded-lg py-2.5 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                        <p class="text-[10px] text-gray-400 mt-1">Leave empty or let file upload automatically populate this, or enter an existing static file path.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Form Actions (Fixed Bottom Bar) -->
+            <div class="px-8 py-6 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+                <a href="/admin/certifications" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-xl transition text-sm">Cancel</a>
+                <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-xl shadow-md transition text-sm"><%= certification ? 'Update Certification' : 'Save Certification' %></button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<%- include('partials/admin-footer') %>

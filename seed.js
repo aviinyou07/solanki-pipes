@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcryptjs');
-const { mongoose, Project, Admin } = require('./db');
+const { mongoose, Project, Admin, Certification } = require('./db');
 
 async function seed() {
     try {
@@ -57,6 +57,19 @@ async function seed() {
         await Admin.deleteMany({});
         await Admin.insertMany(admins);
         console.log(`Successfully seeded ${admins.length} admin accounts.`);
+
+        // Clear and seed certifications
+        console.log('Seeding certifications...');
+        const certsFilePath = path.join(__dirname, 'data', 'certifications.json');
+        if (fs.existsSync(certsFilePath)) {
+            const rawCerts = fs.readFileSync(certsFilePath, 'utf8');
+            const certsData = JSON.parse(rawCerts);
+            await Certification.deleteMany({});
+            await Certification.insertMany(certsData);
+            console.log(`Successfully seeded ${certsData.length} certifications.`);
+        } else {
+            console.log('No certifications.json found to seed.');
+        }
 
         console.log('Database seeding finished successfully!');
     } catch (error) {

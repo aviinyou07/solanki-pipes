@@ -4,9 +4,23 @@ const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
 require('dotenv').config();
-const { Project, Admin } = require('./db');
+const { Project, Admin, Certification } = require('./db');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
+
+// Auto-seed certifications if database is empty on start
+Certification.countDocuments().then(count => {
+    if (count === 0) {
+        const certsFilePath = path.join(__dirname, 'data', 'certifications.json');
+        if (fs.existsSync(certsFilePath)) {
+            const rawCerts = fs.readFileSync(certsFilePath, 'utf8');
+            const certsData = JSON.parse(rawCerts);
+            Certification.insertMany(certsData)
+                .then(() => console.log('Successfully auto-seeded initial certifications'))
+                .catch(err => console.error('Failed to auto-seed certifications:', err));
+        }
+    }
+}).catch(err => console.error('Error checking certification count:', err));
 
 // Configure multer storage for file uploads
 const storage = multer.diskStorage({
@@ -126,8 +140,14 @@ app.get('/pvc-pipe', (req, res) => {
 });
 
 // Route for the quality page
-app.get('/quality', (req, res) => {
-    res.render('quality', { title: 'Quality Assurance — Solanki Industries' });
+app.get('/quality', async (req, res) => {
+    try {
+        const certifications = await Certification.find().sort({ createdDate: 1 });
+        res.render('quality', { title: 'Quality Assurance — Solanki Industries', certifications });
+    } catch (err) {
+        console.error('Error fetching certifications:', err);
+        res.render('quality', { title: 'Quality Assurance — Solanki Industries', certifications: [] });
+    }
 });
 
 // ==========================================
@@ -221,10 +241,10 @@ app.get('/admin/projects', async (req, res) => {
     try {
         const docs = await Project.find().sort({ createdDate: -1 });
         const projects = docs.map(parseProject);
-        res.render('admin-projects', { title: 'Admin — Manage Projects', projects });
+        res.render('admin-projects', { title: 'Admin — Manage Projects', projects, activeTab: 'projects' });
     } catch (err) {
         console.error('DB Error:', err);
-        res.render('admin-projects', { title: 'Admin — Manage Projects', projects: [] });
+        res.render('admin-projects', { title: 'Admin — Manage Projects', projects: [], activeTab: 'projects' });
     }
 });
 
@@ -346,6 +366,103 @@ app.post('/admin/projects/delete/:id', async (req, res) => {
     } catch (err) {
         console.error('DB Error:', err);
         res.status(500).send('Failed to delete project');
+    }
+});
+
+// ==========================================
+// ADMIN CERTIFICATION ROUTES
+// ==========================================
+
+// Admin: List all certifications
+app.get('/admin/certifications', async (req, res) => {
+    try {
+        const certifications = await Certification.find().sort({ createdDate: 1 });
+        res.render('admin-certifications', { title: 'Admin — Manage Certifications', certifications, activeTab: 'certifications' });
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.render('admin-certifications', { title: 'Admin — Manage Certifications', certifications: [], activeTab: 'certifications' });
+    }
+});
+
+// Admin: Show add certification page
+app.get('/admin/certifications/add', (req, res) => {
+    res.render('admin-certification-form', { title: 'Add New Certification', certification: null, action: '/admin/certifications/add', activeTab: 'certifications' });
+});
+
+// Admin: Show edit certification page
+app.get('/admin/certifications/edit/:id', async (req, res) => {
+    try {
+        const certification = await Certification.findById(req.params.id);
+        if (!certification) return res.status(404).send('Certification not found');
+        res.render('admin-certification-form', { title: 'Edit Certification', certification, action: `/admin/certifications/edit/${certification._id}`, activeTab: 'certifications' });
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Admin: Handle add certification POST
+app.post('/admin/certifications/add', upload.single('file'), async (req, res) => {
+    try {
+        const { title, subtitle, badgeText, noteText, iconType, externalLink } = req.body;
+        let link = externalLink || '';
+        if (req.file) {
+            link = `/images/uploads/${req.file.filename}`;
+        }
+        await Certification.create({
+            title,
+            subtitle,
+            badgeText,
+            noteText,
+            iconType,
+            link
+        });
+        res.redirect('/admin/certifications');
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.status(500).send('Failed to add certification: ' + err.message);
+    }
+});
+
+// Admin: Handle edit certification POST
+app.post('/admin/certifications/edit/:id', upload.single('file'), async (req, res) => {
+    try {
+        const { title, subtitle, badgeText, noteText, iconType, externalLink } = req.body;
+        
+        let link;
+        if (req.file) {
+            link = `/images/uploads/${req.file.filename}`;
+        } else {
+            const doc = await Certification.findById(req.params.id);
+            link = doc ? doc.link : '';
+            if (externalLink !== undefined) {
+                link = externalLink;
+            }
+        }
+
+        await Certification.findByIdAndUpdate(req.params.id, {
+            title,
+            subtitle,
+            badgeText,
+            noteText,
+            iconType,
+            link
+        });
+        res.redirect('/admin/certifications');
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.status(500).send('Failed to update certification: ' + err.message);
+    }
+});
+
+// Admin: Handle delete certification POST
+app.post('/admin/certifications/delete/:id', async (req, res) => {
+    try {
+        await Certification.findByIdAndDelete(req.params.id);
+        res.redirect('/admin/certifications');
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.status(500).send('Failed to delete certification');
     }
 });
 

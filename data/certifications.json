@@ -1,0 +1,42 @@
+[
+  {
+    "title": "BIS Licence",
+    "subtitle": "IS 4984:2016",
+    "badgeText": "CM/L 9100182616",
+    "noteText": "(Water Supply)",
+    "link": "/images/bis4984.pdf",
+    "iconType": "shield-check"
+  },
+  {
+    "title": "BIS Licence",
+    "subtitle": "IS 14333:2022",
+    "badgeText": "CM/L 9100198114",
+    "noteText": "(Sewerage)",
+    "link": "/images/bis14333.pdf",
+    "iconType": "shield-check"
+  },
+  {
+    "title": "ISO 9001:2015",
+    "subtitle": "",
+    "badgeText": "Quality Management",
+    "noteText": "(System Certified)",
+    "link": "/images/solanki-industries-iso-9001-2015.pdf",
+    "iconType": "badge-check"
+  },
+  {
+    "title": "GST Registration",
+    "subtitle": "",
+    "badgeText": "06ACJFS4876P1Z6",
+    "noteText": "(Haryana State)",
+    "link": "/images/solanki-industries-gst-registration.pdf",
+    "iconType": "clipboard-check"
+  },
+  {
+    "title": "Udyam MSME",
+    "subtitle": "",
+    "badgeText": "Registered",
+    "noteText": "(Make in India)",
+    "link": "/images/solanki-industries-msme-udyam.pdf",
+    "iconType": "office-building"
+  }
+]
