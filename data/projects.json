@@ -1,0 +1,161 @@
+[
+  {
+    "id": "ludhiana-stp",
+    "title": "Successful HDPE Pipeline Execution for STP Project – Mega Food Park, Ludhiana",
+    "shortDescription": "Successful HDPE Pipeline Execution for STP Project – Mega Food Park, Ludhiana",
+    "longDescription": "Solanki Industries (Solanki Pipes) successfully executed the full-scale HDPE pipeline supply, laying, and jointing work for the STP Project of Mega Food Park, Ludhiana. The project was commissioned under the esteemed Department of Soil & Water Conservation, Punjab, to build a reliable sewerage and water reclamation system supporting regional industrial growth and ecology.",
+    "image": "/images/project_1.jpg",
+    "category": "STP Project",
+    "location": "Samrala, Ludhiana, Punjab",
+    "department": "Department of Soil & Water Conservation, Punjab",
+    "segment": "Sewage Treatment Plant (STP) & Waste Management",
+    "execution": "Directly Executed by Solanki Industries",
+    "specsDescription": "A total of 10,000 meters of HDPE pipeline was meticulously supplied and installed by our unit, utilizing two key standard dimensions:",
+    "specifications": [
+      {
+        "size": "250 mm OD HDPE Pipes",
+        "rating": "PE 80 • PN 4 rating"
+      },
+      {
+        "size": "200 mm OD HDPE Pipes",
+        "rating": "PE 80 • PN 4 rating"
+      }
+    ],
+    "specsFootnote": "* All pipes supplied and installed were fully manufactured in-house by Solanki Industries, complying strictly with Indian Standard IS 4984 (BIS standards) for water and wastewater applications.",
+    "executionSteps": [
+      "Laying and jointing were carried out utilizing advanced standard HDPE butt fusion jointing techniques under strict compliance with BIS and departmental guidelines.",
+      "All onsite engineering and distribution activities were directly overseen and completed by the skilled execution division of Solanki Industries (Solanki Pipes).",
+      "Upon final hydrostatic testing, pressure assessment, and jointing verification, the operational system was formally handed over to the Department of Soil & Water Conservation, Punjab."
+    ],
+    "inspections": [
+      {
+        "name": "CIPET, Amritsar",
+        "text": "Plastic piping certification",
+        "logo": "/images/cipet.png"
+      },
+      {
+        "name": "Shri Ram Testing Lab",
+        "text": "Delhi Lab certification",
+        "logo": "/images/shriramlab.png"
+      }
+    ],
+    "outcomeTitle": "Supporting sustainable water management and state industrial expansion",
+    "outcomeDescription": "The STP pipeline is fully operational at the Mega Food Park, Ludhiana, providing flawless sewerage collection and treated effluent flow, minimizing environmental discharge.",
+    "outcomeBtnText": "Enquire for STP Projects",
+    "outcomeBtnLink": "/contact",
+    "createdDate": "2026-06-08"
+  },
+  {
+    "id": "lift-irrigation-630mm",
+    "title": "630 mm PE100 PN10 HDPE Pipeline Supply",
+    "shortDescription": "Supply and deployment of massive diameter HDPE pipes for heavy lift irrigation schemes, facilitating wide-scale farm water transport across rural grids.",
+    "longDescription": "This project involved the engineering and manufacture of large diameter HDPE pipes to support massive lift irrigation grids. Under the agricultural development initiatives, these pipelines transport water over high elevations to remote farming sectors, enhancing soil health and agricultural output.",
+    "image": "/images/lift_irrigation.jpeg",
+    "category": "Irrigation Project",
+    "location": "Fatehabad, Haryana",
+    "department": "Department of Agriculture & Water Resources",
+    "segment": "Lift Irrigation Scheme",
+    "execution": "Directly Executed by Solanki Industries",
+    "specsDescription": "Over 5,000 meters of high-density PE100 pipes were manufactured, verified, and delivered to handle high-pressure water grids.",
+    "specifications": [
+      {
+        "size": "630 mm OD HDPE Pipes",
+        "rating": "PE 100 • PN 10 rating"
+      }
+    ],
+    "specsFootnote": "* Conforming to IS 4984:2016 licensing standard.",
+    "executionSteps": [
+      "High-pressure fusion jointing for large diameter pipes.",
+      "Hydrostatic testing at PN15 to guarantee durability under stress.",
+      "On-time heavy transport dispatch to construction layout."
+    ],
+    "inspections": [
+      {
+        "name": "CIPET, Amritsar",
+        "text": "Compliance Verification",
+        "logo": "/images/cipet.png"
+      }
+    ],
+    "outcomeTitle": "Enabling reliable irrigation across 1,200 acres of rural cropland",
+    "outcomeDescription": "The high-volume water distribution network has been operating with zero pressure drop, boosting cropping efficiency for local farmers.",
+    "outcomeBtnText": "Enquire for Irrigation",
+    "outcomeBtnLink": "/contact",
+    "createdDate": "2026-05-15"
+  },
+  {
+    "id": "municipal-water-supply",
+    "title": "Government Municipal Water Supply Network",
+    "shortDescription": "Providing BIS-licensed, heavy-grade piping configurations for drinking water networks and municipality schemes supporting cities and villages.",
+    "longDescription": "Solanki Industries was chosen as the prime manufacturer for clean potable drinking water pipe installation across regional municipality networks. The pipes deployed must sustain long-term pressure and preserve hygienic water quality for local public distribution.",
+    "image": "/images/homeProject_05.png",
+    "category": "Govt Infrastructure",
+    "location": "Bhiwani District, Haryana",
+    "department": "Public Health Engineering Department (PHED), Haryana",
+    "segment": "Potable Municipal Water Distribution",
+    "execution": "Directly Executed by Solanki Industries",
+    "specsDescription": "Extensive municipality distribution spanning 15,000 meters of underground piping infrastructure.",
+    "specifications": [
+      {
+        "size": "110 mm OD HDPE Pipes",
+        "rating": "PE 80 • PN 6 rating"
+      },
+      {
+        "size": "90 mm OD HDPE Pipes",
+        "rating": "PE 80 • PN 6 rating"
+      }
+    ],
+    "specsFootnote": "* Licensed under BIS with IS 4984 certifications.",
+    "executionSteps": [
+      "Trench excavation and underground conduit laying.",
+      "Electrofusion and butt welding joints.",
+      "Flawless pressure flow and water hygiene certification testing."
+    ],
+    "inspections": [
+      {
+        "name": "Shri Ram Testing Lab",
+        "text": "Delhi Lab certification",
+        "logo": "/images/shriramlab.png"
+      }
+    ],
+    "outcomeTitle": "Delivering clean potable water to over 25 rural communities",
+    "outcomeDescription": "The PHED network is completely online, delivering safe and regular drinking water flow with no reports of leakage.",
+    "outcomeBtnText": "Enquire for Municipal Projects",
+    "outcomeBtnLink": "/contact",
+    "createdDate": "2026-04-10"
+  },
+  {
+    "id": "test-automated-project",
+    "title": "Updated Automated Project",
+    "shortDescription": "This is an automated test short description.",
+    "longDescription": "Detailed description of the automated project execution.",
+    "image": "/images/project_1.jpg",
+    "category": "Automated Test Category",
+    "location": "Bhiwani, Haryana",
+    "department": "PHED Haryana",
+    "segment": "Water supply",
+    "execution": "Direct",
+    "specsDescription": "2000 meters of pipes were installed.",
+    "specifications": [
+      {
+        "size": "160 mm Pipe",
+        "rating": "PE 80 PN 6"
+      }
+    ],
+    "specsFootnote": "",
+    "executionSteps": [
+      "Standard butt welding jointing technique was used."
+    ],
+    "inspections": [
+      {
+        "name": "Shri Ram Test Lab",
+        "text": "Compliance check",
+        "logo": "/images/shriramlab.png"
+      }
+    ],
+    "outcomeTitle": "Project successfully completed.",
+    "outcomeDescription": "Deployed pipelines are fully functional.",
+    "outcomeBtnText": "Enquire Now",
+    "outcomeBtnLink": "/contact",
+    "createdDate": "2026-06-08"
+  }
+]

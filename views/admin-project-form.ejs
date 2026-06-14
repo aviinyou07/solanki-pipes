@@ -1,0 +1,227 @@
+<%- include('partials/header') %>
+
+<main class="bg-gray-50 min-h-screen font-sans py-12 px-6">
+    <div class="max-w-4xl mx-auto">
+
+        <!-- Page Header -->
+        <div class="flex items-center justify-between mb-10">
+            <div>
+                <a href="/admin/projects" class="text-blue-700 hover:text-blue-900 text-sm font-semibold flex items-center gap-1 mb-3">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    Back to Dashboard
+                </a>
+                <h1 class="text-3xl font-extrabold text-gray-900 uppercase tracking-tight"><%= project ? 'Edit' : 'Add New' %> <span class="text-[#1E3A8A]">Project</span></h1>
+            </div>
+        </div>
+
+        <!-- Form Card -->
+        <form action="<%= action %>" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div class="p-8 space-y-10">
+
+                <!-- Section 1: Basic Information -->
+                <div>
+                    <h4 class="text-xs uppercase font-extrabold text-blue-800 tracking-wider mb-4 border-b border-gray-100 pb-2">1. Basic Information</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Project Title *</label>
+                            <input type="text" name="title" required placeholder="e.g. STP Project - Mega Food Park" value="<%= project ? project.title : '' %>" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Project Category *</label>
+                            <input type="text" name="category" required placeholder="e.g. STP Project, Irrigation Project" value="<%= project ? project.category : '' %>" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Short Description *</label>
+                            <input type="text" name="shortDescription" required placeholder="A short description of the project outcome (displayed on cards)" value="<%= project ? project.shortDescription : '' %>" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Long Description / Overview *</label>
+                            <textarea name="longDescription" required rows="4" placeholder="Detailed project overview..." class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm resize-none"><%= project ? project.longDescription : '' %></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Project Image (Upload New)</label>
+                            <input type="file" name="image" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            <% if (project && project.image) { %>
+                                <p class="text-[10px] text-gray-400 mt-1">Current image: <%= project.image %></p>
+                            <% } else { %>
+                                <p class="text-[10px] text-gray-400 mt-1">Recommended: high quality banner image.</p>
+                            <% } %>
+                        </div>
+                        <% if (project && project.image) { %>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Current Image Preview</label>
+                            <img src="<%= project.image %>" alt="Preview" class="w-32 h-20 object-cover rounded-lg border border-gray-100">
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Section 2: Factsheet Details -->
+                <div>
+                    <h4 class="text-xs uppercase font-extrabold text-blue-800 tracking-wider mb-4 border-b border-gray-100 pb-2">2. Project Factsheet Details</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Project Location</label>
+                            <input type="text" name="location" placeholder="e.g. Samrala, Ludhiana, Punjab" value="<%= project ? project.location : '' %>" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Commissioning Department</label>
+                            <input type="text" name="department" placeholder="e.g. Department of Soil & Water Conservation, Punjab" value="<%= project ? project.department : '' %>" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Industry Segment</label>
+                            <input type="text" name="segment" placeholder="e.g. Sewage Treatment Plant (STP) & Waste Management" value="<%= project ? project.segment : '' %>" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Execution Directness</label>
+                            <input type="text" name="execution" placeholder="e.g. Directly Executed by Solanki Industries" value="<%= project ? project.execution : '' %>" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Technical Specifications -->
+                <div>
+                    <div class="flex items-center justify-between mb-4 border-b border-gray-100 pb-2">
+                        <h4 class="text-xs uppercase font-extrabold text-blue-800 tracking-wider">3. Technical Specifications</h4>
+                        <button type="button" onclick="addSpecInput()" class="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1">➕ Add Spec</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Technical specs introduction text</label>
+                            <input type="text" name="specsDescription" placeholder="e.g. A total of 10,000 meters of HDPE pipeline was supplied..." value="<%= project ? project.specsDescription : '' %>" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                        </div>
+                        <div id="specsContainer" class="space-y-3">
+                            <!-- spec rows injected here -->
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Technical specs footnote text</label>
+                            <input type="text" name="specsFootnote" placeholder="e.g. * All pipes supplied complied strictly with Indian standards." value="<%= project ? project.specsFootnote : '' %>" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Execution Steps -->
+                <div>
+                    <div class="flex items-center justify-between mb-4 border-b border-gray-100 pb-2">
+                        <h4 class="text-xs uppercase font-extrabold text-blue-800 tracking-wider">4. Execution & Handover Steps</h4>
+                        <button type="button" onclick="addStepInput()" class="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1">➕ Add Step</button>
+                    </div>
+                    <div id="stepsContainer" class="space-y-3">
+                        <!-- step rows injected here -->
+                    </div>
+                </div>
+
+                <!-- Section 5: Inspections -->
+                <div>
+                    <div class="flex items-center justify-between mb-4 border-b border-gray-100 pb-2">
+                        <h4 class="text-xs uppercase font-extrabold text-blue-800 tracking-wider">5. Inspections & Quality Audit Agencies</h4>
+                        <button type="button" onclick="addInspectionInput()" class="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1">➕ Add Inspection Agency</button>
+                    </div>
+                    <div id="inspectionsContainer" class="space-y-3">
+                        <!-- inspection rows injected here -->
+                    </div>
+                </div>
+
+                <!-- Section 6: Project Outcome -->
+                <div>
+                    <h4 class="text-xs uppercase font-extrabold text-blue-800 tracking-wider mb-4 border-b border-gray-100 pb-2">6. Project Outcome Banner</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Outcome Heading / Title</label>
+                            <input type="text" name="outcomeTitle" placeholder="e.g. Supporting sustainable water management and state industrial expansion" value="<%= project ? project.outcomeTitle : '' %>" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Outcome Description</label>
+                            <textarea name="outcomeDescription" rows="2" placeholder="e.g. The STP pipeline is fully operational at the Mega Food Park..." class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm resize-none"><%= project ? project.outcomeDescription : '' %></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Outcome Button Text</label>
+                            <input type="text" name="outcomeBtnText" placeholder="e.g. Enquire for STP Projects" value="<%= project ? project.outcomeBtnText : '' %>" class="w-full border-gray-300 border rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Outcome Button Link</label>
+                            <input type="text" name="outcomeBtnLink" placeholder="e.g. /contact" value="<%= project ? project.outcomeBtnLink : '' %>" class="w-full border-gray-300 border rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Form Actions (Fixed Bottom Bar) -->
+            <div class="px-8 py-6 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+                <a href="/admin/projects" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-xl transition text-sm">Cancel</a>
+                <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-xl shadow-md transition text-sm"><%= project ? 'Update Project' : 'Save Project' %></button>
+            </div>
+        </form>
+
+    </div>
+</main>
+
+<script>
+    const specsContainer = document.getElementById('specsContainer');
+    const stepsContainer = document.getElementById('stepsContainer');
+    const inspectionsContainer = document.getElementById('inspectionsContainer');
+
+    function addSpecInput(size = '', rating = '') {
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-3 spec-row';
+        div.innerHTML = `
+            <input type="text" name="specSizes" value="${size}" placeholder="e.g. 250 mm OD HDPE Pipes" class="w-1/2 border border-gray-300 rounded-lg py-2 px-3 text-sm">
+            <input type="text" name="specRatings" value="${rating}" placeholder="e.g. PE 80 • PN 4 rating" class="w-1/2 border border-gray-300 rounded-lg py-2 px-3 text-sm">
+            <button type="button" onclick="this.closest('.spec-row').remove()" class="text-rose-600 hover:text-rose-800 text-sm px-2">✖</button>
+        `;
+        specsContainer.appendChild(div);
+    }
+
+    function addStepInput(text = '') {
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-3 step-row';
+        div.innerHTML = `
+            <input type="text" name="executionSteps" value="${text}" placeholder="e.g. Laying and jointing were executed according to specs..." class="flex-grow border border-gray-300 rounded-lg py-2 px-3 text-sm">
+            <button type="button" onclick="this.closest('.step-row').remove()" class="text-rose-600 hover:text-rose-800 text-sm px-2">✖</button>
+        `;
+        stepsContainer.appendChild(div);
+    }
+
+    function addInspectionInput(name = '', text = '', logo = '') {
+        const div = document.createElement('div');
+        div.className = 'flex flex-col md:flex-row items-center gap-3 inspection-row border border-gray-100 p-3 rounded-lg bg-gray-50/50';
+        div.innerHTML = `
+            <input type="text" name="inspectionNames" value="${name}" placeholder="Agency Name (e.g. CIPET, Amritsar)" class="w-full md:w-1/3 border border-gray-300 rounded-lg py-2 px-3 text-xs">
+            <input type="text" name="inspectionTexts" value="${text}" placeholder="Details (e.g. Plastic piping certification)" class="w-full md:w-1/3 border border-gray-300 rounded-lg py-2 px-3 text-xs">
+            <select name="inspectionLogos" class="w-full md:w-1/3 border border-gray-300 rounded-lg py-2 px-3 text-xs text-gray-500">
+                <option value="/images/cipet.png" ${logo === '/images/cipet.png' ? 'selected' : ''}>CIPET Logo</option>
+                <option value="/images/shriramlab.png" ${logo === '/images/shriramlab.png' ? 'selected' : ''}>Shri Ram Lab Logo</option>
+            </select>
+            <button type="button" onclick="this.closest('.inspection-row').remove()" class="text-rose-600 hover:text-rose-800 text-sm px-2">✖</button>
+        `;
+        inspectionsContainer.appendChild(div);
+    }
+
+    // Initialize with existing data or one empty row
+    <% if (project && project.specifications && project.specifications.length > 0) { %>
+        <% project.specifications.forEach(spec => { %>
+            addSpecInput('<%= spec.size %>', '<%= spec.rating %>');
+        <% }) %>
+    <% } else { %>
+        addSpecInput();
+    <% } %>
+
+    <% if (project && project.executionSteps && project.executionSteps.length > 0) { %>
+        <% project.executionSteps.forEach(step => { %>
+            addStepInput(`<%= step %>`);
+        <% }) %>
+    <% } else { %>
+        addStepInput();
+    <% } %>
+
+    <% if (project && project.inspections && project.inspections.length > 0) { %>
+        <% project.inspections.forEach(insp => { %>
+            addInspectionInput('<%= insp.name %>', '<%= insp.text %>', '<%= insp.logo %>');
+        <% }) %>
+    <% } else { %>
+        addInspectionInput();
+    <% } %>
+</script>
+
+<%- include('partials/footer') %>

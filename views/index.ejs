@@ -1,0 +1,917 @@
+<%- include('partials/header') %>
+  <!-- Hero Section -->
+  <section
+    class="relative w-full min-h-[85vh] flex items-center bg-gradient-to-br from-[#f8fafc] via-white to-[#eff6ff] overflow-hidden">
+    <!-- Decorative elements -->
+    <div
+      class="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] rounded-full bg-cyan-100/40 blur-3xl pointer-events-none">
+    </div>
+    <div
+      class="absolute bottom-0 left-0 -ml-20 -mb-20 w-[500px] h-[500px] rounded-full bg-blue-100/40 blur-3xl pointer-events-none">
+    </div>
+
+    <div
+      class="max-w-7xl mx-auto w-full px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10 py-16 lg:py-0">
+
+      <!-- Left Content -->
+      <div id="hero-text-container" data-aos="fade-right" data-aos-duration="1000"
+        class="flex flex-col space-y-6 md:space-y-8 z-20 transition-opacity duration-300 opacity-100">
+        <div>
+          <span id="hero-badge"
+            class="inline-block py-1 px-3 rounded-full bg-blue-50 text-blue-600 font-bold tracking-widest uppercase text-xs mb-4">
+            Welcome to Solanki Pipes
+          </span>
+          <h1 id="hero-title" class="text-xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 leading-[1.15]">
+            Trusted Piping Partner for North India's <br class="hidden lg:block" />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-cyan-500">Water
+              Infrastructure</span>
+          </h1>
+        </div>
+        <p id="hero-description" class="text-lg md:text-xl text-gray-600 max-w-lg leading-relaxed min-h-[80px]">
+          20+ Years of Manufacturing Excellence. Supplying high-quality PE 80 & PE 100 grades, PN 2.5 to PN 10 for a
+          robust tomorrow.
+        </p>
+
+        <div class="flex flex-row gap-2 sm:gap-4 pt-2 w-full">
+          <a href="/hdpe"
+            class="flex-1 sm:flex-none flex items-center justify-center px-2 sm:px-8 py-3 sm:py-3.5 bg-gradient-to-r from-blue-700 to-cyan-600 text-white text-xs sm:text-base font-medium rounded-full hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 whitespace-nowrap">
+            Explore Products
+          </a>
+          <a href="/contact"
+            class="flex-1 sm:flex-none flex items-center justify-center px-2 sm:px-8 py-3 sm:py-3.5 border-2 border-gray-200 text-gray-700 text-xs sm:text-base font-medium rounded-full hover:border-blue-600 hover:text-blue-700 hover:bg-blue-50 transition-all duration-300 whitespace-nowrap">
+            Contact Us
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Image (Auto-changing) -->
+      <div class="relative flex items-center justify-center h-[450px] sm:h-[550px] lg:h-[550px] w-full"
+        data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+        <!-- Glow behind image -->
+        <div
+          class="absolute inset-0 bg-gradient-to-tr from-blue-200 to-cyan-200 rounded-full blur-3xl opacity-30 animate-pulse duration-1000">
+        </div>
+
+        <!-- Images -->
+        <div class="relative w-full h-full flex items-center justify-center">
+          <img id="hero-img-0" src="/images/Hdpe_hero.png"
+            class="absolute max-h-[100%] max-w-[100%] object-contain transition-all duration-700 ease-in-out opacity-100 scale-100 z-10 drop-shadow-2xl"
+            alt="Product 1">
+          <img id="hero-img-1" src="/images/dwc_hero.png"
+            class="absolute max-h-[100%] max-w-[100%`] object-contain transition-all duration-700 ease-in-out opacity-0 scale-95 z-0 pointer-events-none drop-shadow-2xl"
+            alt="Product 2">
+          <img id="hero-img-2" src="/images/pvc_hero.png"
+            class="absolute max-h-[100%] max-w-[100%] object-contain transition-all duration-700 ease-in-out opacity-0 scale-95 z-0 pointer-events-none drop-shadow-2xl"
+            alt="Product 3">
+        </div>
+
+        <!-- Image indicators -->
+        <div
+          class="absolute -bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-20 bg-white/50 backdrop-blur-sm py-2 px-4 rounded-full border border-white/60 shadow-sm">
+          <button onclick="setHeroImage(0)" id="hero-dot-0"
+            class="w-8 h-2.5 rounded-full bg-blue-600 transition-all duration-300 hover:bg-blue-700 focus:outline-none"></button>
+          <button onclick="setHeroImage(1)" id="hero-dot-1"
+            class="w-2.5 h-2.5 rounded-full bg-gray-300 transition-all duration-300 hover:bg-gray-400 focus:outline-none"></button>
+          <button onclick="setHeroImage(2)" id="hero-dot-2"
+            class="w-2.5 h-2.5 rounded-full bg-gray-300 transition-all duration-300 hover:bg-gray-400 focus:outline-none"></button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <div class="flex flex-col items-center justify-center mt-10">
+    <div class="flex font-bold uppercase tracking-wider">
+      EXPLORE OUR PRODUCT RANGE
+    </div>
+
+    <h2 class="text-2xl md:text-3xl lg:text-5xl mb-20 mt-10 text-jacksonsPurple" data-aos="fade-up">
+      What We Produce
+    </h2>
+
+    <div class="w-full px-6 md:px-10 relative flex justify-center">
+      <div class="flex lg:justify-center overflow-x-auto gap-6 pb-8 snap-x scrollbar-hide scroll-smooth w-full">
+
+        <div class="flex-none w-64 md:w-72 snap-center group" data-aos="zoom-in" data-aos-delay="100">
+          <div
+            class="flex flex-col items-center border border-jacksonsPurple p-6 rounded-3xl transition-all hover:bg-jacksonsPurple  relative">
+            <h4 class="text-lg md:text-xl font-semibold mb-4 text-center">HDPE PIPES</h4>
+            <div class="mb-6 h-40 flex items-center justify-center">
+              <img src="/images/product_01.png" alt="HDPE" class="group-hover:hidden max-h-full w-auto">
+              <img src="/images/product_01hover.png" alt="HDPE Hover"
+                class="hidden group-hover:block max-h-full w-auto">
+            </div>
+            <a href="/hdpe"
+              class="text-xs py-1 px-4 border border-black group-hover:border-white rounded-md transition-colors">more</a>
+          </div>
+        </div>
+
+        <div class="flex-none w-64 md:w-72 snap-center group" data-aos="zoom-in" data-aos-delay="200">
+          <div
+            class="flex flex-col items-center border border-jacksonsPurple p-6 rounded-3xl transition-all hover:bg-jacksonsPurple relative">
+            <h4 class="text-lg md:text-xl font-semibold mb-4 text-center"> DWC PIPE</h4>
+            <div class="mb-6 h-40 flex items-center justify-center">
+              <img src="/images/product_03.png" alt="MDPE Water" class="group-hover:hidden max-h-full w-auto">
+              <img src="/images/product_03hover.png" alt="MDPE Water Hover"
+                class="hidden group-hover:block max-h-full w-auto">
+            </div>
+            <a href="/dwc-pipe"
+              class="text-xs py-1 px-4 border border-black group-hover:border-white rounded-md transition-colors">more</a>
+          </div>
+        </div>
+
+        <div class="flex-none w-64 md:w-72 snap-center group" data-aos="zoom-in" data-aos-delay="300">
+          <div
+            class="flex flex-col items-center border border-jacksonsPurple p-6 rounded-3xl transition-all hover:bg-jacksonsPurple relative">
+            <h4 class="text-lg md:text-xl font-semibold mb-4 text-center">PVC PIPE</h4>
+            <div class="mb-6 h-40 flex items-center justify-center">
+              <img src="/images/product_04hover.png" alt="MDPE Gas" class="group-hover:hidden max-h-full w-auto">
+              <img src="/images/product_04hover.png" alt="MDPE Gas Hover"
+                class="hidden group-hover:block max-h-full w-auto">
+            </div>
+            <a href="/pvc-pipe"
+              class="text-xs py-1 px-4 border border-black group-hover:border-white rounded-md transition-colors">more</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="font-sans overflow-x-hidden">
+      <div class="flex flex-col items-center justify-center mt-10 px-4 sm:px-10 lg:px-20">
+        <div class="text-center mb-10" data-aos="fade-up">
+          <span class="text-blue-900 font-bold tracking-widest uppercase">OUR IMPACT</span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl mt-4">Projects & Events</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full max-w-7xl mb-24">
+
+          <!-- LEFT BIG CARD -->
+          <div class="lg:col-span-2 relative group overflow-hidden rounded-2xl min-h-[500px]" data-aos="fade-right">
+
+            <a href="/projects" class="block h-full">
+              <img src="/images/project_1.jpg"
+                class="object-cover w-full h-[500px] transition-transform duration-500 group-hover:scale-105">
+
+
+              <div class="absolute bottom-6 left-6 right-6 flex flex-col items-start">
+                <span class="text-black text-xs font-bold py-1 px-3 bg-cyan-400 rounded-md mb-3">
+                  Project
+                </span>
+
+                <div class="text-white lg:text-black text-2xl font-semibold leading-tight">
+                  <p>Mega Food Park, Ludhiana</p>
+
+                  <p class="text-lg font-bold mt-2 opacity-90">
+                    Successful HDPE Pipeline Execution for STP Project – Mega Food Park, Ludhiana
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- RIGHT SIDE -->
+          <div class="flex flex-col gap-6">
+
+            <!-- TOP CARD -->
+            <a href="/farmers-fair" class="flex flex-col group" data-aos="fade-left" data-aos-delay="100">
+              <div class="overflow-hidden rounded-xl h-60 relative">
+                <img src="/images/IMG_0524.jpg.jpeg"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+
+                <div class="absolute inset-0 bg-black/10"></div>
+              </div>
+
+              <span
+                class="text-white text-[10px] uppercase tracking-wider py-1 px-3 bg-emerald-700 rounded-md w-fit mt-4 mb-2 font-bold">
+                Event
+              </span>
+
+              <p class="text-blue-900 font-bold text-sm leading-snug">
+                Sponsorship of Farmers’ Fair & Agricultural Exhibition – Haryana
+              </p>
+            </a>
+
+            <!-- BOTTOM CARD -->
+            <div class="flex flex-col" data-aos="fade-left" data-aos-delay="200">
+              <div class="overflow-hidden rounded-xl h-60">
+                <img src="/images/kabadi.jpeg" class="w-full h-full object-cover">
+              </div>
+
+              <span
+                class="text-white text-[10px] uppercase tracking-wider py-1 px-3 bg-blue-800 rounded-md w-fit mt-4 mb-2">
+                Community & Sponsorships
+              </span>
+
+              <p class="text-blue-900 font-medium text-sm leading-snug">
+                Solanki Pipes Proudly Sponsors JKL (Just Kabaddi League)
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <!-- DHBVN EMPANELMENT ANNOUNCEMENT SECTION -->
+      <section id="dhbvn-announcement"
+        class="bg-gradient-to-br from-[#F9F9F7] via-white to-[#F0F4F8] py-10 px-6 md:px-20 border-y border-gray-100 overflow-hidden relative mb-16">
+        <!-- Subtle decorative background elements -->
+        <div
+          class="absolute -right-40 -bottom-40 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-60 pointer-events-none">
+        </div>
+        <div
+          class="absolute -left-40 -top-40 w-96 h-96 bg-amber-50 rounded-full blur-3xl opacity-40 pointer-events-none">
+        </div>
+
+        <div class="max-w-7xl mx-auto">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+
+            <!-- LEFT COLUMN: Visually stunning certificate frame + zoom -->
+            <div class="lg:col-span-5 flex flex-col items-center justify-center lg:sticky lg:top-8 z-20"
+              data-aos="zoom-in-right">
+              <div class="w-full relative group">
+
+
+                <div
+                  class="relative bg-white p-4 rounded-xl border border-gray-100 group overflow-hidden border-blue-200">
+                  <!-- Main certificate image -->
+                  <img src="/images/dhbvn_empanelment.jpg" alt="Solanki Industries Empanelled with DHBVN"
+                    class="w-full h-auto rounded-2xl border border-gray-50 z-0 transition-transform duration-500 group-hover:scale-[1.01] shadow-inner cursor-pointer"
+                    onclick="openZoomModal()">
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Text & dynamic accordions -->
+            <div class="lg:col-span-7 space-y-8 z-10" data-aos="fade-up">
+
+              <div class="space-y-4">
+
+
+                <h2 class="text-3xl md:text-5xl  text-gray-900 leading-tight">
+                  Empanelled with <span class="font-bold text-[#1E3A8A] block sm:inline">DHBVN</span>
+                </h2>
+
+                <h3 class="text-lg md:text-xl font-medium text-blue-900 tracking-wide">
+                  Strengthening Haryana’s Power Infrastructure with Quality HDPE Pipes
+                </h3>
+
+                <p class="text-gray-700 text-base leading-relaxed ">
+                  Solanki Industries (Solanki Pipes) is proud to announce its empanelment with <strong>Dakshin Haryana
+                    Bijli Vitran Nigam Limited (DHBVN)</strong> under the category of HDPE Pipes. This achievement
+                  reflects our commitment to manufacturing high-quality, ISI-marked HDPE piping solutions that meet the
+                  stringent requirements of government infrastructure and utility projects.
+                </p>
+
+                <p class="text-gray-700 text-sm leading-relaxed ">
+                  The empanelment enables Solanki Industries to participate in DHBVN-related turnkey and deposit works,
+                  supporting the development of reliable underground electrical infrastructure across Haryana.
+                </p>
+              </div>
+
+              <!-- ACCORDIONS CONTAINER -->
+              <div class="space-y-4" id="dhbvn-accordions">
+
+                <!-- ACCORDION 1: What is DHBVN? -->
+                <div
+                  class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:border-blue-200">
+                  <button onclick="toggleAccordion('acc-dhbvn')"
+                    class="w-full flex items-center justify-between p-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                    <span class="font-semibold text-gray-900 text-base flex items-center gap-3">
+                      <span
+                        class="w-8 h-8 rounded-xl bg-blue-50 text-blue-800 flex items-center justify-center font-bold text-sm">01</span>
+                      What is DHBVN?
+                    </span>
+                    <svg id="icon-acc-dhbvn" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none"
+                      stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </button>
+                  <div id="content-acc-dhbvn"
+                    class="max-h-0 overflow-hidden transition-all duration-305 ease-in-out bg-gray-50/50">
+                    <div class="p-6 pt-0 border-t border-gray-100 text-sm text-gray-600 space-y-3">
+                      <p>DHBVN is a state-owned electricity distribution utility engaged in power distribution,
+                        electrification, underground cabling, and power infrastructure development projects across
+                        Haryana.</p>
+
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ACCORDION 2: Why HDPE is Essential for Power -->
+                <div
+                  class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:border-blue-200">
+                  <button onclick="toggleAccordion('acc-hdpe')"
+                    class="w-full flex items-center justify-between p-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                    <span class="font-semibold text-gray-950 text-base flex items-center gap-3">
+                      <span
+                        class="w-8 h-8 rounded-xl bg-blue-50 text-blue-800 flex items-center justify-center font-bold text-sm">02</span>
+                      Why HDPE Pipes are Essential for Electrical Infrastructure
+                    </span>
+                    <svg id="icon-acc-hdpe" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none"
+                      stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </button>
+                  <div id="content-acc-hdpe"
+                    class="max-h-0 overflow-hidden transition-all duration-305 ease-in-out bg-gray-50/50">
+                    <div class="p-6 pt-0 border-t border-gray-100 text-sm text-gray-600 space-y-4">
+                      <p>HDPE (High-Density Polyethylene) pipes have become the preferred choice for underground cable
+                        protection due to their exceptional properties:</p>
+                      <div class="space-y-3 mt-2">
+                        <div class="flex gap-3">
+                          <div
+                            class="w-6 h-6 rounded-lg bg-blue-100 text-blue-800 flex items-center justify-center flex-shrink-0 text-xs font-bold">
+                            1</div>
+                          <div>
+                            <h4 class="font-bold text-gray-800 text-sm">High Mechanical Strength</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">HDPE pipes can withstand heavy external soil loads,
+                              traffic pressure, and earth movement without cracking or fracturing.</p>
+                          </div>
+                        </div>
+                        <div class="flex gap-3">
+                          <div
+                            class="w-6 h-6 rounded-lg bg-blue-100 text-blue-800 flex items-center justify-center flex-shrink-0 text-xs font-bold">
+                            2</div>
+                          <div>
+                            <h4 class="font-bold text-gray-800 text-sm">Corrosion Resistance</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">Unlike metallic conduits, HDPE pipes do not rust,
+                              corrode, or decay, ensuring decades of reliable, maintenance-free underground service.</p>
+                          </div>
+                        </div>
+                        <div class="flex gap-3">
+                          <div
+                            class="w-6 h-6 rounded-lg bg-blue-100 text-blue-800 flex items-center justify-center flex-shrink-0 text-xs font-bold">
+                            3</div>
+                          <div>
+                            <h4 class="font-bold text-gray-800 text-sm">Excellent Cable Protection</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">The exceptionally smooth inner surface significantly
+                              reduces friction, preventing cable sheath damage during installation and pull-throughs.
+                            </p>
+                          </div>
+                        </div>
+                        <div class="flex gap-3">
+                          <div
+                            class="w-6 h-6 rounded-lg bg-blue-100 text-blue-800 flex items-center justify-center flex-shrink-0 text-xs font-bold">
+                            4</div>
+                          <div>
+                            <h4 class="font-bold text-gray-800 text-sm">Long Service Life</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">Properly manufactured and laid HDPE pipes are
+                              engineered to deliver a service life exceeding 50 years under standard operating
+                              conditions.</p>
+                          </div>
+                        </div>
+                        <div class="flex gap-3">
+                          <div
+                            class="w-6 h-6 rounded-lg bg-blue-100 text-blue-800 flex items-center justify-center flex-shrink-0 text-xs font-bold">
+                            5</div>
+                          <div>
+                            <h4 class="font-bold text-gray-800 text-sm">Cost-Effective Installation</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">Their lightweight and flexible nature drastically
+                              cuts transportation and heavy machinery costs while enabling fast, smooth installation.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ACCORDION 3: Solanki Industries Key Strengths -->
+                <div
+                  class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:border-blue-200">
+                  <button onclick="toggleAccordion('acc-solanki')"
+                    class="w-full flex items-center justify-between p-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                    <span class="font-semibold text-gray-900 text-base flex items-center gap-3">
+                      <span
+                        class="w-8 h-8 rounded-xl bg-blue-50 text-blue-800 flex items-center justify-center font-bold text-sm">03</span>
+                      Solanki Industries: Trusted HDPE Pipe Manufacturer
+                    </span>
+                    <svg id="icon-acc-solanki" class="w-5 h-5 text-gray-400 transition-transform duration-300"
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </button>
+                  <div id="content-acc-solanki"
+                    class="max-h-0 overflow-hidden transition-all duration-305 ease-in-out bg-gray-50/50">
+                    <div class="p-6 pt-0 border-t border-gray-100 text-sm text-gray-600 space-y-4">
+                      <p>With over two decades of manufacturing expertise, Solanki Industries has established itself as
+                        a trusted and premium brand name in the HDPE pipe segment.</p>
+
+                      <h5 class="font-bold text-gray-800 text-xs tracking-wider uppercase mb-2">Our Key Strengths</h5>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-2">
+                        <div class="bg-white p-3 rounded-xl border border-gray-100 flex items-start gap-2.5">
+                          <svg class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                            stroke-width="3" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span class="text-xs text-gray-700 font-semibold">ISI Marked HDPE Pipes (IS 4984)</span>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-gray-100 flex items-start gap-2.5">
+                          <svg class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                            stroke-width="3" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span class="text-xs text-gray-700 font-semibold">BIS Licensed Manufacturing Facility</span>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-gray-100 flex items-start gap-2.5">
+                          <svg class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                            stroke-width="3" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span class="text-xs text-gray-700 font-semibold">Advanced Automated Production Lines</span>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-gray-100 flex items-start gap-2.5">
+                          <svg class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                            stroke-width="3" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span class="text-xs text-gray-700 font-semibold">In-House Quality Testing Laboratory</span>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-gray-100 flex items-start gap-2.5">
+                          <svg class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                            stroke-width="3" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span class="text-xs text-gray-700 font-semibold">Highly Experienced Technical Team</span>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-gray-100 flex items-start gap-2.5">
+                          <svg class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                            stroke-width="3" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span class="text-xs text-gray-700 font-semibold">Large-Scale Supply Across North India</span>
+                        </div>
+                      </div>
+
+                      <h5 class="font-bold text-gray-800 text-xs tracking-wider uppercase mt-4 mb-2">Product
+                        Applications</h5>
+                      <p class="text-xs leading-relaxed">
+                        Our robust product portfolio supports crucial infrastructure divisions, including **electrical
+                        cable ducting**, water supply projects, micro-irrigation systems, sewerage infrastructure,
+                        agriculture utilities, and industrial processing channels.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ACCORDION 4: Supporting Growth & Compliance -->
+                <div
+                  class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:border-blue-200">
+                  <button onclick="toggleAccordion('acc-vision')"
+                    class="w-full flex items-center justify-between p-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                    <span class="font-semibold text-gray-900 text-base flex items-center gap-3">
+                      <span
+                        class="w-8 h-8 rounded-xl bg-blue-50 text-blue-800 flex items-center justify-center font-bold text-sm">04</span>
+                      Supporting Growth, Quality & Compliance
+                    </span>
+                    <svg id="icon-acc-vision" class="w-5 h-5 text-gray-400 transition-transform duration-300"
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </button>
+                  <div id="content-acc-vision"
+                    class="max-h-0 overflow-hidden transition-all duration-305 ease-in-out bg-gray-50/50">
+                    <div class="p-6 pt-0 border-t border-gray-100 text-sm text-gray-600 space-y-4">
+                      <div>
+                        <h6 class="font-bold text-gray-800 text-xs mb-1">Supporting Haryana’s Infrastructure Growth</h6>
+                        <p class="text-xs leading-relaxed text-gray-500">
+                          The DHBVN empanelment reinforces Solanki Industries’ growing contribution to government
+                          infrastructure development. As demand increases for underground electrical networks, smart
+                          cities, and utility modernization, we aim to support DHBVN contractors, turnkey agencies, EPC
+                          companies, and government departments with quality-driven products.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h6 class="font-bold text-gray-800 text-xs mb-1">Commitment to Quality and Compliance</h6>
+                        <p class="text-xs leading-relaxed text-gray-500">
+                          Quality remains at the core of every pipe manufactured at Solanki Industries. Our processes
+                          focus on strict raw material control, dimensional accuracy, performance testing under BIS
+                          standards, and continuous process optimization.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h6 class="font-bold text-gray-800 text-xs mb-1">Looking Ahead</h6>
+                        <p class="text-xs leading-relaxed text-gray-500">
+                          The empanelment with DHBVN marks another significant milestone in Solanki Industries’ journey
+                          toward becoming one of India’s most trusted infrastructure piping brands. We remain committed
+                          to delivering reliable HDPE solutions that contribute to safer, stronger, and more efficient
+                          grids.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FULL SCREEN ZOOM MODAL FOR CERTIFICATE -->
+      <div id="zoom-modal"
+        class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 p-4 transition-all duration-300 backdrop-blur-sm"
+        onclick="closeZoomModal()">
+        <!-- Close Button -->
+        <button
+          class="absolute top-6 right-6 text-white/70 hover:text-white transition-colors duration-200 focus:outline-none"
+          onclick="closeZoomModal()">
+          <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+
+        <!-- Image Container -->
+        <div
+          class="max-w-4xl max-h-[85vh] w-full flex items-center justify-center relative scale-95 transition-transform duration-300 ease-out"
+          id="zoom-modal-content" onclick="event.stopPropagation()">
+          <img src="/images/dhbvn_empanelment.jpg" alt="Empanelled with DHBVN Certificate"
+            class="max-w-full max-h-[80vh] object-contain rounded-lg border border-white/10 shadow-2xl">
+          <div
+            class="absolute bottom-[-40px] text-center left-0 right-0 text-white/90 text-xs tracking-wider uppercase font-semibold">
+            Dakshin Haryana Bijli Vitran Nigam Limited (DHBVN) Empanelment Announcement
+          </div>
+        </div>
+      </div>
+
+      <script>
+        // Accordion toggle handler
+        function toggleAccordion(id) {
+          const content = document.getElementById(`content-${id}`);
+          const icon = document.getElementById(`icon-${id}`);
+
+          const isOpen = content.style.maxHeight !== '0px' && content.style.maxHeight !== '';
+
+          // Close other active accordions to ensure neat toggle behavior
+          const allContents = document.querySelectorAll("[id^='content-acc-']");
+          const allIcons = document.querySelectorAll("[id^='icon-acc-']");
+
+          allContents.forEach(c => {
+            c.style.maxHeight = '0px';
+          });
+
+          allIcons.forEach(i => {
+            i.style.transform = 'rotate(0deg)';
+          });
+
+          // Open the clicked accordion if it wasn't already open
+          if (!isOpen) {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            icon.style.transform = 'rotate(180deg)';
+          }
+        }
+
+        // Open full-screen Zoom Modal
+        function openZoomModal() {
+          const modal = document.getElementById('zoom-modal');
+          const modalContent = document.getElementById('zoom-modal-content');
+
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+
+          // Animate scaling with a tiny timeout to ensure display transitions trigger
+          setTimeout(() => {
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+          }, 10);
+
+          document.body.style.overflow = 'hidden';
+        }
+
+        // Close Zoom Modal
+        function closeZoomModal() {
+          const modal = document.getElementById('zoom-modal');
+          const modalContent = document.getElementById('zoom-modal-content');
+
+          modalContent.classList.remove('scale-100');
+          modalContent.classList.add('scale-95');
+
+          setTimeout(() => {
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+          }, 200);
+        }
+
+        // Auto-expand the first accordion on load
+        window.addEventListener('DOMContentLoaded', () => {
+          setTimeout(() => {
+            const firstContent = document.getElementById('content-acc-dhbvn');
+            const firstIcon = document.getElementById('icon-acc-dhbvn');
+            if (firstContent && firstIcon) {
+              firstContent.style.maxHeight = firstContent.scrollHeight + 'px';
+              firstIcon.style.transform = 'rotate(180deg)';
+            }
+          }, 250);
+        });
+      </script>
+
+
+      <section id="typing-section" class="bg-[#3e4095] min-h-[40vh] flex items-center px-6 md:px-20 py-16 mb-16">
+        <div class="max-w-5xl">
+          <h1 class="text-3xl md:text-4xl lg:text-5xl text-cyan-300 leading-tight min-h-[120px] sm:min-h-[150px]">
+            <span id="typing-text"></span><span id="typing-span" class="text-white/40"></span><span id="typing-cursor"
+              class="inline-block w-[3px] h-[30px] md:h-[40px] lg:h-[48px] bg-cyan-300 ml-1 mb-[-4px] md:mb-[-6px] animate-pulse"></span>
+          </h1>
+        </div>
+      </section>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const textElement = document.getElementById('typing-text');
+          const spanElement = document.getElementById('typing-span');
+          const cursorElement = document.getElementById('typing-cursor');
+          const section = document.getElementById('typing-section');
+
+          const textPart1 = "Solanki Delivering Pipes for Diverse Industries, from Agriculture to Tele-communications, and Infrastructure Development, Building a Better ";
+          const textPart2 = "Tomorrow.";
+
+          let i = 0;
+          let isTypingPart2 = false;
+          let typingInterval;
+
+          const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+              textElement.textContent = "";
+              spanElement.textContent = "";
+              i = 0;
+              isTypingPart2 = false;
+
+              typingInterval = setInterval(() => {
+                if (!isTypingPart2) {
+                  if (i < textPart1.length) {
+                    textElement.textContent += textPart1.charAt(i);
+                    i++;
+                  } else {
+                    isTypingPart2 = true;
+                    i = 0;
+                  }
+                } else {
+                  if (i < textPart2.length) {
+                    spanElement.textContent += textPart2.charAt(i);
+                    i++;
+                  } else {
+                    clearInterval(typingInterval);
+                    setTimeout(() => {
+                      cursorElement.classList.remove('animate-pulse');
+                      cursorElement.style.opacity = '0';
+                      cursorElement.style.transition = 'opacity 0.5s ease';
+                    }, 2500); // Fade out cursor after 2.5 seconds
+                  }
+                }
+              }, 40); // Typing speed in ms
+
+              observer.unobserve(section); // Only animate once
+            }
+          }, { threshold: 0.3 }); // Trigger when 30% of the section is visible
+
+          if (section) {
+            observer.observe(section);
+          }
+        });
+      </script>
+
+      <section class="relative overflow-hidden bg-[#f7f7f5] py-20 px-6 md:px-20">
+
+        <!-- Background Circles -->
+        <div class="absolute top-10 left-10 w-28 h-28 bg-cyan-500 rounded-full opacity-20"></div>
+        <div class="absolute bottom-10 right-10 w-40 h-40 bg-blue-500 rounded-full opacity-20"></div>
+
+        <!-- Decorative Rings -->
+        <div class="absolute top-0 right-0 w-[400px] h-[400px] border border-cyan-400 rounded-full opacity-30"></div>
+        <div class="absolute top-10 right-10 w-[350px] h-[350px] border border-blue-500 rounded-full opacity-30"></div>
+
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+
+          <!-- Left Content -->
+          <div data-aos="fade-right">
+            <h2 class="text-4xl md:text-6xl font-bold leading-tight text-[#0a1b3d]">
+              Strong Pipes
+              For a Stronger Future
+            </h2>
+
+            <p class="mt-6 text-lg text-gray-600 leading-relaxed max-w-xl">
+              High-quality PVC pipes engineered for durability, strength, and long-lasting
+              performance in residential, commercial, and industrial applications.
+            </p>
+
+            <!-- Features -->
+            <div class="grid grid-cols-2 gap-6 mt-10">
+
+              <!-- Durable -->
+              <div class="flex items-start gap-4 group">
+                <div
+                  class="min-w-[52px] h-[52px] rounded-2xl bg-cyan-100 flex items-center justify-center group-hover:bg-cyan-500 transition duration-300">
+
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6 text-cyan-700 group-hover:text-white transition duration-300" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
+                  </svg>
+                </div>
+
+                <div>
+                  <h4 class="font-semibold text-[#0a1b3d] text-lg">
+                    Durable
+                  </h4>
+                  <p class="text-sm text-gray-500 leading-relaxed">
+                    Built for long-lasting performance and strength.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Leak Resistant -->
+              <div class="flex items-start gap-4 group">
+                <div
+                  class="min-w-[52px] h-[52px] rounded-2xl bg-cyan-100 flex items-center justify-center group-hover:bg-cyan-500 transition duration-300">
+
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6 text-cyan-700 group-hover:text-white transition duration-300" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M12 3C12 3 6 10 6 14a6 6 0 0012 0c0-4-6-11-6-11z" />
+                  </svg>
+                </div>
+
+                <div>
+                  <h4 class="font-semibold text-[#0a1b3d] text-lg">
+                    Leak Resistant
+                  </h4>
+                  <p class="text-sm text-gray-500 leading-relaxed">
+                    Advanced sealing for reliable water flow systems.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Low Maintenance -->
+              <div class="flex items-start gap-4 group">
+                <div
+                  class="min-w-[52px] h-[52px] rounded-2xl bg-cyan-100 flex items-center justify-center group-hover:bg-cyan-500 transition duration-300">
+
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6 text-cyan-700 group-hover:text-white transition duration-300" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M11.049 2.927c.3-1.14 1.603-1.14 1.902 0l.7 2.659a1 1 0 00.95.69h2.797c1.2 0 1.698 1.54.73 2.31l-2.263 1.8a1 1 0 00-.364 1.118l.86 2.55c.39 1.16-.95 2.12-1.91 1.37l-2.24-1.64a1 1 0 00-1.18 0l-2.24 1.64c-.96.75-2.3-.21-1.91-1.37l.86-2.55a1 1 0 00-.364-1.118l-2.263-1.8c-.968-.77-.47-2.31.73-2.31h2.797a1 1 0 00.95-.69l.7-2.659z" />
+                  </svg>
+                </div>
+
+                <div>
+                  <h4 class="font-semibold text-[#0a1b3d] text-lg">
+                    Low Maintenance
+                  </h4>
+                  <p class="text-sm text-gray-500 leading-relaxed">
+                    Hassle-free installation with minimal upkeep.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Eco Friendly -->
+              <div class="flex items-start gap-4 group">
+                <div
+                  class="min-w-[52px] h-[52px] rounded-2xl bg-cyan-100 flex items-center justify-center group-hover:bg-cyan-500 transition duration-300">
+
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6 text-cyan-700 group-hover:text-white transition duration-300" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M5 13c0 5 3.5 8 7 8s7-3 7-8c0-4-3.5-7-7-10-3.5 3-7 6-7 10z" />
+                  </svg>
+                </div>
+
+                <div>
+                  <h4 class="font-semibold text-[#0a1b3d] text-lg">
+                    Eco Friendly
+                  </h4>
+                  <p class="text-sm text-gray-500 leading-relaxed">
+                    Sustainable materials safe for environment & future.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-row gap-2 sm:gap-5 mt-10 w-full">
+              <a href="#contact"
+                class="flex-1 sm:flex-none flex items-center justify-center px-2 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-[11px] sm:text-base rounded-md font-semibold whitespace-nowrap">
+                Request Quote
+              </a>
+
+              <a href="/images/Catalog Solanki Pipes.pdf" download="Catalog Solanki Pipes.pdf"
+                class="flex-1 sm:flex-none flex items-center justify-center px-2 sm:px-8 py-3 sm:py-4 border-2 border-blue-600 text-blue-700 text-[11px] sm:text-base rounded-md font-semibold whitespace-nowrap">
+                Download Catalogue
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Side Pipe Image -->
+          <div class="relative flex justify-center" data-aos="fade-left" data-aos-delay="200">
+            <img src="/images/collection.png" alt="" srcset="">
+
+
+
+
+          </div>
+        </div>
+      </section>
+
+
+
+
+    </div>
+
+    <%- include('partials/footer') %>
+      <script>
+        let currentHeroImage = 0;
+        const totalHeroImages = 3;
+        let heroInterval;
+
+        const heroData = [
+          {
+            badge: "Welcome to Solanki Pipes",
+            title: "Trusted Piping Partner for North India's <br class=\"hidden lg:block\" />\n<span class=\"text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-cyan-500\">Water Infrastructure</span>",
+            description: "20+ Years of Manufacturing Excellence. Supplying high-quality PE 80 & PE 100 grades, PN 2.5 to PN 10 for a robust tomorrow."
+          },
+          {
+            badge: "Unmatched Quality",
+            title: "Advanced DWC Pipes for Reliable <br class=\"hidden lg:block\" />\n<span class=\"text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-cyan-500\">Underground Drainage</span>",
+            description: "Engineered for superior load-bearing capacity and long life. The perfect solution for city sewage and industrial effluent disposal."
+          },
+          {
+            badge: "Innovation & Durability",
+            title: "High-Performance PVC Pipes for <br class=\"hidden lg:block\" />\n<span class=\"text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-cyan-500\">Every Application</span>",
+            description: "From plumbing to agriculture, our PVC pipes offer unmatched strength, leak resistance, and eco-friendly performance."
+          }
+        ];
+
+        function updateHeroImage() {
+          const textContainer = document.getElementById('hero-text-container');
+          if (textContainer) {
+            textContainer.classList.remove('opacity-100');
+            textContainer.classList.add('opacity-0');
+
+            setTimeout(() => {
+              const badgeEl = document.getElementById('hero-badge');
+              const titleEl = document.getElementById('hero-title');
+              const descEl = document.getElementById('hero-description');
+
+              if (badgeEl) badgeEl.innerHTML = heroData[currentHeroImage].badge;
+              if (titleEl) titleEl.innerHTML = heroData[currentHeroImage].title;
+              if (descEl) descEl.innerHTML = heroData[currentHeroImage].description;
+
+              textContainer.classList.remove('opacity-0');
+              textContainer.classList.add('opacity-100');
+            }, 300);
+          }
+
+          for (let i = 0; i < totalHeroImages; i++) {
+            const img = document.getElementById(`hero-img-${i}`);
+            const dot = document.getElementById(`hero-dot-${i}`);
+            if (!img || !dot) continue;
+
+            if (i === currentHeroImage) {
+              img.classList.remove('opacity-0', 'scale-95', 'z-0', 'pointer-events-none');
+              img.classList.add('opacity-100', 'scale-100', 'z-10');
+              dot.classList.remove('bg-gray-300', 'w-2.5');
+              dot.classList.add('bg-blue-600', 'w-8');
+            } else {
+              img.classList.remove('opacity-100', 'scale-100', 'z-10');
+              img.classList.add('opacity-0', 'scale-95', 'z-0', 'pointer-events-none');
+              dot.classList.remove('bg-blue-600', 'w-8');
+              dot.classList.add('bg-gray-300', 'w-2.5');
+            }
+          }
+        }
+
+        function nextHeroImage() {
+          currentHeroImage = (currentHeroImage + 1) % totalHeroImages;
+          updateHeroImage();
+        }
+
+        function setHeroImage(index) {
+          currentHeroImage = index;
+          updateHeroImage();
+          resetHeroInterval();
+        }
+
+        function resetHeroInterval() {
+          clearInterval(heroInterval);
+          heroInterval = setInterval(nextHeroImage, 3500); // Change image every 3.5 seconds
+        }
+
+        // Start interval on load
+        window.addEventListener('DOMContentLoaded', () => {
+          resetHeroInterval();
+        });
+      </script>

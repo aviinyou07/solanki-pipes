@@ -1,0 +1,61 @@
+<%- include('partials/header') %>
+
+<main class="bg-[#FDFBF7] min-h-screen font-sans">
+    
+    <!-- Hero Section -->
+    <header class="py-20 px-6 text-center max-w-6xl mx-auto">
+        <span class="text-blue-800 text-xs font-bold tracking-widest uppercase mb-3 block">Realizing Vision with Action</span>
+        <h1 class="text-4xl md:text-6xl font-light tracking-tight text-gray-900 uppercase">
+            Our <span class="font-extrabold text-[#1E3A8A]">Projects</span> & Case Studies
+        </h1>
+        <p class="mt-4 text-lg md:text-xl font-medium text-gray-600 max-w-3xl mx-auto">
+            Explore our executions of high-quality HDPE and PVC piping systems supporting agricultural irrigation, sewerage treatment, municipal water supply, and community infrastructure across North India.
+        </p>
+    </header>
+
+    <!-- Projects Grid Section -->
+    <section class="max-w-6xl mx-auto px-6 pb-24">
+        <% if (projects && projects.length > 0) { %>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <% projects.forEach(project => { %>
+                    <div class="flex flex-col bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-lg transition duration-300" data-aos="fade-up">
+                        <!-- Card Image -->
+                        <div class="h-52 overflow-hidden bg-gray-200 relative">
+                            <img src="<%= project.image %>" alt="<%= project.title %>" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                        </div>
+                        
+                        <!-- Card Content -->
+                        <div class="p-6 flex flex-col flex-grow">
+                            <!-- Category Badge -->
+                            <span class="text-white text-[9px] uppercase tracking-wider py-1 px-3 bg-blue-800 rounded-md w-fit font-bold mb-3">
+                                <%= project.category %>
+                            </span>
+                            
+                            <!-- Title -->
+                            <h3 class="text-lg font-bold text-blue-900 mb-2 line-clamp-2 hover:text-[#1E3A8A]">
+                                <%= project.title %>
+                            </h3>
+                            
+                            <!-- Short Description -->
+                            <p class="text-gray-600 text-xs leading-relaxed font-semibold flex-grow mb-4 line-clamp-3">
+                                <%= project.shortDescription %>
+                            </p>
+                            
+                            <!-- View Details Link -->
+                            <a href="/projects/<%= project.id %>" class="text-xs font-bold text-[#1E3A8A] hover:text-emerald-700 flex items-center gap-1 mt-auto transition-colors">
+                                View Project Details &rarr;
+                            </a>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <div class="text-center py-16 bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+                <p class="text-gray-500 font-semibold">No projects found. Check back later or add some from the admin dashboard.</p>
+            </div>
+        <% } %>
+    </section>
+
+</main>
+
+<%- include('partials/footer') %>

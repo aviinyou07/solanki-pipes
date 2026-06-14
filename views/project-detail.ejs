@@ -1,0 +1,179 @@
+<%- include('partials/header') %>
+
+<main class="bg-[#FDFBF7] min-h-screen font-sans">
+    
+    <!-- Hero Section -->
+    <header class="py-16 px-6 text-center max-w-6xl mx-auto">
+        <span class="text-blue-800 text-xs font-bold tracking-widest uppercase mb-3 block">Realizing Vision with Action</span>
+        <h1 class="text-4xl md:text-6xl font-light tracking-tight text-gray-900 uppercase">
+            Our <span class="font-extrabold text-[#1E3A8A]">Projects</span> & Impact
+        </h1>
+        <p class="mt-4 text-lg md:text-xl font-medium text-gray-600 max-w-3xl mx-auto">
+            Delivering robust, durable, and certified HDPE piping infrastructure for agricultural irrigation, municipal water supply, and industrial waste management across Northern India.
+        </p>
+    </header>
+
+    <!-- Main Featured Project (Dynamic Project Details) -->
+    <section>
+        <div class="bg-white overflow-hidden">
+            
+            <!-- Project Image Banner -->
+            <div class="relative h-[450px] w-full overflow-hidden">
+                <img src="<%= project.image %>" alt="<%= project.title %>" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"></div>
+                <div class="absolute bottom-8 left-8 right-8">
+                    <span class="bg-cyan-400 text-black text-xs font-bold px-3 py-1 rounded-md uppercase tracking-wider mb-3 inline-block"><%= project.category %></span>
+                    <h2 class="text-2xl md:text-4xl font-extrabold text-white leading-tight">
+                        <%= project.title %>
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Project Details Grid -->
+            <div class="p-8 md:p-12">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                    
+                    <!-- Left Columns: Description & Execution -->
+                    <div class="lg:col-span-2 space-y-8">
+                        <div>
+                            <h3 class="text-xl font-bold text-[#1E3A8A] uppercase border-b border-gray-100 pb-3 mb-4">Project Overview</h3>
+                            <p class="text-gray-700 leading-relaxed text-base">
+                                <%= project.longDescription %>
+                            </p>
+                        </div>
+
+                        <!-- Technical Specs -->
+                        <% if (project.specifications && project.specifications.length > 0) { %>
+                        <div>
+                            <h3 class="text-xl font-bold text-[#1E3A8A] uppercase border-b border-gray-100 pb-3 mb-4">Pipeline Specifications</h3>
+                            <p class="text-gray-700 mb-4 leading-relaxed">
+                                <%= project.specsDescription %>
+                            </p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <% project.specifications.forEach((spec, idx) => { %>
+                                <div class="bg-blue-50/50 border border-blue-100 p-4 rounded-xl flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-blue-900 text-white flex items-center justify-center font-bold">
+                                        <%= spec.size.match(/\d+/) ? spec.size.match(/\d+/)[0] : (idx + 1) %>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 text-sm"><%= spec.size %></h4>
+                                        <p class="text-xs text-gray-500 font-semibold"><%= spec.rating %></p>
+                                    </div>
+                                </div>
+                                <% }) %>
+                            </div>
+                            <% if (project.specsFootnote) { %>
+                            <p class="text-gray-500 text-xs mt-3 italic font-semibold">
+                                <%= project.specsFootnote %>
+                            </p>
+                            <% } %>
+                        </div>
+                        <% } %>
+
+                        <!-- Jointing & Handover -->
+                        <% if (project.executionSteps && project.executionSteps.length > 0) { %>
+                        <div>
+                            <h3 class="text-xl font-bold text-[#1E3A8A] uppercase border-b border-gray-100 pb-3 mb-4">Execution & Handover</h3>
+                            <ul class="space-y-3 pl-1">
+                                <% project.executionSteps.forEach(step => { %>
+                                <li class="flex items-start gap-3 text-gray-700">
+                                    <span class="text-blue-800 mt-1 font-bold text-lg">✔</span>
+                                    <span><%= step %></span>
+                                </li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                        <% } %>
+                    </div>
+
+                    <!-- Right Column: Meta Info Card & QA -->
+                    <div class="space-y-8">
+                        
+                        <!-- Metadata Card -->
+                        <div class="bg-[#F9F9F7] border border-gray-200 rounded-2xl p-6 space-y-4">
+                            <h4 class="text-base font-extrabold text-gray-800 uppercase tracking-wider">Project Factsheet</h4>
+                            <hr class="border-gray-200">
+                            <% if (project.department) { %>
+                            <div>
+                                <span class="text-xs uppercase font-bold text-gray-400">Department</span>
+                                <p class="text-sm font-semibold text-gray-800"><%= project.department %></p>
+                            </div>
+                            <% } %>
+                            <% if (project.location) { %>
+                            <div>
+                                <span class="text-xs uppercase font-bold text-gray-400">Project Location</span>
+                                <p class="text-sm font-semibold text-gray-800"><%= project.location %></p>
+                            </div>
+                            <% } %>
+                            <% if (project.segment) { %>
+                            <div>
+                                <span class="text-xs uppercase font-bold text-gray-400">Industry Segment</span>
+                                <p class="text-sm font-semibold text-gray-800"><%= project.segment %></p>
+                            </div>
+                            <% } %>
+                            <% if (project.execution) { %>
+                            <div>
+                                <span class="text-xs uppercase font-bold text-gray-400">Execution Directness</span>
+                                <p class="text-sm font-semibold text-gray-800"><%= project.execution %></p>
+                            </div>
+                            <% } %>
+                        </div>
+
+                        <!-- Quality Assurance Card -->
+                        <% if (project.inspections && project.inspections.length > 0) { %>
+                        <div class="bg-white border border-blue-100 rounded-2xl p-6 shadow-sm space-y-6">
+                            <h4 class="text-base font-extrabold text-blue-900 uppercase tracking-wider">Inspection & Testing</h4>
+                            <p class="text-xs text-gray-600 leading-relaxed font-semibold">
+                                To ensure material reliability and standard compliance, the entire pipeline layout was thoroughly audited and verified by department officials. Complete compliance test reports were issued by recognized agencies:
+                            </p>
+                            <div class="flex flex-col gap-6 items-center justify-around">
+                                <% project.inspections.forEach(insp => { %>
+                                <div class="flex items-center gap-3 w-full border border-gray-100 p-3 rounded-lg bg-gray-50/50">
+                                    <img src="<%= insp.logo %>" alt="<%= insp.name %> Logo" class="h-10 w-10 object-contain" onerror="this.src='/images/cipet.png'">
+                                    <div>
+                                        <h5 class="text-xs font-bold text-gray-800"><%= insp.name %></h5>
+                                        <p class="text-[10px] text-gray-400 uppercase font-bold"><%= insp.text %></p>
+                                    </div>
+                                </div>
+                                <% }) %>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+
+                </div>
+
+                <!-- Bottom Full-Width Impact Bar -->
+                <% if (project.outcomeTitle) { %>
+                <div class="mt-12 bg-blue-800 text-white rounded-2xl p-6 md:p-8 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="max-w-2xl">
+                        <span class="text-cyan-400 text-xs font-extrabold uppercase tracking-wider">Project Outcome</span>
+                        <h4 class="text-xl md:text-2xl font-bold mt-1 leading-tight">
+                            <%= project.outcomeTitle %>
+                        </h4>
+                        <p class="text-sm text-blue-100 mt-2 font-medium">
+                            <%= project.outcomeDescription %>
+                        </p>
+                    </div>
+                    <% if (project.outcomeBtnText) { %>
+                    <a href="<%= project.outcomeBtnLink || '/contact' %>" class="bg-cyan-400 hover:bg-cyan-300 text-black px-6 py-3 font-bold rounded-lg text-sm transition uppercase whitespace-nowrap shadow-md">
+                        <%= project.outcomeBtnText %>
+                    </a>
+                    <% } %>
+                </div>
+                <% } %>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Back Link -->
+    <div class="max-w-6xl mx-auto px-6 py-12">
+        <a href="/projects" class="inline-flex items-center gap-2 text-sm font-bold text-blue-800 hover:text-blue-900 transition-colors">
+            &larr; Back to All Projects
+        </a>
+    </div>
+
+</main>
+
+<%- include('partials/footer') %>

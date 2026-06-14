@@ -1,0 +1,81 @@
+<%- include('partials/header') %>
+
+<main class="bg-gray-50 min-h-screen font-sans py-12 px-6">
+    <div class="max-w-7xl mx-auto">
+        
+        <!-- Dashboard Header -->
+        <div class="  mb-12">
+
+            <div class="flex justify-between items-center mb-6">
+ <div>
+                <h1 class="text-3xl font-extrabold text-gray-900 uppercase tracking-tight">Admin <span class="text-[#1E3A8A]">Dashboard</span></h1>
+                <p class="text-gray-500 text-sm mt-1">Manage project case studies and portfolio items displayed on the main website.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="/admin/projects/add" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-1 px-2 rounded-lg shadow-md transition flex items-center gap-2">
+                    <span>➕</span> Add New Project
+                </a>
+                <a href="/admin/logout" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-1 px-2 rounded-lg transition flex items-center gap-2 text-sm border border-gray-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    Logout
+                </a>
+            </div>
+            </div>
+           
+
+        <!-- Projects Table / List -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-12">
+            <div class="p-6 border-b border-gray-100">
+                <h2 class="text-xl font-bold text-gray-800">Current Projects</h2>
+            </div>
+            
+            <% if (projects && projects.length > 0) { %>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-xs font-bold uppercase tracking-wider text-gray-500 border-b border-gray-100">
+                                <th class="p-4 pl-6">Image</th>
+                                <th class="p-4">Title</th>
+                                <th class="p-4">Category</th>
+                                <th class="p-4">Location</th>
+                                <th class="p-4">Date</th>
+                                <th class="p-4 pr-6 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100 text-sm text-gray-700">
+                            <% projects.forEach(project => { %>
+                                <tr class="hover:bg-gray-50/50 transition-colors">
+                                    <td class="p-4 pl-6">
+                                        <img src="<%= project.image %>" alt="<%= project.title %>" class="w-16 h-10 object-cover rounded-lg border border-gray-100">
+                                    </td>
+                                    <td class="p-4 font-bold text-gray-900 max-w-xs truncate"><%= project.title %></td>
+                                    <td class="p-4">
+                                        <span class="bg-blue-50 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-md"><%= project.category %></span>
+                                    </td>
+                                    <td class="p-4 text-gray-500"><%= project.location || 'N/A' %></td>
+                                    <td class="p-4 text-gray-400 font-medium"><%= project.createdDate || 'N/A' %></td>
+                                    <td class="p-4 pr-6 text-right">
+                                        <div class="flex items-center justify-end gap-3">
+                                            <a href="/projects/<%= project.id %>" target="_blank" class="text-blue-600 hover:text-blue-800 font-semibold text-xs">View Page</a>
+                                            <a href="/admin/projects/edit/<%= project.id %>" class="text-amber-600 hover:text-amber-800 font-semibold text-xs border border-amber-200 hover:border-amber-300 rounded px-2.5 py-1 transition-colors">Edit</a>
+                                            <form action="/admin/projects/delete/<%= project.id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this project?');" class="inline">
+                                                <button type="submit" class="text-rose-600 hover:text-rose-800 font-semibold text-xs border border-rose-200 hover:border-rose-300 rounded px-2.5 py-1 transition-colors">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } else { %>
+                <div class="p-12 text-center text-gray-400">
+                    <p class="font-medium">No projects found in the system. Click "Add New Project" to create one.</p>
+                </div>
+            <% } %>
+        </div>
+
+    </div>
+</main>
+
+<%- include('partials/footer') %>
