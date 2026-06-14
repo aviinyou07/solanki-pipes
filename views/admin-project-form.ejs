@@ -1,6 +1,6 @@
 <%- include('partials/admin-header') %>
 
-<div class="flex-grow p-6 md:p-10 max-w-4xl w-full mx-auto">
+<div class="flex-grow p-6 md:p-10 max-w-7xl w-full mx-auto">
 
         <!-- Page Header -->
         <div class="flex items-center justify-between mb-10">
@@ -14,8 +14,8 @@
         </div>
 
         <!-- Form Card -->
-        <form action="<%= action %>" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-            <div class="p-8 space-y-10">
+        <form action="<%= action %>" method="POST" enctype="multipart/form-data" class="bg-white border border-gray-100 shadow-sm overflow-hidden">
+            <div class="p-5 sm:p-8 space-y-8 sm:space-y-10">
 
                 <!-- Section 1: Basic Information -->
                 <div>
@@ -162,14 +162,14 @@
             </div>
 
             <!-- Form Actions (Fixed Bottom Bar) -->
-            <div class="px-8 py-6 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
-                <a href="/admin/projects" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-xl transition text-sm">Cancel</a>
-                <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-xl shadow-md transition text-sm"><%= project ? 'Update Project' : 'Save Project' %></button>
+            <div class="px-5 sm:px-8 py-4 sm:py-6 bg-gray-50 border-t border-gray-100 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-0">
+                <a href="/admin/projects" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-xl transition text-sm text-center">Cancel</a>
+                <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-xl shadow-md transition text-sm text-center"><%= project ? 'Update Project' : 'Save Project' %></button>
             </div>
         </form>
 
     </div>
-</main>
+</div>
 
 <script>
     const specsContainer = document.getElementById('specsContainer');
@@ -178,11 +178,11 @@
 
     function addSpecInput(size = '', rating = '') {
         const div = document.createElement('div');
-        div.className = 'flex items-center gap-3 spec-row';
+        div.className = 'flex flex-col sm:flex-row items-stretch sm:items-center gap-3 spec-row bg-slate-50/50 sm:bg-transparent p-3 sm:p-0 rounded-lg border border-slate-100 sm:border-0';
         div.innerHTML = `
-            <input type="text" name="specSizes" value="${size}" placeholder="e.g. 250 mm OD HDPE Pipes" class="w-1/2 border border-gray-300 rounded-lg py-2 px-3 text-sm">
-            <input type="text" name="specRatings" value="${rating}" placeholder="e.g. PE 80 • PN 4 rating" class="w-1/2 border border-gray-300 rounded-lg py-2 px-3 text-sm">
-            <button type="button" onclick="this.closest('.spec-row').remove()" class="text-rose-600 hover:text-rose-800 text-sm px-2">✖</button>
+            <input type="text" name="specSizes" value="${size}" placeholder="e.g. 250 mm OD HDPE Pipes" class="w-full sm:w-1/2 border border-gray-300 rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-blue-500 bg-white">
+            <input type="text" name="specRatings" value="${rating}" placeholder="e.g. PE 80 • PN 4 rating" class="w-full sm:w-1/2 border border-gray-300 rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-blue-500 bg-white">
+            <button type="button" onclick="this.closest('.spec-row').remove()" class="text-rose-600 hover:text-rose-800 text-xs px-2 self-end sm:self-auto mt-1 sm:mt-0 font-bold shrink-0">✖ Remove</button>
         `;
         specsContainer.appendChild(div);
     }
@@ -191,23 +191,25 @@
         const div = document.createElement('div');
         div.className = 'flex items-center gap-3 step-row';
         div.innerHTML = `
-            <input type="text" name="executionSteps" value="${text}" placeholder="e.g. Laying and jointing were executed according to specs..." class="flex-grow border border-gray-300 rounded-lg py-2 px-3 text-sm">
-            <button type="button" onclick="this.closest('.step-row').remove()" class="text-rose-600 hover:text-rose-800 text-sm px-2">✖</button>
+            <input type="text" name="executionSteps" value="${text}" placeholder="e.g. Laying and jointing were executed according to specs..." class="flex-grow border border-gray-300 rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-blue-500">
+            <button type="button" onclick="this.closest('.step-row').remove()" class="text-rose-600 hover:text-rose-800 text-sm px-2 font-bold shrink-0">✖</button>
         `;
         stepsContainer.appendChild(div);
     }
 
     function addInspectionInput(name = '', text = '', logo = '') {
         const div = document.createElement('div');
-        div.className = 'flex flex-col md:flex-row items-center gap-3 inspection-row border border-gray-100 p-3 rounded-lg bg-gray-50/50';
+        div.className = 'flex flex-col md:flex-row items-stretch md:items-center gap-3 inspection-row border border-gray-200 p-4 rounded-xl bg-gray-50/50';
         div.innerHTML = `
-            <input type="text" name="inspectionNames" value="${name}" placeholder="Agency Name (e.g. CIPET, Amritsar)" class="w-full md:w-1/3 border border-gray-300 rounded-lg py-2 px-3 text-xs">
-            <input type="text" name="inspectionTexts" value="${text}" placeholder="Details (e.g. Plastic piping certification)" class="w-full md:w-1/3 border border-gray-300 rounded-lg py-2 px-3 text-xs">
-            <select name="inspectionLogos" class="w-full md:w-1/3 border border-gray-300 rounded-lg py-2 px-3 text-xs text-gray-500">
-                <option value="/images/cipet.png" ${logo === '/images/cipet.png' ? 'selected' : ''}>CIPET Logo</option>
-                <option value="/images/shriramlab.png" ${logo === '/images/shriramlab.png' ? 'selected' : ''}>Shri Ram Lab Logo</option>
-            </select>
-            <button type="button" onclick="this.closest('.inspection-row').remove()" class="text-rose-600 hover:text-rose-800 text-sm px-2">✖</button>
+            <div class="flex-grow grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <input type="text" name="inspectionNames" value="${name}" placeholder="Agency Name (e.g. CIPET, Amritsar)" class="border border-gray-300 rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-blue-500 bg-white">
+                <input type="text" name="inspectionTexts" value="${text}" placeholder="Details (e.g. Plastic piping certification)" class="border border-gray-300 rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-blue-500 bg-white">
+                <select name="inspectionLogos" class="border border-gray-300 rounded-lg py-2 px-3 text-sm text-gray-700 focus:outline-none focus:border-blue-500 bg-white">
+                    <option value="/images/cipet.png" ${logo === '/images/cipet.png' ? 'selected' : ''}>CIPET Logo</option>
+                    <option value="/images/shriramlab.png" ${logo === '/images/shriramlab.png' ? 'selected' : ''}>Shri Ram Lab Logo</option>
+                </select>
+            </div>
+            <button type="button" onclick="this.closest('.inspection-row').remove()" class="text-rose-600 hover:text-rose-800 text-xs px-2 font-bold self-end md:self-auto mt-2 md:mt-0 shrink-0">✖ Remove</button>
         `;
         inspectionsContainer.appendChild(div);
     }

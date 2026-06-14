@@ -14,8 +14,8 @@
         </div>
 
         <!-- Form Card -->
-        <form action="<%= action %>" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-            <div class="p-8 space-y-8">
+        <form action="<%= action %>" method="POST" enctype="multipart/form-data" class="bg-white  border border-gray-100 shadow-sm overflow-hidden">
+            <div class="p-5 sm:p-8 space-y-6 sm:space-y-8">
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Title -->
@@ -74,9 +74,9 @@
             </div>
 
             <!-- Form Actions (Fixed Bottom Bar) -->
-            <div class="px-8 py-6 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
-                <a href="/admin/certifications" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-xl transition text-sm">Cancel</a>
-                <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-xl shadow-md transition text-sm"><%= certification ? 'Update Certification' : 'Save Certification' %></button>
+            <div class="px-5 sm:px-8 py-4 sm:py-6 bg-gray-50 border-t border-gray-100 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-0">
+                <a href="/admin/certifications" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-xl transition text-sm text-center">Cancel</a>
+                <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-xl shadow-md transition text-sm text-center"><%= certification ? 'Update Certification' : 'Save Certification' %></button>
             </div>
         </form>
 
