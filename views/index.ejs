@@ -54,15 +54,15 @@
 
         <!-- Images -->
         <div class="relative w-full h-full flex items-center justify-center">
-          <img id="hero-img-0" src="/images/Hdpe_hero.png"
+          <img id="hero-img-0" src="<%= (typeof products !== 'undefined' && products[0]) ? products[0].heroImage : '/images/Hdpe_hero.png' %>"
             class="absolute max-h-[100%] max-w-[100%] object-contain transition-all duration-700 ease-in-out opacity-100 scale-100 z-10 drop-shadow-2xl"
-            alt="Product 1">
-          <img id="hero-img-1" src="/images/dwc_hero.png"
-            class="absolute max-h-[100%] max-w-[100%`] object-contain transition-all duration-700 ease-in-out opacity-0 scale-95 z-0 pointer-events-none drop-shadow-2xl"
-            alt="Product 2">
-          <img id="hero-img-2" src="/images/pvc_hero.png"
+            alt="<%= (typeof products !== 'undefined' && products[0]) ? products[0].name : 'Product 1' %>">
+          <img id="hero-img-1" src="<%= (typeof products !== 'undefined' && products[1]) ? products[1].heroImage : '/images/dwc_hero.png' %>"
             class="absolute max-h-[100%] max-w-[100%] object-contain transition-all duration-700 ease-in-out opacity-0 scale-95 z-0 pointer-events-none drop-shadow-2xl"
-            alt="Product 3">
+            alt="<%= (typeof products !== 'undefined' && products[1]) ? products[1].name : 'Product 2' %>">
+          <img id="hero-img-2" src="<%= (typeof products !== 'undefined' && products[2]) ? products[2].heroImage : '/images/pvc_hero.png' %>"
+            class="absolute max-h-[100%] max-w-[100%] object-contain transition-all duration-700 ease-in-out opacity-0 scale-95 z-0 pointer-events-none drop-shadow-2xl"
+            alt="<%= (typeof products !== 'undefined' && products[2]) ? products[2].name : 'Product 3' %>">
         </div>
 
         <!-- Image indicators -->
@@ -93,49 +93,65 @@
 
     <div class="w-full px-6 md:px-10 relative flex justify-center">
       <div class="flex lg:justify-center overflow-x-auto gap-6 pb-8 snap-x scrollbar-hide scroll-smooth w-full">
-
-        <div class="flex-none w-64 md:w-72 snap-center group" data-aos="zoom-in" data-aos-delay="100">
-          <div
-            class="flex flex-col items-center border border-jacksonsPurple p-6 rounded-3xl transition-all hover:bg-jacksonsPurple  relative">
-            <h4 class="text-lg md:text-xl font-semibold mb-4 text-center">HDPE PIPES</h4>
-            <div class="mb-6 h-40 flex items-center justify-center">
-              <img src="/images/product_01.png" alt="HDPE" class="group-hover:hidden max-h-full w-auto">
-              <img src="/images/product_01hover.png" alt="HDPE Hover"
-                class="hidden group-hover:block max-h-full w-auto">
+        <% if (typeof products !== 'undefined' && products.length > 0) { %>
+          <% products.forEach((prod, idx) => { %>
+            <div class="flex-none w-64 md:w-72 snap-center group" data-aos="zoom-in" data-aos-delay="<%= (idx + 1) * 100 %>">
+              <div
+                class="flex flex-col items-center border border-jacksonsPurple p-6 rounded-3xl transition-all hover:bg-jacksonsPurple relative">
+                <h4 class="text-lg md:text-xl font-semibold mb-4 text-center"><%= prod.name %></h4>
+                <div class="mb-6 h-40 w-full flex items-center justify-center overflow-hidden">
+                  <img src="<%= prod.mainImage %>" alt="<%= prod.name %>" class="group-hover:hidden h-full w-full object-contain max-h-40">
+                  <img src="<%= prod.hoverImage || prod.mainImage %>" alt="<%= prod.name %> Hover"
+                    class="hidden group-hover:block h-full w-full object-contain max-h-40">
+                </div>
+                <a href="<%= prod.link || '/' + prod.slug %>"
+                  class="text-xs py-1 px-4 border border-black group-hover:border-white rounded-md transition-colors">more</a>
+              </div>
             </div>
-            <a href="/hdpe"
-              class="text-xs py-1 px-4 border border-black group-hover:border-white rounded-md transition-colors">more</a>
-          </div>
-        </div>
-
-        <div class="flex-none w-64 md:w-72 snap-center group" data-aos="zoom-in" data-aos-delay="200">
-          <div
-            class="flex flex-col items-center border border-jacksonsPurple p-6 rounded-3xl transition-all hover:bg-jacksonsPurple relative">
-            <h4 class="text-lg md:text-xl font-semibold mb-4 text-center"> DWC PIPE</h4>
-            <div class="mb-6 h-40 flex items-center justify-center">
-              <img src="/images/product_03.png" alt="MDPE Water" class="group-hover:hidden max-h-full w-auto">
-              <img src="/images/product_03hover.png" alt="MDPE Water Hover"
-                class="hidden group-hover:block max-h-full w-auto">
+          <% }) %>
+        <% } else { %>
+          <div class="flex-none w-64 md:w-72 snap-center group" data-aos="zoom-in" data-aos-delay="100">
+            <div
+              class="flex flex-col items-center border border-jacksonsPurple p-6 rounded-3xl transition-all hover:bg-jacksonsPurple  relative">
+              <h4 class="text-lg md:text-xl font-semibold mb-4 text-center">HDPE PIPES</h4>
+              <div class="mb-6 h-40 flex items-center justify-center">
+                <img src="/images/product_01.png" alt="HDPE" class="group-hover:hidden max-h-full w-auto">
+                <img src="/images/product_01hover.png" alt="HDPE Hover"
+                  class="hidden group-hover:block max-h-full w-auto">
+              </div>
+              <a href="/hdpe"
+                class="text-xs py-1 px-4 border border-black group-hover:border-white rounded-md transition-colors">more</a>
             </div>
-            <a href="/dwc-pipe"
-              class="text-xs py-1 px-4 border border-black group-hover:border-white rounded-md transition-colors">more</a>
           </div>
-        </div>
 
-        <div class="flex-none w-64 md:w-72 snap-center group" data-aos="zoom-in" data-aos-delay="300">
-          <div
-            class="flex flex-col items-center border border-jacksonsPurple p-6 rounded-3xl transition-all hover:bg-jacksonsPurple relative">
-            <h4 class="text-lg md:text-xl font-semibold mb-4 text-center">PVC PIPE</h4>
-            <div class="mb-6 h-40 flex items-center justify-center">
-              <img src="/images/product_04hover.png" alt="MDPE Gas" class="group-hover:hidden max-h-full w-auto">
-              <img src="/images/product_04hover.png" alt="MDPE Gas Hover"
-                class="hidden group-hover:block max-h-full w-auto">
+          <div class="flex-none w-64 md:w-72 snap-center group" data-aos="zoom-in" data-aos-delay="200">
+            <div
+              class="flex flex-col items-center border border-jacksonsPurple p-6 rounded-3xl transition-all hover:bg-jacksonsPurple relative">
+              <h4 class="text-lg md:text-xl font-semibold mb-4 text-center"> DWC PIPE</h4>
+              <div class="mb-6 h-40 flex items-center justify-center">
+                <img src="/images/product_03.png" alt="MDPE Water" class="group-hover:hidden max-h-full w-auto">
+                <img src="/images/product_03hover.png" alt="MDPE Water Hover"
+                  class="hidden group-hover:block max-h-full w-auto">
+              </div>
+              <a href="/dwc-pipe"
+                class="text-xs py-1 px-4 border border-black group-hover:border-white rounded-md transition-colors">more</a>
             </div>
-            <a href="/pvc-pipe"
-              class="text-xs py-1 px-4 border border-black group-hover:border-white rounded-md transition-colors">more</a>
           </div>
-        </div>
 
+          <div class="flex-none w-64 md:w-72 snap-center group" data-aos="zoom-in" data-aos-delay="300">
+            <div
+              class="flex flex-col items-center border border-jacksonsPurple p-6 rounded-3xl transition-all hover:bg-jacksonsPurple relative">
+              <h4 class="text-lg md:text-xl font-semibold mb-4 text-center">PVC PIPE</h4>
+              <div class="mb-6 h-40 flex items-center justify-center">
+                <img src="/images/product_04hover.png" alt="MDPE Gas" class="group-hover:hidden max-h-full w-auto">
+                <img src="/images/product_04hover.png" alt="MDPE Gas Hover"
+                  class="hidden group-hover:block max-h-full w-auto">
+              </div>
+              <a href="/pvc-pipe"
+                class="text-xs py-1 px-4 border border-black group-hover:border-white rounded-md transition-colors">more</a>
+            </div>
+          </div>
+        <% } %>
       </div>
     </div>
 
@@ -239,8 +255,8 @@
                 <div
                   class="relative bg-white p-4 rounded-xl border border-gray-100 group overflow-hidden border-blue-200">
                   <!-- Main certificate image -->
-                  <img src="/images/dhbvn_empanelment.jpg" alt="Solanki Industries Empanelled with DHBVN"
-                    class="w-full h-auto rounded-2xl border border-gray-50 z-0 transition-transform duration-500 group-hover:scale-[1.01] shadow-inner cursor-pointer"
+                  <img src="<%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.dhbvnEmpanelment) ? siteSettings.dhbvnEmpanelment : '/images/dhbvn_empanelment.jpg' %>" alt="Solanki Industries Empanelled with DHBVN"
+                    class="w-full h-80 sm:h-96 md:h-[450px] object-cover rounded-2xl border border-gray-50 z-0 transition-transform duration-500 group-hover:scale-[1.01] shadow-inner cursor-pointer"
                     onclick="openZoomModal()">
                 </div>
               </div>
@@ -533,7 +549,7 @@
         <div
           class="max-w-4xl max-h-[85vh] w-full flex items-center justify-center relative scale-95 transition-transform duration-300 ease-out"
           id="zoom-modal-content" onclick="event.stopPropagation()">
-          <img src="/images/dhbvn_empanelment.jpg" alt="Empanelled with DHBVN Certificate"
+          <img src="<%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.dhbvnEmpanelment) ? siteSettings.dhbvnEmpanelment : '/images/dhbvn_empanelment.jpg' %>" alt="Empanelled with DHBVN Certificate"
             class="max-w-full max-h-[80vh] object-contain rounded-lg border border-white/10 shadow-2xl">
           <div
             class="absolute bottom-[-40px] text-center left-0 right-0 text-white/90 text-xs tracking-wider uppercase font-semibold">
@@ -808,7 +824,7 @@
                 Request Quote
               </a>
 
-              <a href="/images/Catalog Solanki Pipes.pdf" download="Catalog Solanki Pipes.pdf"
+              <a href="<%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.catalogPdf) ? siteSettings.catalogPdf : '/images/Catalog Solanki Pipes.pdf' %>" download="Catalog Solanki Pipes.pdf"
                 class="flex-1 sm:flex-none flex items-center justify-center px-2 sm:px-8 py-3 sm:py-4 border-2 border-blue-600 text-blue-700 text-[11px] sm:text-base rounded-md font-semibold whitespace-nowrap">
                 Download Catalogue
               </a>
@@ -816,8 +832,8 @@
           </div>
 
           <!-- Right Side Pipe Image -->
-          <div class="relative flex justify-center" data-aos="fade-left" data-aos-delay="200">
-            <img src="/images/collection.png" alt="" srcset="">
+          <div class="relative flex justify-center items-center h-64 sm:h-80 md:h-96 w-full overflow-hidden" data-aos="fade-left" data-aos-delay="200">
+            <img src="<%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.collectionBanner) ? siteSettings.collectionBanner : '/images/collection.png' %>" alt="Collection Banner" class="max-h-full max-w-full h-full w-auto object-contain drop-shadow-xl">
 
 
 

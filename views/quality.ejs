@@ -8,7 +8,7 @@
         
          <section class="max-w-6xl mx-auto my-12 px-6">
         <div>
-            <img src="/images/sp_img1.jpeg" alt="Testing Laboratory" class="w-full object-cover h-[450px]">
+            <img src="<%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.qualityBanner) ? siteSettings.qualityBanner : '/images/sp_img1.jpeg' %>" alt="Testing Laboratory" class="w-full object-cover h-[450px]">
         </div>
     </section>
     </header>
@@ -120,12 +120,12 @@
         <div class="flex flex-col md:flex-row justify-center items-center gap-12 mb-10">
             <div class="flex flex-col items-center">
                 <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center border-4 border-blue-500 mb-4 shadow overflow-hidden p-2">
-                    <img src="/images/cipet.png" alt="CIPET JAIPUR Logo" class="max-w-full max-h-full object-contain">
+                    <img src="<%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.cipetLogo) ? siteSettings.cipetLogo : '/images/cipet.png' %>" alt="CIPET JAIPUR Logo" class="max-w-full max-h-full object-contain">
                 </div>
             </div>
             <div class="flex flex-col items-center">
                 <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center border-4 border-blue-500 mb-4 shadow overflow-hidden p-2">
-                    <img src="/images/shriramlab.png" alt="SHRI RAM LAB DELHI Logo" class="max-w-full max-h-full object-contain">
+                    <img src="<%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.shriramlabLogo) ? siteSettings.shriramlabLogo : '/images/shriramlab.png' %>" alt="SHRI RAM LAB DELHI Logo" class="max-w-full max-h-full object-contain">
                 </div>
             </div>
         </div>

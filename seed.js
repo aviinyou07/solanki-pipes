@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcryptjs');
-const { mongoose, Project, Admin, Certification } = require('./db');
+const { mongoose, Project, Admin, Certification, Product } = require('./db');
 
 async function seed() {
     try {
@@ -69,6 +69,24 @@ async function seed() {
             console.log(`Successfully seeded ${certsData.length} certifications.`);
         } else {
             console.log('No certifications.json found to seed.');
+        }
+
+        // Clear and seed products
+        console.log('Seeding products...');
+        const productsFilePath = path.join(__dirname, 'data', 'products.json');
+        if (fs.existsSync(productsFilePath)) {
+            const rawProducts = fs.readFileSync(productsFilePath, 'utf8');
+            const productsData = JSON.parse(rawProducts);
+            const formattedProducts = productsData.map(p => {
+                const formatted = { ...p, _id: p.id };
+                delete formatted.id;
+                return formatted;
+            });
+            await Product.deleteMany({});
+            await Product.insertMany(formattedProducts);
+            console.log(`Successfully seeded ${formattedProducts.length} products.`);
+        } else {
+            console.log('No products.json found to seed.');
         }
 
         console.log('Database seeding finished successfully!');

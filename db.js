@@ -71,14 +71,49 @@ const certificationSchema = new mongoose.Schema({
     createdDate: { type: Date, default: Date.now }
 });
 
+// Define Product Schema
+const productSchema = new mongoose.Schema({
+    _id: { type: String, required: true }, // custom slug ID (e.g. 'hdpe', 'dwc-pipe', 'pvc-pipe')
+    name: { type: String, required: true },
+    slug: { type: String, required: true },
+    shortDescription: { type: String, default: '' },
+    mainImage: { type: String, default: '/images/product_01.png' },
+    hoverImage: { type: String, default: '/images/product_01hover.png' },
+    heroImage: { type: String, default: '/images/Hdpe_hero.png' },
+    detailImage: { type: String, default: '/images/hdpepage.png' },
+    bannerImage: { type: String, default: '/images/hdpe_02.svg' },
+    galleryImages: [{ type: String }],
+    link: { type: String, default: '' },
+    badge: { type: String, default: '' },
+    createdDate: { type: Date, default: Date.now }
+});
+
+// Define SiteSetting Schema for Site-wide Images and Media
+const siteSettingSchema = new mongoose.Schema({
+    _id: { type: String, default: 'default' },
+    headerLogo: { type: String, default: '/images/blacklogo.png' },
+    footerLogo: { type: String, default: '/images/SOLANKI-PIPES-LOGO-WHITE.png' },
+    dhbvnEmpanelment: { type: String, default: '/images/dhbvn_empanelment.jpg' },
+    qualityBanner: { type: String, default: '/images/sp_img1.jpeg' },
+    cipetLogo: { type: String, default: '/images/cipet.png' },
+    shriramlabLogo: { type: String, default: '/images/shriramlab.png' },
+    collectionBanner: { type: String, default: '/images/collection.png' },
+    catalogPdf: { type: String, default: '/images/Catalog Solanki Pipes.pdf' }
+});
+
 const Project = mongoose.model('Project', projectSchema);
 const Admin = mongoose.model('Admin', adminSchema);
 const Certification = mongoose.model('Certification', certificationSchema);
+const Product = mongoose.model('Product', productSchema);
+const SiteSetting = mongoose.model('SiteSetting', siteSettingSchema);
 
 module.exports = {
     mongoose,
     Project,
     Admin,
-    Certification
+    Certification,
+    Product,
+    SiteSetting
 };
+
 

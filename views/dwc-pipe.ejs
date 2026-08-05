@@ -25,11 +25,11 @@
 
                 </div>
 
-                <div class="flex-1 flex justify-center lg:justify-end relative">
+                <div class="flex-1 flex justify-center items-center lg:justify-end relative min-h-[300px] md:min-h-[400px]">
                     <div class="absolute -z-10 h-64 w-64 rounded-full bg-blue-50 blur-3xl lg:h-96 lg:w-96"></div>
 
-                    <img src="/images/dwcpage.png" alt="DWC Pipe Display"
-                        class="w-full max-w-[350px] md:max-w-[350px] h-auto object-contain drop-shadow-2xl transition-transform duration-500 hover:scale-105">
+                    <img src="<%= (typeof product !== 'undefined' && product && product.detailImage) ? product.detailImage : '/images/dwcpage.png' %>" alt="<%= (typeof product !== 'undefined' && product && product.name) ? product.name : 'DWC Pipe Display' %>"
+                        class="w-full max-w-[350px] md:max-w-[350px] h-[300px] md:h-[400px] object-contain drop-shadow-2xl transition-transform duration-500 hover:scale-105">
                 </div>
 
             </div>
@@ -54,7 +54,7 @@
         <div class="relative mt-10  self-center w-full">
             <div
                 class="bg-black w-full rounded-lg h-48 md:h-96 flex items-center justify-center banner-mask overflow-hidden">
-                <img src="/images/hdpe_02.svg" class="w-full h-full object-cover opacity-50">
+                <img src="<%= (typeof product !== 'undefined' && product && product.bannerImage) ? product.bannerImage : '/images/hdpe_02.svg' %>" class="w-full h-full object-cover opacity-50">
             </div>
             <h6
                 class="text-white absolute top-1/2 left-0 -translate-y-1/2 z-10 text-lg sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl w-full text-center">
@@ -169,36 +169,51 @@
 
         <div
             class="grid grid-flow-col grid-rows-3 lg:grid-rows-2 lg:grid-cols-2 w-full mt-20 gap-8 xl:px-2 md:px-2 lg:px-2">
-            <div class="lg:row-span-2 relative w-full min-h-[400px]">
+            <div class="lg:row-span-2 relative w-full h-[350px] sm:h-[450px] overflow-hidden rounded-2xl">
                 <img alt="HDPE Gallery 1" class="rounded-2xl object-cover absolute inset-0 w-full h-full"
-                    src="/images/hdpe-gallery-1.jpeg">
+                    src="<%= (typeof product !== 'undefined' && product && product.galleryImages && product.galleryImages[0]) ? product.galleryImages[0] : '/images/hdpe-gallery-1.jpeg' %>">
             </div>
-            <div class="h-full">
+            <div class="h-[165px] sm:h-[210px] w-full overflow-hidden rounded-2xl">
                 <img alt="HDPE Gallery 2" class="w-full h-full rounded-2xl object-cover"
-                    src="/images/hdpe-gallery-2.jpeg">
+                    src="<%= (typeof product !== 'undefined' && product && product.galleryImages && product.galleryImages[1]) ? product.galleryImages[1] : '/images/hdpe-gallery-2.jpeg' %>">
             </div>
-            <div class="h-full">
+            <div class="h-[165px] sm:h-[210px] w-full overflow-hidden rounded-2xl">
                 <img alt="HDPE Gallery 3" class="w-full h-full rounded-2xl object-cover"
-                    src="/images/hdpe-gallery-3.jpeg">
+                    src="<%= (typeof product !== 'undefined' && product && product.galleryImages && product.galleryImages[2]) ? product.galleryImages[2] : '/images/hdpe-gallery-3.jpeg' %>">
             </div>
         </div>
 
-        <h6 class="text-center font-medium text-2xl sm:text-4xl xl:text-5xl mt-10 lg:mt-20 mb-10 sm:mb-10 md:mb-20">Our
+        <h6 class="text-center font-bold text-2xl sm:text-4xl xl:text-5xl mt-10 lg:mt-20 mb-10 sm:mb-10 md:mb-20 uppercase text-gray-900 tracking-tight">Our
             Other Products</h6>
         <div class="flex flex-wrap justify-center gap-12 md:gap-20">
 
+            <% if (typeof products !== 'undefined' && products.length > 0) { %>
+                <% products.filter(p => !product || p._id !== product._id).forEach(p => { %>
+                    <a class="group flex flex-col gap-8 items-center justify-center text-center cursor-pointer relative"
+                        href="<%= p.link || '/' + p.slug %>">
+                        <% if (p.badge) { %>
+                            <span
+                                class="absolute top-0 right-4 bg-amber-50 text-amber-800 border border-amber-500/30 text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider z-10 shadow-sm"><%= p.badge %></span>
+                        <% } %>
+                        <img alt="<%= p.name %>" class="w-48 h-auto max-h-36 object-contain transition-transform duration-350 group-hover:scale-105"
+                            src="<%= p.hoverImage || p.mainImage %>">
+                        <p class="text-base group-hover:text-blue-600 font-bold transition-colors uppercase tracking-wide"><%= p.name %></p>
+                    </a>
+                <% }) %>
+            <% } %>
 
-
-
-            <a class="group flex flex-col gap-8 items-center justify-center text-center cursor-pointer" href="/hdpe">
-                <img alt="HDPE WATER PIPE" class="w-48 h-auto" src="/images/product_01hover.png">
-                <p class="text-base group-hover:text-blue-500 font-bold transition-colors">HDPE WATER PIPE</p>
-            </a>
-
-            <a class="group flex flex-col gap-8 items-center justify-center text-center cursor-pointer"
-                href="/pvc-pipe">
-                <img alt="PVC PIPES" class="w-48 h-auto" src="/images/product_04hover.png">
-                <p class="text-base group-hover:text-blue-500 font-bold transition-colors">PVC PIPES</p>
+            <a class="group flex flex-col gap-8 items-center justify-center text-center cursor-pointer" href="/">
+                <div
+                    class="w-48 h-36 flex items-center justify-center bg-blue-50 border border-blue-100 rounded-2xl group-hover:bg-blue-600 transition-colors shadow">
+                    <svg class="w-16 h-16 text-blue-600 group-hover:text-white transition-colors" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                        </path>
+                    </svg>
+                </div>
+                <p class="text-base group-hover:text-blue-600 font-bold transition-colors uppercase tracking-wide">BACK
+                    TO HOME</p>
             </a>
 
         </div>

@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="/images/blacklogo.png">
+    <link rel="icon" type="image/png" href="<%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.headerLogo) ? siteSettings.headerLogo : '/images/blacklogo.png' %>">
     <title>
         <%= title %>
     </title>
@@ -68,7 +68,7 @@
     <header class="relative z-50 flex items-center justify-between px-6 md:px-10 py-2">
         <div class="flex items-center">
             <a href="/" class="block">
-                <img src="/images/blacklogo.png" alt="Solanki Logo" class="h-12 md:h-16 w-auto object-contain">
+                <img src="<%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.headerLogo) ? siteSettings.headerLogo : '/images/blacklogo.png' %>" alt="Solanki Logo" class="h-12 md:h-16 w-auto object-contain">
             </a>
         </div>
 

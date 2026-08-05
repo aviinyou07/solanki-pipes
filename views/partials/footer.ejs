@@ -6,7 +6,7 @@
             <div class="flex flex-col items-start">
 
                 <!-- Logo -->
-                <img src="/images/SOLANKI-PIPES-LOGO-WHITE.png" alt="Solanki Pipes Logo" class="w-40">
+                <img src="<%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.footerLogo) ? siteSettings.footerLogo : '/images/SOLANKI-PIPES-LOGO-WHITE.png' %>" alt="Solanki Pipes Logo" class="w-40">
 
                 <!-- Short Description -->
                 <p class="text-white leading-relaxed max-w-md mt-4">

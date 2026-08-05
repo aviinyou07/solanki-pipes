@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
 require('dotenv').config();
-const { Project, Admin, Certification } = require('./db');
+const { Project, Admin, Certification, Product, SiteSetting } = require('./db');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 
@@ -22,6 +22,48 @@ Certification.countDocuments().then(count => {
     }
 }).catch(err => console.error('Error checking certification count:', err));
 
+// Auto-seed products if database is empty on start
+Product.countDocuments().then(count => {
+    if (count === 0) {
+        const productsFilePath = path.join(__dirname, 'data', 'products.json');
+        if (fs.existsSync(productsFilePath)) {
+            const rawProducts = fs.readFileSync(productsFilePath, 'utf8');
+            const productsData = JSON.parse(rawProducts);
+            const formattedProducts = productsData.map(p => {
+                const formatted = { ...p, _id: p.id };
+                delete formatted.id;
+                return formatted;
+            });
+            Product.insertMany(formattedProducts)
+                .then(() => console.log('Successfully auto-seeded initial products'))
+                .catch(err => console.error('Failed to auto-seed products:', err));
+        }
+    }
+}).catch(err => console.error('Error checking product count:', err));
+
+// Helper: Get or initialize SiteSetting document
+async function getSiteSettings() {
+    try {
+        let settings = await SiteSetting.findById('default');
+        if (!settings) {
+            settings = await SiteSetting.create({ _id: 'default' });
+        }
+        return settings;
+    } catch (err) {
+        console.error('Error fetching SiteSettings:', err);
+        return {
+            headerLogo: '/images/blacklogo.png',
+            footerLogo: '/images/SOLANKI-PIPES-LOGO-WHITE.png',
+            dhbvnEmpanelment: '/images/dhbvn_empanelment.jpg',
+            qualityBanner: '/images/sp_img1.jpeg',
+            cipetLogo: '/images/cipet.png',
+            shriramlabLogo: '/images/shriramlab.png',
+            collectionBanner: '/images/collection.png',
+            catalogPdf: '/images/Catalog Solanki Pipes.pdf'
+        };
+    }
+}
+
 // Configure multer storage for file uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -37,6 +79,27 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({ storage: storage });
+const uploadProductImages = upload.fields([
+    { name: 'mainImage', maxCount: 1 },
+    { name: 'hoverImage', maxCount: 1 },
+    { name: 'heroImage', maxCount: 1 },
+    { name: 'detailImage', maxCount: 1 },
+    { name: 'bannerImage', maxCount: 1 },
+    { name: 'gallery1', maxCount: 1 },
+    { name: 'gallery2', maxCount: 1 },
+    { name: 'gallery3', maxCount: 1 }
+]);
+
+const uploadSiteMedia = upload.fields([
+    { name: 'headerLogo', maxCount: 1 },
+    { name: 'footerLogo', maxCount: 1 },
+    { name: 'dhbvnEmpanelment', maxCount: 1 },
+    { name: 'qualityBanner', maxCount: 1 },
+    { name: 'cipetLogo', maxCount: 1 },
+    { name: 'shriramlabLogo', maxCount: 1 },
+    { name: 'collectionBanner', maxCount: 1 },
+    { name: 'catalogPdf', maxCount: 1 }
+]);
 
 // MongoDB models are imported from ./db
 
@@ -109,9 +172,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname)); // Also serve from root for image folder
 app.set('views', path.join(__dirname, 'views'));
 
+// Global middleware to pass siteSettings to all views
+app.use(async (req, res, next) => {
+    res.locals.siteSettings = await getSiteSettings();
+    next();
+});
+
 // Route for the home page
-app.get('/', (req, res) => {
-    res.render('index', { title: 'Solanki Pipes — HDPE Pipe Manufacturer, Haryana' });
+app.get('/', async (req, res) => {
+    try {
+        const products = await Product.find();
+        res.render('index', { title: 'Solanki Pipes — HDPE Pipe Manufacturer, Haryana', products });
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.render('index', { title: 'Solanki Pipes — HDPE Pipe Manufacturer, Haryana', products: [] });
+    }
 });
 // Route for the about page
 app.get('/about', (req, res) => {
@@ -119,24 +194,59 @@ app.get('/about', (req, res) => {
 });
 
 // Route for HDPE page
-app.get('/hdpe', (req, res) => {
-    res.render('hdpe', { title: 'HDPE Pipes (IS 4984) — Solanki Pipes' });
+app.get('/hdpe', async (req, res) => {
+    try {
+        const product = await Product.findById('hdpe');
+        const products = await Product.find();
+        res.render('hdpe', { title: 'HDPE Pipes (IS 4984) — Solanki Pipes', product, products });
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.render('hdpe', { title: 'HDPE Pipes (IS 4984) — Solanki Pipes', product: null, products: [] });
+    }
 });
 
-app.get('/hdpe-water', (req, res) => {
-    res.render('hdpe', { title: 'HDPE Water Pipe — Solanki Pipes' });
+app.get('/hdpe-water', async (req, res) => {
+    try {
+        const product = await Product.findById('hdpe');
+        const products = await Product.find();
+        res.render('hdpe', { title: 'HDPE Water Pipe — Solanki Pipes', product, products });
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.render('hdpe', { title: 'HDPE Water Pipe — Solanki Pipes', product: null, products: [] });
+    }
 });
 
-app.get('/hdpe-sewerage', (req, res) => {
-    res.render('hdpe-sewerage', { title: 'HDPE Sewerage Pipe — Solanki Pipes' });
+app.get('/hdpe-sewerage', async (req, res) => {
+    try {
+        const product = await Product.findById('hdpe');
+        const products = await Product.find();
+        res.render('hdpe', { title: 'HDPE Sewerage Pipe — Solanki Pipes', product, products });
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.render('hdpe', { title: 'HDPE Sewerage Pipe — Solanki Pipes', product: null, products: [] });
+    }
 });
 
-app.get('/dwc-pipe', (req, res) => {
-    res.render('dwc-pipe', { title: 'DWC Pipe — Solanki Pipes' });
+app.get('/dwc-pipe', async (req, res) => {
+    try {
+        const product = await Product.findById('dwc-pipe');
+        const products = await Product.find();
+        res.render('dwc-pipe', { title: 'DWC Pipe — Solanki Pipes', product, products });
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.render('dwc-pipe', { title: 'DWC Pipe — Solanki Pipes', product: null, products: [] });
+    }
 });
 
-app.get('/pvc-pipe', (req, res) => {
-    res.render('pvc-pipe', { title: 'PVC Pipe — Solanki Pipes' });
+app.get('/pvc-pipe', async (req, res) => {
+    try {
+        const product = await Product.findById('pvc-pipe');
+        const products = await Product.find();
+        res.render('pvc-pipe', { title: 'PVC Pipe — Solanki Pipes', product, products });
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.render('pvc-pipe', { title: 'PVC Pipe — Solanki Pipes', product: null, products: [] });
+    }
 });
 
 // Route for the quality page
@@ -463,6 +573,175 @@ app.post('/admin/certifications/delete/:id', async (req, res) => {
     } catch (err) {
         console.error('DB Error:', err);
         res.status(500).send('Failed to delete certification');
+    }
+});
+
+// ==========================================
+// ADMIN PRODUCT ROUTES
+// ==========================================
+
+// Admin: List all products
+app.get('/admin/products', async (req, res) => {
+    try {
+        const products = await Product.find().sort({ createdDate: 1 });
+        res.render('admin-products', { title: 'Admin — Manage Products', products, activeTab: 'products' });
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.render('admin-products', { title: 'Admin — Manage Products', products: [], activeTab: 'products' });
+    }
+});
+
+// Admin: Show add product page
+app.get('/admin/products/add', (req, res) => {
+    res.render('admin-product-form', { title: 'Add New Product', product: null, action: '/admin/products/add', activeTab: 'products' });
+});
+
+// Admin: Show edit product page
+app.get('/admin/products/edit/:id', async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if (!product) return res.status(404).send('Product not found');
+        res.render('admin-product-form', { title: 'Edit Product', product, action: `/admin/products/edit/${product._id}`, activeTab: 'products' });
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Admin: Handle add product POST
+app.post('/admin/products/add', uploadProductImages, async (req, res) => {
+    try {
+        const { name, slug, shortDescription, link, badge } = req.body;
+        const id = slug || name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        
+        const mainImage = req.files && req.files['mainImage'] ? `/images/uploads/${req.files['mainImage'][0].filename}` : '/images/product_01.png';
+        const hoverImage = req.files && req.files['hoverImage'] ? `/images/uploads/${req.files['hoverImage'][0].filename}` : mainImage;
+        const heroImage = req.files && req.files['heroImage'] ? `/images/uploads/${req.files['heroImage'][0].filename}` : '/images/Hdpe_hero.png';
+        const detailImage = req.files && req.files['detailImage'] ? `/images/uploads/${req.files['detailImage'][0].filename}` : '/images/hdpepage.png';
+        const bannerImage = req.files && req.files['bannerImage'] ? `/images/uploads/${req.files['bannerImage'][0].filename}` : '/images/hdpe_02.svg';
+
+        const galleryImages = [
+            req.files && req.files['gallery1'] ? `/images/uploads/${req.files['gallery1'][0].filename}` : '/images/hdpe-gallery-1.jpeg',
+            req.files && req.files['gallery2'] ? `/images/uploads/${req.files['gallery2'][0].filename}` : '/images/hdpe-gallery-2.jpeg',
+            req.files && req.files['gallery3'] ? `/images/uploads/${req.files['gallery3'][0].filename}` : '/images/hdpe-gallery-3.jpeg'
+        ];
+
+        await Product.create({
+            _id: id,
+            name,
+            slug: id,
+            shortDescription,
+            mainImage,
+            hoverImage,
+            heroImage,
+            detailImage,
+            bannerImage,
+            galleryImages,
+            link: link || `/${id}`,
+            badge
+        });
+        res.redirect('/admin/products');
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.status(500).send('Failed to add product: ' + err.message);
+    }
+});
+
+// Admin: Handle edit product POST
+app.post('/admin/products/edit/:id', uploadProductImages, async (req, res) => {
+    try {
+        const { name, slug, shortDescription, link, badge } = req.body;
+        const doc = await Product.findById(req.params.id);
+        if (!doc) return res.status(404).send('Product not found');
+
+        let mainImage = doc.mainImage;
+        let hoverImage = doc.hoverImage;
+        let heroImage = doc.heroImage;
+        let detailImage = doc.detailImage;
+        let bannerImage = doc.bannerImage || '/images/hdpe_02.svg';
+        let galleryImages = doc.galleryImages && doc.galleryImages.length === 3 ? [...doc.galleryImages] : ['/images/hdpe-gallery-1.jpeg', '/images/hdpe-gallery-2.jpeg', '/images/hdpe-gallery-3.jpeg'];
+
+        if (req.files) {
+            if (req.files['mainImage']) mainImage = `/images/uploads/${req.files['mainImage'][0].filename}`;
+            if (req.files['hoverImage']) hoverImage = `/images/uploads/${req.files['hoverImage'][0].filename}`;
+            if (req.files['heroImage']) heroImage = `/images/uploads/${req.files['heroImage'][0].filename}`;
+            if (req.files['detailImage']) detailImage = `/images/uploads/${req.files['detailImage'][0].filename}`;
+            if (req.files['bannerImage']) bannerImage = `/images/uploads/${req.files['bannerImage'][0].filename}`;
+            if (req.files['gallery1']) galleryImages[0] = `/images/uploads/${req.files['gallery1'][0].filename}`;
+            if (req.files['gallery2']) galleryImages[1] = `/images/uploads/${req.files['gallery2'][0].filename}`;
+            if (req.files['gallery3']) galleryImages[2] = `/images/uploads/${req.files['gallery3'][0].filename}`;
+        }
+
+        await Product.findByIdAndUpdate(req.params.id, {
+            name,
+            slug: slug || doc.slug,
+            shortDescription,
+            mainImage,
+            hoverImage,
+            heroImage,
+            detailImage,
+            bannerImage,
+            galleryImages,
+            link: link || `/${req.params.id}`,
+            badge
+        });
+        res.redirect('/admin/products');
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.status(500).send('Failed to update product: ' + err.message);
+    }
+});
+
+// Admin: Handle delete product POST
+app.post('/admin/products/delete/:id', async (req, res) => {
+    try {
+        await Product.findByIdAndDelete(req.params.id);
+        res.redirect('/admin/products');
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.status(500).send('Failed to delete product');
+    }
+});
+
+// ==========================================
+// ADMIN SITE SETTINGS & MEDIA ROUTES
+// ==========================================
+
+// Admin: Show site media settings page
+app.get('/admin/settings', async (req, res) => {
+    try {
+        const settings = await getSiteSettings();
+        res.render('admin-settings', { title: 'Admin — Manage Site Media & Logos', settings, activeTab: 'settings' });
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Admin: Handle site media settings POST
+app.post('/admin/settings', uploadSiteMedia, async (req, res) => {
+    try {
+        let settings = await SiteSetting.findById('default');
+        if (!settings) {
+            settings = new SiteSetting({ _id: 'default' });
+        }
+
+        if (req.files) {
+            if (req.files['headerLogo']) settings.headerLogo = `/images/uploads/${req.files['headerLogo'][0].filename}`;
+            if (req.files['footerLogo']) settings.footerLogo = `/images/uploads/${req.files['footerLogo'][0].filename}`;
+            if (req.files['dhbvnEmpanelment']) settings.dhbvnEmpanelment = `/images/uploads/${req.files['dhbvnEmpanelment'][0].filename}`;
+            if (req.files['qualityBanner']) settings.qualityBanner = `/images/uploads/${req.files['qualityBanner'][0].filename}`;
+            if (req.files['cipetLogo']) settings.cipetLogo = `/images/uploads/${req.files['cipetLogo'][0].filename}`;
+            if (req.files['shriramlabLogo']) settings.shriramlabLogo = `/images/uploads/${req.files['shriramlabLogo'][0].filename}`;
+            if (req.files['collectionBanner']) settings.collectionBanner = `/images/uploads/${req.files['collectionBanner'][0].filename}`;
+            if (req.files['catalogPdf']) settings.catalogPdf = `/images/uploads/${req.files['catalogPdf'][0].filename}`;
+        }
+
+        await settings.save();
+        res.redirect('/admin/settings');
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.status(500).send('Failed to update settings: ' + err.message);
     }
 });
 

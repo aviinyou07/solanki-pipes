@@ -1,0 +1,56 @@
+[
+  {
+    "id": "hdpe",
+    "name": "HDPE PIPES",
+    "slug": "hdpe",
+    "shortDescription": "Solanki Pipes manufactures HDPE Pipes from 20 mm to 1000 mm OD with pressure ratings from PN 2.5 to PN 10, in PE 80 and PE 100 grades.",
+    "mainImage": "/images/product_01.png",
+    "hoverImage": "/images/product_01hover.png",
+    "heroImage": "/images/Hdpe_hero.png",
+    "detailImage": "/images/hdpepage.png",
+    "bannerImage": "/images/hdpe_02.svg",
+    "galleryImages": [
+      "/images/hdpe-gallery-1.jpeg",
+      "/images/hdpe-gallery-2.jpeg",
+      "/images/hdpe-gallery-3.jpeg"
+    ],
+    "link": "/hdpe",
+    "badge": ""
+  },
+  {
+    "id": "dwc-pipe",
+    "name": "DWC PIPE",
+    "slug": "dwc-pipe",
+    "shortDescription": "Double Wall Corrugated (DWC) Pipes designed for robust underground cable protection, sewerage, and drainage networks.",
+    "mainImage": "/images/product_03.png",
+    "hoverImage": "/images/product_03hover.png",
+    "heroImage": "/images/dwc_hero.png",
+    "detailImage": "/images/dwcpage.png",
+    "bannerImage": "/images/hdpe_02.svg",
+    "galleryImages": [
+      "/images/hdpe-gallery-1.jpeg",
+      "/images/hdpe-gallery-2.jpeg",
+      "/images/hdpe-gallery-3.jpeg"
+    ],
+    "link": "/dwc-pipe",
+    "badge": "Coming Soon"
+  },
+  {
+    "id": "pvc-pipe",
+    "name": "PVC PIPE",
+    "slug": "pvc-pipe",
+    "shortDescription": "Durable PVC Pipes designed for efficient agricultural, domestic, and industrial water supply applications.",
+    "mainImage": "/images/product_04hover.png",
+    "hoverImage": "/images/product_04hover.png",
+    "heroImage": "/images/pvc_hero.png",
+    "detailImage": "/images/pvcpage.png",
+    "bannerImage": "/images/hdpe_02.svg",
+    "galleryImages": [
+      "/images/hdpe-gallery-1.jpeg",
+      "/images/hdpe-gallery-2.jpeg",
+      "/images/hdpe-gallery-3.jpeg"
+    ],
+    "link": "/pvc-pipe",
+    "badge": ""
+  }
+]

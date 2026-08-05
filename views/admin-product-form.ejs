@@ -1,0 +1,183 @@
+<%- include('partials/admin-header') %>
+
+<div class="flex-grow p-6 md:p-10 max-w-7xl w-full mx-auto">
+
+    <!-- Page Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <a href="/admin/products" class="text-blue-700 hover:text-blue-900 text-sm font-semibold flex items-center gap-1 mb-3">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                Back to Products
+            </a>
+            <h1 class="text-3xl font-extrabold text-gray-900 uppercase tracking-tight"><%= product ? 'Edit' : 'Add New' %> <span class="text-blue-600">Product</span></h1>
+            <p class="text-gray-500 text-sm mt-1">Upload or change product images and details across the website.</p>
+        </div>
+    </div>
+
+    <!-- Form Card -->
+    <form action="<%= action %>" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-12">
+        <div class="p-6 md:p-8 space-y-8">
+            
+            <!-- Basic Details Section -->
+            <div>
+                <h3 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>General Information</span>
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Name -->
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Product Name *</label>
+                        <input type="text" name="name" required placeholder="e.g. HDPE PIPES" value="<%= product ? product.name : '' %>" class="w-full border border-gray-300 rounded-lg py-2.5 px-3.5 focus:outline-none focus:border-blue-500 text-sm">
+                    </div>
+
+                    <!-- Slug / ID -->
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Slug / ID (URL identifier) *</label>
+                        <input type="text" name="slug" required placeholder="e.g. hdpe, dwc-pipe, pvc-pipe" value="<%= product ? product.slug : '' %>" class="w-full border border-gray-300 rounded-lg py-2.5 px-3.5 focus:outline-none focus:border-blue-500 text-sm font-mono" <%= product ? 'readonly' : '' %>>
+                        <p class="text-[11px] text-gray-400 mt-1">Used for route paths like /hdpe, /dwc-pipe.</p>
+                    </div>
+
+                    <!-- Page Link -->
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Page Link URL</label>
+                        <input type="text" name="link" placeholder="e.g. /hdpe, /dwc-pipe" value="<%= product ? product.link : '' %>" class="w-full border border-gray-300 rounded-lg py-2.5 px-3.5 focus:outline-none focus:border-blue-500 text-sm font-mono">
+                    </div>
+
+                    <!-- Badge Text -->
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Status Badge (Optional)</label>
+                        <input type="text" name="badge" placeholder="e.g. Coming Soon, Best Seller" value="<%= product ? product.badge : '' %>" class="w-full border border-gray-300 rounded-lg py-2.5 px-3.5 focus:outline-none focus:border-blue-500 text-sm">
+                    </div>
+
+                    <!-- Short Description -->
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Short Description</label>
+                        <textarea name="shortDescription" rows="3" placeholder="Brief summary of the product..." class="w-full border border-gray-300 rounded-lg py-2.5 px-3.5 focus:outline-none focus:border-blue-500 text-sm"><%= product ? product.shortDescription : '' %></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Images Section -->
+            <div>
+                <h3 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span>Product Images Management</span>
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- 1. Main Card Image -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <label class="block text-xs font-bold text-gray-800 uppercase mb-1">1. Main Card Image</label>
+                        <p class="text-[11px] text-gray-500 mb-3">Displayed on product cards on the Home page.</p>
+                        <% if (product && product.mainImage) { %>
+                            <div class="mb-3 flex items-center gap-3 bg-white p-2 rounded-lg border border-gray-200">
+                                <img src="<%= product.mainImage %>" alt="Main Image" class="w-16 h-16 object-contain">
+                                <span class="text-xs text-gray-500 truncate font-mono"><%= product.mainImage %></span>
+                            </div>
+                        <% } %>
+                        <input type="file" name="mainImage" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                    </div>
+
+                    <!-- 2. Hover Image -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <label class="block text-xs font-bold text-gray-800 uppercase mb-1">2. Hover Card Image</label>
+                        <p class="text-[11px] text-gray-500 mb-3">Displayed when hovering over product card on Home page.</p>
+                        <% if (product && product.hoverImage) { %>
+                            <div class="mb-3 flex items-center gap-3 bg-white p-2 rounded-lg border border-gray-200">
+                                <img src="<%= product.hoverImage %>" alt="Hover Image" class="w-16 h-16 object-contain">
+                                <span class="text-xs text-gray-500 truncate font-mono"><%= product.hoverImage %></span>
+                            </div>
+                        <% } %>
+                        <input type="file" name="hoverImage" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                    </div>
+
+                    <!-- 3. Hero Image -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <label class="block text-xs font-bold text-gray-800 uppercase mb-1">3. Hero Slider Image</label>
+                        <p class="text-[11px] text-gray-500 mb-3">Displayed on the Home page top hero banner slider.</p>
+                        <% if (product && product.heroImage) { %>
+                            <div class="mb-3 flex items-center gap-3 bg-white p-2 rounded-lg border border-gray-200">
+                                <img src="<%= product.heroImage %>" alt="Hero Image" class="w-16 h-16 object-contain">
+                                <span class="text-xs text-gray-500 truncate font-mono"><%= product.heroImage %></span>
+                            </div>
+                        <% } %>
+                        <input type="file" name="heroImage" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                    </div>
+
+                    <!-- 4. Detail Page Display Image -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <label class="block text-xs font-bold text-gray-800 uppercase mb-1">4. Product Detail Page Display Image</label>
+                        <p class="text-[11px] text-gray-500 mb-3">Displayed on individual product page (e.g. /hdpe, /dwc-pipe).</p>
+                        <% if (product && product.detailImage) { %>
+                            <div class="mb-3 flex items-center gap-3 bg-white p-2 rounded-lg border border-gray-200">
+                                <img src="<%= product.detailImage %>" alt="Detail Image" class="w-16 h-16 object-contain">
+                                <span class="text-xs text-gray-500 truncate font-mono"><%= product.detailImage %></span>
+                            </div>
+                        <% } %>
+                        <input type="file" name="detailImage" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                    </div>
+
+                    <!-- 5. Page Banner Image -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <label class="block text-xs font-bold text-gray-800 uppercase mb-1">5. Product Page Banner Image</label>
+                        <p class="text-[11px] text-gray-500 mb-3">Background image for section banner on detail page.</p>
+                        <% if (product && product.bannerImage) { %>
+                            <div class="mb-3 flex items-center gap-3 bg-white p-2 rounded-lg border border-gray-200">
+                                <img src="<%= product.bannerImage %>" alt="Banner Image" class="w-16 h-16 object-contain">
+                                <span class="text-xs text-gray-500 truncate font-mono"><%= product.bannerImage %></span>
+                            </div>
+                        <% } %>
+                        <input type="file" name="bannerImage" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Product Gallery Images -->
+                <div class="mt-6 pt-6 border-t border-slate-200">
+                    <label class="block text-xs font-bold text-gray-800 uppercase mb-2">6. Product Gallery Images (Up to 3 Photos)</label>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <span class="text-xs font-bold text-gray-600 block mb-2">Gallery Photo #1</span>
+                            <% if (product && product.galleryImages && product.galleryImages[0]) { %>
+                                <div class="mb-2 bg-white p-1 rounded border border-gray-200">
+                                    <img src="<%= product.galleryImages[0] %>" class="h-12 w-auto object-contain">
+                                </div>
+                            <% } %>
+                            <input type="file" name="gallery1" accept="image/*" class="w-full text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-600 file:text-white">
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <span class="text-xs font-bold text-gray-600 block mb-2">Gallery Photo #2</span>
+                            <% if (product && product.galleryImages && product.galleryImages[1]) { %>
+                                <div class="mb-2 bg-white p-1 rounded border border-gray-200">
+                                    <img src="<%= product.galleryImages[1] %>" class="h-12 w-auto object-contain">
+                                </div>
+                            <% } %>
+                            <input type="file" name="gallery2" accept="image/*" class="w-full text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-600 file:text-white">
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <span class="text-xs font-bold text-gray-600 block mb-2">Gallery Photo #3</span>
+                            <% if (product && product.galleryImages && product.galleryImages[2]) { %>
+                                <div class="mb-2 bg-white p-1 rounded border border-gray-200">
+                                    <img src="<%= product.galleryImages[2] %>" class="h-12 w-auto object-contain">
+                                </div>
+                            <% } %>
+                            <input type="file" name="gallery3" accept="image/*" class="w-full text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-600 file:text-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Buttons -->
+            <div class="pt-6 border-t border-gray-100 flex items-center justify-end gap-4">
+                <a href="/admin/products" class="px-5 py-2.5 text-xs font-bold text-gray-600 hover:text-gray-900 border border-gray-300 rounded-lg transition-colors">Cancel</a>
+                <button type="submit" class="px-6 py-2.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span>Save Product Changes</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<%- include('partials/admin-footer') %>
