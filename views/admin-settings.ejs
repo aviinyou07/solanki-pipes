@@ -1,6 +1,6 @@
 <%- include('partials/admin-header') %>
 
-<div class="flex-grow p-6 md:p-10 max-w-5xl w-full mx-auto">
+<div class="p-6">
 
     <!-- Page Header -->
     <div class="flex items-center justify-between mb-8">
@@ -27,10 +27,10 @@
                         <label class="block text-xs font-bold text-gray-800 uppercase mb-1">Header Navbar Logo</label>
                         <p class="text-[11px] text-gray-500 mb-3">Logo displayed in top header navigation and browser favicon.</p>
                         <div class="mb-3 flex items-center gap-3 bg-white p-2 rounded-lg border border-gray-200">
-                            <img src="<%= settings.headerLogo %>" alt="Header Logo" class="h-10 w-auto object-contain">
+                            <img id="preview-headerLogo" src="<%= settings.headerLogo %>" alt="Header Logo" class="h-10 w-auto object-contain">
                             <span class="text-xs text-gray-500 truncate font-mono"><%= settings.headerLogo %></span>
                         </div>
-                        <input type="file" name="headerLogo" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                        <input type="file" name="headerLogo" accept="image/*" onchange="previewImage(this, 'preview-headerLogo')" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
                     </div>
 
                     <!-- Footer Logo -->
@@ -38,10 +38,10 @@
                         <label class="block text-xs font-bold text-gray-800 uppercase mb-1">Footer White Logo</label>
                         <p class="text-[11px] text-gray-500 mb-3">Logo displayed in footer bottom banner.</p>
                         <div class="mb-3 flex items-center gap-3 bg-slate-900 p-2 rounded-lg border border-gray-800">
-                            <img src="<%= settings.footerLogo %>" alt="Footer Logo" class="h-10 w-auto object-contain">
+                            <img id="preview-footerLogo" src="<%= settings.footerLogo %>" alt="Footer Logo" class="h-10 w-auto object-contain">
                             <span class="text-xs text-gray-300 truncate font-mono"><%= settings.footerLogo %></span>
                         </div>
-                        <input type="file" name="footerLogo" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                        <input type="file" name="footerLogo" accept="image/*" onchange="previewImage(this, 'preview-footerLogo')" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
                     </div>
                 </div>
             </div>
@@ -59,10 +59,10 @@
                         <label class="block text-xs font-bold text-gray-800 uppercase mb-1">DHBVN Empanelment Certificate Image</label>
                         <p class="text-[11px] text-gray-500 mb-3">Displayed in DHBVN Empanelment announcement on Home page.</p>
                         <div class="mb-3 flex items-center gap-3 bg-white p-2 rounded-lg border border-gray-200">
-                            <img src="<%= settings.dhbvnEmpanelment %>" alt="DHBVN Certificate" class="h-16 w-auto object-contain">
+                            <img id="preview-dhbvnEmpanelment" src="<%= settings.dhbvnEmpanelment %>" alt="DHBVN Certificate" class="h-16 w-auto object-contain">
                             <span class="text-xs text-gray-500 truncate font-mono"><%= settings.dhbvnEmpanelment %></span>
                         </div>
-                        <input type="file" name="dhbvnEmpanelment" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                        <input type="file" name="dhbvnEmpanelment" accept="image/*" onchange="previewImage(this, 'preview-dhbvnEmpanelment')" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
                     </div>
 
                     <!-- Quality Banner -->
@@ -70,10 +70,10 @@
                         <label class="block text-xs font-bold text-gray-800 uppercase mb-1">Quality Page Testing Lab Banner</label>
                         <p class="text-[11px] text-gray-500 mb-3">Displayed at top of Quality Assurance page (`/quality`).</p>
                         <div class="mb-3 flex items-center gap-3 bg-white p-2 rounded-lg border border-gray-200">
-                            <img src="<%= settings.qualityBanner %>" alt="Quality Lab Banner" class="h-16 w-auto object-contain">
+                            <img id="preview-qualityBanner" src="<%= settings.qualityBanner %>" alt="Quality Lab Banner" class="h-16 w-auto object-contain">
                             <span class="text-xs text-gray-500 truncate font-mono"><%= settings.qualityBanner %></span>
                         </div>
-                        <input type="file" name="qualityBanner" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                        <input type="file" name="qualityBanner" accept="image/*" onchange="previewImage(this, 'preview-qualityBanner')" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
                     </div>
 
                     <!-- CIPET Logo -->
@@ -81,10 +81,10 @@
                         <label class="block text-xs font-bold text-gray-800 uppercase mb-1">CIPET Lab Partner Logo</label>
                         <p class="text-[11px] text-gray-500 mb-3">CIPET logo on Quality page & Project Inspection details.</p>
                         <div class="mb-3 flex items-center gap-3 bg-white p-2 rounded-lg border border-gray-200">
-                            <img src="<%= settings.cipetLogo %>" alt="CIPET Logo" class="h-12 w-auto object-contain">
+                            <img id="preview-cipetLogo" src="<%= settings.cipetLogo %>" alt="CIPET Logo" class="h-12 w-auto object-contain">
                             <span class="text-xs text-gray-500 truncate font-mono"><%= settings.cipetLogo %></span>
                         </div>
-                        <input type="file" name="cipetLogo" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                        <input type="file" name="cipetLogo" accept="image/*" onchange="previewImage(this, 'preview-cipetLogo')" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
                     </div>
 
                     <!-- Shri Ram Lab Logo -->
@@ -92,10 +92,10 @@
                         <label class="block text-xs font-bold text-gray-800 uppercase mb-1">Shri Ram Lab Partner Logo</label>
                         <p class="text-[11px] text-gray-500 mb-3">Shri Ram Lab logo on Quality page & Project Inspection details.</p>
                         <div class="mb-3 flex items-center gap-3 bg-white p-2 rounded-lg border border-gray-200">
-                            <img src="<%= settings.shriramlabLogo %>" alt="Shri Ram Lab Logo" class="h-12 w-auto object-contain">
+                            <img id="preview-shriramlabLogo" src="<%= settings.shriramlabLogo %>" alt="Shri Ram Lab Logo" class="h-12 w-auto object-contain">
                             <span class="text-xs text-gray-500 truncate font-mono"><%= settings.shriramlabLogo %></span>
                         </div>
-                        <input type="file" name="shriramlabLogo" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                        <input type="file" name="shriramlabLogo" accept="image/*" onchange="previewImage(this, 'preview-shriramlabLogo')" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
                     </div>
                 </div>
             </div>
@@ -107,16 +107,18 @@
                     <span>Catalog PDF & Promotional Assets</span>
                 </h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Product Collection Banner -->
                     <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
-                        <label class="block text-xs font-bold text-gray-800 uppercase mb-1">Product Collection Banner</label>
-                        <p class="text-[11px] text-gray-500 mb-3">Displayed near catalog download on Home page.</p>
+                        <label class="block text-xs font-bold text-gray-800 uppercase mb-1">Home Feature Pipe Banner Image (Strong Pipes Section)</label>
+                        <p class="text-[11px] text-gray-500 mb-3">Displayed next to "Strong Pipes For a Stronger Future" & Catalog Download on Home page.</p>
                         <div class="mb-3 flex items-center gap-3 bg-white p-2 rounded-lg border border-gray-200">
-                            <img src="<%= settings.collectionBanner %>" alt="Collection Banner" class="h-16 w-auto object-contain">
-                            <span class="text-xs text-gray-500 truncate font-mono"><%= settings.collectionBanner %></span>
+                            <img id="preview-collectionBanner" src="<%= settings.collectionBanner %>" alt="Collection Banner" class="h-16 w-auto max-w-[120px] object-contain rounded border border-gray-100">
+                            <div class="overflow-hidden">
+                                <span class="text-xs text-gray-600 block truncate font-mono"><%= settings.collectionBanner %></span>
+                                <span class="text-[10px] text-blue-600 font-semibold">Current Image</span>
+                            </div>
                         </div>
-                        <input type="file" name="collectionBanner" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                        <input type="file" name="collectionBanner" accept="image/*" onchange="previewImage(this, 'preview-collectionBanner')" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
                     </div>
 
                     <!-- Catalog PDF -->
@@ -142,5 +144,20 @@
         </div>
     </form>
 </div>
+
+<script>
+function previewImage(input, previewId) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById(previewId);
+            if (preview) {
+                preview.src = e.target.result;
+            }
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 
 <%- include('partials/admin-footer') %>

@@ -1,0 +1,942 @@
+<%- include('partials/header') %>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<div class="font-['Inter',sans-serif] bg-[#f8fafc] text-slate-800 antialiased overflow-hidden pb-16">
+
+    <!-- ========================================== -->
+    <!-- 1. HERO SECTION -->
+    <!-- ========================================== -->
+    <section class="relative w-full bg-gradient-to-b from-[#e0f2fe]/60 via-[#f0f9ff]/40 to-white pt-10 pb-16 px-4 sm:px-8 lg:px-12 border-b border-sky-100/60">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+                
+                <!-- Left Hero Content -->
+                <div class="lg:col-span-6 flex flex-col justify-center text-left" data-aos="fade-right">
+                    
+                    <!-- Tag Header -->
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xs font-black tracking-widest text-[#0284c7] uppercase">SOLANKI SPRINKLER PIPES</span>
+                        <span class="w-10 h-[2px] bg-[#0284c7]"></span>
+                    </div>
+
+                    <!-- Main Title -->
+                    <h1 class="text-3xl sm:text-5xl lg:text-[3.5rem] font-black tracking-tight text-[#0f172a] leading-[1.12] mb-5">
+                        <% if (typeof product !== 'undefined' && product && product.headline) { %>
+                            <%= product.headline %>
+                        <% } else { %>
+                            Efficient Micro-Irrigation <br>
+                            <span class="text-[#0369a1]">for Maximum Crop Yield</span>
+                        <% } %>
+                    </h1>
+
+                    <!-- Subtitle -->
+                    <p class="text-base sm:text-lg text-slate-600 font-normal leading-relaxed mb-8 max-w-xl">
+                        <%= (typeof product !== 'undefined' && product && product.heroSubtitle) ? product.heroSubtitle : 'Solanki HDPE Sprinkler Pipes with Quick-Coupling latch mechanism conform to IS 14151 (Part 1 & 2), delivering high-efficiency irrigation and 40-50% water savings for modern agriculture.' %>
+                    </p>
+
+                    <!-- Key Spec Metric Badges in 1 row -->
+                    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 mb-8">
+                        <div class="flex items-center gap-2 bg-white/90 border border-slate-200/90 rounded-xl p-2.5 shadow-sm">
+                            <div class="w-7 h-7 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                            </div>
+                            <div class="leading-tight">
+                                <div class="text-[11px] font-extrabold text-slate-900">IS 14151 (Pt 1 & 2)</div>
+                                <div class="text-[9px] text-slate-500 font-medium">BIS Standard</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 bg-white/90 border border-slate-200/90 rounded-xl p-2.5 shadow-sm">
+                            <div class="w-7 h-7 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                            </div>
+                            <div class="leading-tight">
+                                <div class="text-[11px] font-extrabold text-slate-900">50 mm – 110 mm</div>
+                                <div class="text-[9px] text-slate-500 font-medium">OD Range</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 bg-white/90 border border-slate-200/90 rounded-xl p-2.5 shadow-sm col-span-2 sm:col-span-1">
+                            <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            </div>
+                            <div class="leading-tight">
+                                <div class="text-[11px] font-extrabold text-slate-900">Quick Coupler</div>
+                                <div class="text-[9px] text-slate-500 font-medium">Tool-Free Joint</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-wrap items-center gap-4">
+                        <a href="#sprinkler-products" class="inline-flex items-center gap-2 bg-[#0284c7] hover:bg-[#0369a1] text-white text-sm font-bold px-7 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5">
+                            <span>Explore Products</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+                        <a href="<%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.catalogPdf) ? siteSettings.catalogPdf : '/images/Catalog Solanki Pipes.pdf' %>" download class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 text-sm font-bold px-6 py-3.5 rounded-xl shadow-sm transition-all duration-200">
+                            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            <span>Download Brochure</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Hero Image -->
+                <div class="lg:col-span-6 relative flex items-center justify-center" data-aos="fade-left">
+                    <!-- Glowing Background -->
+                    <div class="absolute inset-0 bg-gradient-to-tr from-sky-200/50 to-blue-200/30 rounded-3xl blur-2xl -z-10 scale-95"></div>
+
+                    <!-- Sprinkler Pipe Image Stack -->
+                    <div class="w-full flex justify-center">
+                        <img src="<%= (typeof product !== 'undefined' && product && product.detailImage) ? product.detailImage : '/images/solanki_pe.png' %>" alt="<%= (typeof product !== 'undefined' && product && product.name) ? product.name : 'Solanki Sprinkler Pipes' %>" class="w-full max-w-lg h-auto object-contain transform transition-transform duration-700 hover:scale-105 drop-shadow-xl">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 2. MANUFACTURING & ASSEMBLY CAPABILITY SECTION -->
+    <!-- ========================================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-16">
+        
+        <!-- Section Header -->
+        <div class="mb-10 text-left" data-aos="fade-up">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs font-black tracking-widest text-[#0284c7] uppercase">MANUFACTURING & ASSEMBLY CAPABILITY</span>
+                <span class="w-10 h-[2px] bg-[#0284c7]"></span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-3">
+                Advanced Extrusion. Precision Quick-Coupling.
+            </h2>
+            <p class="text-sm sm:text-base text-slate-600 max-w-3xl">
+                Automated HDPE extrusion combined with factory butt-fusion welded couplers for robust, zero-leakage agricultural micro-irrigation systems.
+            </p>
+        </div>
+
+        <!-- 3 Extrusion / Field Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            
+            <!-- Card 1 -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="100">
+                <div class="relative h-48 sm:h-56 w-full overflow-hidden bg-slate-900">
+                    <img src="/images/sp_img1.jpeg" alt="High-Speed HDPE Extrusion" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95">
+                    <div class="absolute bottom-3 left-3 bg-[#0369a1] text-white text-xs font-extrabold px-3 py-1.5 rounded-lg shadow">
+                        Automated Extrusion Lines
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="200">
+                <div class="relative h-48 sm:h-56 w-full overflow-hidden bg-slate-900">
+                    <img src="/images/sp_pipesimg.jpeg" alt="Precision Coupler Fusion" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95">
+                    <div class="absolute bottom-3 left-3 bg-[#0369a1] text-white text-xs font-extrabold px-3 py-1.5 rounded-lg shadow">
+                        Welded Quick-Couplers
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="300">
+                <div class="relative h-48 sm:h-56 w-full overflow-hidden bg-slate-900">
+                    <img src="/images/pipe_deployment.jpeg" alt="Field Deployment & Stacking" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95">
+                    <div class="absolute bottom-3 left-3 bg-[#0369a1] text-white text-xs font-extrabold px-3 py-1.5 rounded-lg shadow">
+                        Field Deployment Ready
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Capability Note Description -->
+        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-4xl mb-8">
+            Automated in-line process control — melt temperature, line speed, wall thickness, and coupler weld integrity are monitored continuously to spec for durable, leak-free performance in demanding farm environments.
+        </p>
+
+        <!-- 3 Feature Highlight Boxes -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="flex items-center gap-4 bg-[#f0f9ff] border border-sky-200/80 rounded-2xl p-5">
+                <div class="w-12 h-12 rounded-xl bg-white text-[#0284c7] flex items-center justify-center shadow-sm shrink-0 border border-sky-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                </div>
+                <div>
+                    <h4 class="text-base font-extrabold text-slate-900">PE63 & PE80 Polymers</h4>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">High UV & stress-crack resistance</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4 bg-[#f0f9ff] border border-sky-200/80 rounded-2xl p-5">
+                <div class="w-12 h-12 rounded-xl bg-white text-[#0284c7] flex items-center justify-center shadow-sm shrink-0 border border-sky-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <div>
+                    <h4 class="text-base font-extrabold text-slate-900">Tool-Free Quick Latch</h4>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Rapid shifting across farm fields</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4 bg-[#f0f9ff] border border-sky-200/80 rounded-2xl p-5">
+                <div class="w-12 h-12 rounded-xl bg-white text-[#0284c7] flex items-center justify-center shadow-sm shrink-0 border border-sky-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <div>
+                    <h4 class="text-base font-extrabold text-slate-900">Zero-Leakage Sealing</h4>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">High-retention EPDM rubber rings</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 3. BIS CERTIFIED SPRINKLER SYSTEMS (IS 14151 Pt 1 vs Pt 2) -->
+    <!-- ========================================== -->
+    <section id="sprinkler-products" class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-16">
+        
+        <!-- Section Header -->
+        <div class="mb-10 text-left" data-aos="fade-up">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs font-black tracking-widest text-[#0284c7] uppercase">BIS CERTIFIED SPRINKLER PIPES</span>
+                <span class="w-10 h-[2px] bg-[#0284c7]"></span>
+            </div>
+            <p class="text-sm sm:text-base text-slate-600 max-w-3xl">
+                Solanki HDPE Sprinkler Systems conform strictly to Indian Standards IS 14151 Part 1 (Pipes) and Part 2 (Quick-Action Couplers).
+            </p>
+        </div>
+
+        <!-- 2 Standard Cards Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Card 1: IS 14151: Part 1 (Sprinkler Pipes) -->
+            <div class="bg-white rounded-3xl border border-slate-200/90 shadow-lg p-6 sm:p-8 flex flex-col justify-between hover:border-sky-300 transition-colors" data-aos="fade-right">
+                <div>
+                    <!-- Header Icon & Title -->
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 rounded-2xl bg-[#0284c7] text-white flex items-center justify-center shadow-md shrink-0">
+                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">IS 14151 (Part 1)</h3>
+                            <p class="text-sm font-bold text-[#0284c7]">HDPE Pipes for Sprinkler Irrigation</p>
+                        </div>
+                    </div>
+
+                    <!-- Main Body Layout: Checkpoints + Pipe Graphic -->
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center mb-8">
+                        <div class="sm:col-span-7 space-y-2.5">
+                            <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                                <svg class="w-4 h-4 text-[#0284c7] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Standard: <strong>IS 14151 : Part 1</strong></span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                                <svg class="w-4 h-4 text-[#0284c7] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Brand: <strong>SOLANKI</strong></span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                                <svg class="w-4 h-4 text-[#0284c7] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Raw Material: <strong>PE63 & PE80 Virgin Resins</strong></span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                                <svg class="w-4 h-4 text-[#0284c7] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Sizes: <strong>50, 63, 75, 90 & 110 mm OD</strong></span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                                <svg class="w-4 h-4 text-[#0284c7] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Pressure Class: <strong>Class 1 to Class 4 (2.5 – 6.0 kg/cm²)</strong></span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                                <svg class="w-4 h-4 text-[#0284c7] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>UV Protection: <strong>Carbon Black formulation for 15+ years</strong></span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                                <svg class="w-4 h-4 text-[#0284c7] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Lengths: <strong>Standard 3m & 6m with couplers</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- Right Pipe Display Image -->
+                        <div class="sm:col-span-5 flex justify-center items-center">
+                            <img src="/images/solanki_pe.png" alt="HDPE Sprinkler Pipe" class="w-full max-w-[200px] h-auto object-contain drop-shadow-md">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Button -->
+                <a href="/contact" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#0284c7] hover:bg-[#0369a1] text-white text-xs font-bold px-6 py-3 rounded-xl transition-colors">
+                    <span>Enquire About Sprinkler Pipes</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+            </div>
+
+            <!-- Card 2: IS 14151: Part 2 (Quick-Action Couplers & Fittings) -->
+            <div class="bg-white rounded-3xl border border-slate-200/90 shadow-lg p-6 sm:p-8 flex flex-col justify-between hover:border-sky-300 transition-colors" data-aos="fade-left">
+                <div>
+                    <!-- Header Icon & Title -->
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 rounded-2xl bg-[#0369a1] text-white flex items-center justify-center shadow-md shrink-0">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">IS 14151 (Part 2)</h3>
+                            <p class="text-sm font-bold text-[#0369a1]">Quick-Action Couplers & Accessories</p>
+                        </div>
+                    </div>
+
+                    <!-- Main Body Layout: Checkpoints + Pipe Graphic -->
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center mb-8">
+                        <div class="sm:col-span-7 space-y-2.5">
+                            <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                                <svg class="w-4 h-4 text-[#0369a1] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Standard: <strong>IS 14151 : Part 2</strong></span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                                <svg class="w-4 h-4 text-[#0369a1] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Fitting Range: <strong>Couplers, Bends, Tees & End Plugs</strong></span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                                <svg class="w-4 h-4 text-[#0369a1] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Latch Type: <strong>Heavy-Duty C-Clamp & Spring Lock</strong></span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                                <svg class="w-4 h-4 text-[#0369a1] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Rubber Gasket: <strong>Flexible EPDM (Zero-Leakage)</strong></span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                                <svg class="w-4 h-4 text-[#0369a1] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Jointing: <strong>Factory Butt-Fusion welded on pipe</strong></span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                                <svg class="w-4 h-4 text-[#0369a1] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Burst Resistance: <strong>Withstands >1.5x working pressure</strong></span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                                <svg class="w-4 h-4 text-[#0369a1] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Nozzle Compatibility: <strong>Standard 3/4" & 1" threaded risers</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- Right Pipe Display Image -->
+                        <div class="sm:col-span-5 flex justify-center items-center">
+                            <img src="/images/collection.png" alt="Sprinkler Couplers & Accessories" class="w-full max-w-[200px] h-auto object-contain drop-shadow-md">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Button -->
+                <a href="/contact" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#0369a1] hover:bg-[#075985] text-white text-xs font-bold px-6 py-3 rounded-xl transition-colors">
+                    <span>View Fittings & Accessories</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 4. OUR QUALITY PROCESS -->
+    <!-- ========================================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-16">
+        
+        <!-- Section Header -->
+        <div class="mb-12 text-left" data-aos="fade-up">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs font-black tracking-widest text-[#0284c7] uppercase">OUR QUALITY PROCESS</span>
+                <span class="w-10 h-[2px] bg-[#0284c7]"></span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-3">
+                Quality at Every Stage
+            </h2>
+            <p class="text-sm sm:text-base text-slate-600 max-w-3xl">
+                Verified virgin polymers, continuous extrusion monitoring, precision coupler butt-fusion, and hydrostatic test batteries.
+            </p>
+        </div>
+
+        <!-- 3 Stages Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start relative">
+            
+            <!-- Stage 01 -->
+            <div class="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 shadow-sm relative hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex items-center justify-between mb-6">
+                    <span class="w-10 h-10 rounded-full bg-sky-100 text-[#0284c7] font-extrabold text-sm flex items-center justify-center">01</span>
+                    <div class="w-12 h-12 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/></svg>
+                    </div>
+                </div>
+                <h4 class="text-lg font-black text-slate-900 mb-2">Raw Material Verification</h4>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                    Tier-1 PE resin (IOCL · GAIL · Reliance) verified for Melt Flow Rate, density & carbon dispersion before extrusion.
+                </p>
+            </div>
+
+            <!-- Stage 02 -->
+            <div class="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 shadow-sm relative hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="200">
+                <div class="flex items-center justify-between mb-6">
+                    <span class="w-10 h-10 rounded-full bg-sky-100 text-[#0284c7] font-extrabold text-sm flex items-center justify-center">02</span>
+                    <div class="w-12 h-12 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    </div>
+                </div>
+                <h4 class="text-lg font-black text-slate-900 mb-2">In-Process & Coupler Welding</h4>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                    Wall thickness, ovality, and robotic coupler fusion weld strength monitored on every single batch by QC engineers.
+                </p>
+            </div>
+
+            <!-- Stage 03 -->
+            <div class="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 shadow-sm relative hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="300">
+                <div class="flex items-center justify-between mb-6">
+                    <span class="w-10 h-10 rounded-full bg-sky-100 text-[#0284c7] font-extrabold text-sm flex items-center justify-center">03</span>
+                    <div class="w-12 h-12 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                    </div>
+                </div>
+                <h4 class="text-lg font-black text-slate-900 mb-2">Laboratory & Pressure Testing</h4>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                    Full IS 14151 test battery on finished pipes and quick couplers — hydrostatic burst, leak testing, and latch pull-out.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 5. IN-HOUSE TESTING LABORATORY (8 TESTS GRID) -->
+    <!-- ========================================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-16">
+        
+        <!-- Section Header -->
+        <div class="mb-10 text-left" data-aos="fade-up">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs font-black tracking-widest text-[#0284c7] uppercase">IN-HOUSE TESTING LABORATORY</span>
+                <span class="w-10 h-[2px] bg-[#0284c7]"></span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-3">
+                Tested for Performance. Proven for Reliability.
+            </h2>
+            <p class="text-sm sm:text-base text-slate-600 max-w-3xl">
+                Comprehensive in-house testing capabilities strictly conforming to IS 14151 Part 1 & Part 2.
+            </p>
+        </div>
+
+        <!-- 8 Test Cards Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3.5">
+            
+            <!-- 1. Hydrostatic Testing -->
+            <div class="bg-white rounded-2xl border border-slate-200/90 p-4 flex flex-col items-center text-center shadow-sm hover:border-sky-300 hover:shadow-md transition-all">
+                <div class="w-10 h-10 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                </div>
+                <h5 class="text-xs font-bold text-slate-900 leading-snug">Hydrostatic Testing (27°C / 65°C)</h5>
+            </div>
+
+            <!-- 2. Coupler Pull-Out -->
+            <div class="bg-white rounded-2xl border border-slate-200/90 p-4 flex flex-col items-center text-center shadow-sm hover:border-sky-300 hover:shadow-md transition-all">
+                <div class="w-10 h-10 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                </div>
+                <h5 class="text-xs font-bold text-slate-900 leading-snug">Coupler Pull-Out Resistance</h5>
+            </div>
+
+            <!-- 3. Dimensions & Ovality -->
+            <div class="bg-white rounded-2xl border border-slate-200/90 p-4 flex flex-col items-center text-center shadow-sm hover:border-sky-300 hover:shadow-md transition-all">
+                <div class="w-10 h-10 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+                </div>
+                <h5 class="text-xs font-bold text-slate-900 leading-snug">Dimensions & Wall Thickness</h5>
+            </div>
+
+            <!-- 4. Tensile & Elongation -->
+            <div class="bg-white rounded-2xl border border-slate-200/90 p-4 flex flex-col items-center text-center shadow-sm hover:border-sky-300 hover:shadow-md transition-all">
+                <div class="w-10 h-10 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <h5 class="text-xs font-bold text-slate-900 leading-snug">Tensile & Elongation</h5>
+            </div>
+
+            <!-- 5. Carbon Black & Dispersion -->
+            <div class="bg-white rounded-2xl border border-slate-200/90 p-4 flex flex-col items-center text-center shadow-sm hover:border-sky-300 hover:shadow-md transition-all">
+                <div class="w-10 h-10 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                </div>
+                <h5 class="text-xs font-bold text-slate-900 leading-snug">Carbon Black & UV Dispersion</h5>
+            </div>
+
+            <!-- 6. Density Testing -->
+            <div class="bg-white rounded-2xl border border-slate-200/90 p-4 flex flex-col items-center text-center shadow-sm hover:border-sky-300 hover:shadow-md transition-all">
+                <div class="w-10 h-10 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>
+                </div>
+                <h5 class="text-xs font-bold text-slate-900 leading-snug">Density Testing</h5>
+            </div>
+
+            <!-- 7. Melt Flow Rate -->
+            <div class="bg-white rounded-2xl border border-slate-200/90 p-4 flex flex-col items-center text-center shadow-sm hover:border-sky-300 hover:shadow-md transition-all">
+                <div class="w-10 h-10 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                </div>
+                <h5 class="text-xs font-bold text-slate-900 leading-snug">Melt Flow Rate (MFR)</h5>
+            </div>
+
+            <!-- 8. Pressure Surge & Joint Leak -->
+            <div class="bg-white rounded-2xl border border-slate-200/90 p-4 flex flex-col items-center text-center shadow-sm hover:border-sky-300 hover:shadow-md transition-all">
+                <div class="w-10 h-10 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <h5 class="text-xs font-bold text-slate-900 leading-snug">Pressure Surge & Leak Test</h5>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 6. TECHNICAL SPECIFICATIONS (IS 14151 TABLE) -->
+    <!-- ========================================== -->
+    <section id="specifications" class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-16">
+        
+        <!-- Section Header -->
+        <div class="mb-10 text-left" data-aos="fade-up">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs font-black tracking-widest text-[#0284c7] uppercase">TECHNICAL SPECIFICATIONS</span>
+                <span class="w-10 h-[2px] bg-[#0284c7]"></span>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-2">
+                        Sprinkler Dimension & Pressure Chart
+                    </h2>
+                    <p class="text-sm sm:text-base text-slate-600">
+                        Quick-Coupled HDPE Sprinkler Pipes conforming to IS 14151 (Part 1 & 2).
+                    </p>
+                </div>
+                <div class="bg-sky-50 text-[#0284c7] font-extrabold text-xs px-4 py-2 rounded-xl border border-sky-200/80 shadow-sm shrink-0">
+                    Standard Length: 3m & 6m with Couplers
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="w-full overflow-x-auto rounded-3xl border border-slate-200/90 shadow-lg bg-white" data-aos="fade-up">
+            <table class="w-full text-sm text-left text-slate-700 border-collapse min-w-[800px]">
+                <thead>
+                    <tr class="bg-gradient-to-r from-[#0284c7] to-[#0369a1] text-white font-extrabold text-center border-b border-sky-800">
+                        <th class="py-4 px-6 border-r border-sky-600/60">Nominal OD (mm)</th>
+                        <th class="py-4 px-6 border-r border-sky-600/60">Pressure Class</th>
+                        <th class="py-4 px-6 border-r border-sky-600/60">Working Pressure (kg/cm²)</th>
+                        <th class="py-4 px-6 border-r border-sky-600/60">Wall Thickness (mm)</th>
+                        <th class="py-4 px-6">Coupling Mechanism</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 font-medium text-center">
+                    <% if (typeof product !== 'undefined' && product && product.specifications && product.specifications.length > 0) { %>
+                        <% product.specifications.forEach(spec => { %>
+                            <tr class="hover:bg-sky-50/50 transition-colors">
+                                <td class="py-4 px-6 font-extrabold text-slate-900 border-r border-slate-100 bg-slate-50/50"><%= spec.size %></td>
+                                <td class="py-4 px-6 border-r border-slate-100"><%= spec.classType || 'Class 1 / Class 2' %></td>
+                                <td class="py-4 px-6 border-r border-slate-100 text-[#0284c7] font-bold"><%= spec.workingPressure || '2.5 - 4.0 kg/cm²' %></td>
+                                <td class="py-4 px-6 border-r border-slate-100 font-mono text-xs font-semibold text-slate-800"><%= spec.wallThickness || '1.80 - 2.80 mm' %></td>
+                                <td class="py-4 px-6 text-emerald-700 font-bold text-xs">C-Clamp / Quick Latch</td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr class="hover:bg-sky-50/50 transition-colors">
+                            <td class="py-4 px-6 font-extrabold text-slate-900 border-r border-slate-100 bg-slate-50/50">50 mm</td>
+                            <td class="py-4 px-6 border-r border-slate-100">Class 1 / Class 2</td>
+                            <td class="py-4 px-6 border-r border-slate-100 text-[#0284c7] font-bold">2.5 – 3.2 kg/cm²</td>
+                            <td class="py-4 px-6 border-r border-slate-100 font-mono text-xs font-semibold text-slate-800">1.50 – 2.00 mm</td>
+                            <td class="py-4 px-6 text-emerald-700 font-bold text-xs">C-Clamp / Quick Latch</td>
+                        </tr>
+                        <tr class="hover:bg-sky-50/50 transition-colors">
+                            <td class="py-4 px-6 font-extrabold text-slate-900 border-r border-slate-100 bg-slate-50/50">63 mm</td>
+                            <td class="py-4 px-6 border-r border-slate-100">Class 1 / Class 2 / Class 3</td>
+                            <td class="py-4 px-6 border-r border-slate-100 text-[#0284c7] font-bold">2.5 – 4.0 kg/cm²</td>
+                            <td class="py-4 px-6 border-r border-slate-100 font-mono text-xs font-semibold text-slate-800">1.80 – 2.80 mm</td>
+                            <td class="py-4 px-6 text-emerald-700 font-bold text-xs">C-Clamp / Quick Latch</td>
+                        </tr>
+                        <tr class="hover:bg-sky-50/50 transition-colors">
+                            <td class="py-4 px-6 font-extrabold text-slate-900 border-r border-slate-100 bg-slate-50/50">75 mm</td>
+                            <td class="py-4 px-6 border-r border-slate-100">Class 1 / Class 2 / Class 3 / Class 4</td>
+                            <td class="py-4 px-6 border-r border-slate-100 text-[#0284c7] font-bold">2.5 – 6.0 kg/cm²</td>
+                            <td class="py-4 px-6 border-r border-slate-100 font-mono text-xs font-semibold text-slate-800">2.10 – 3.70 mm</td>
+                            <td class="py-4 px-6 text-emerald-700 font-bold text-xs">C-Clamp / Quick Latch</td>
+                        </tr>
+                        <tr class="hover:bg-sky-50/50 transition-colors">
+                            <td class="py-4 px-6 font-extrabold text-slate-900 border-r border-slate-100 bg-slate-50/50">90 mm</td>
+                            <td class="py-4 px-6 border-r border-slate-100">Class 1 / Class 2 / Class 3 / Class 4</td>
+                            <td class="py-4 px-6 border-r border-slate-100 text-[#0284c7] font-bold">2.5 – 6.0 kg/cm²</td>
+                            <td class="py-4 px-6 border-r border-slate-100 font-mono text-xs font-semibold text-slate-800">2.60 – 4.50 mm</td>
+                            <td class="py-4 px-6 text-emerald-700 font-bold text-xs">C-Clamp / Quick Latch</td>
+                        </tr>
+                        <tr class="hover:bg-sky-50/50 transition-colors">
+                            <td class="py-4 px-6 font-extrabold text-slate-900 border-r border-slate-100 bg-slate-50/50">110 mm</td>
+                            <td class="py-4 px-6 border-r border-slate-100">Class 1 / Class 2 / Class 3 / Class 4</td>
+                            <td class="py-4 px-6 border-r border-slate-100 text-[#0284c7] font-bold">2.5 – 6.0 kg/cm²</td>
+                            <td class="py-4 px-6 border-r border-slate-100 font-mono text-xs font-semibold text-slate-800">3.20 – 5.50 mm</td>
+                            <td class="py-4 px-6 text-emerald-700 font-bold text-xs">C-Clamp / Quick Latch</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 7. MEDIA & FIELD DEMONSTRATION SECTION -->
+    <!-- ========================================== -->
+    <% if (typeof product !== 'undefined' && product && (product.videoUrl || product.videoFile || product.animationUrl || product.animationFile || product.videoTitle || product.animationTitle)) { %>
+        <section class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-16">
+            
+            <!-- Section Header -->
+            <div class="mb-10 text-left" data-aos="fade-up">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="text-xs font-black tracking-widest text-[#0284c7] uppercase">MEDIA & DEMONSTRATION</span>
+                    <span class="w-10 h-[2px] bg-[#0284c7]"></span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-3">
+                    Sprinkler Technology in Action
+                </h2>
+                <p class="text-sm sm:text-base text-slate-600 max-w-3xl">
+                    Discover seamless field installation, 360° uniform spray coverage, and pressure-sealed quick coupler operations.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                <!-- Video Showcase Card -->
+                <div class="bg-white rounded-3xl border border-slate-200/90 shadow-lg p-6 sm:p-8 flex flex-col justify-between hover:border-sky-300 transition-colors" data-aos="fade-right">
+                    <div class="mb-5">
+                        <div class="inline-flex items-center gap-2 bg-sky-50 text-[#0284c7] border border-sky-200/80 text-[11px] font-extrabold px-3 py-1 rounded-lg uppercase tracking-wider mb-2">
+                            Video Demonstration
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mt-1"><%= product.videoTitle || 'Sprinkler Quick-Lock Assembly & Spray' %></h3>
+                        <p class="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed mt-1.5"><%= product.videoDescription || 'Discover seamless field installation and pressure-sealed quick coupler operations.' %></p>
+                    </div>
+                    
+                    <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-950 shadow-md border border-slate-200 mt-auto">
+                        <% if (product.videoFile) { %>
+                            <video controls class="w-full h-full object-cover">
+                                <source src="<%= product.videoFile %>" type="video/mp4">
+                                Your browser does not support HTML5 video.
+                            </video>
+                        <% } else if (product.videoUrl && product.videoUrl.includes('embed')) { %>
+                            <iframe src="<%= product.videoUrl %>" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <% } else if (product.videoUrl && product.videoUrl.includes('youtube.com/watch')) { %>
+                            <% const videoId = product.videoUrl.split('v=')[1]?.split('&')[0]; %>
+                            <iframe src="https://www.youtube.com/embed/<%= videoId %>" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
+                        <% } else { %>
+                            <div class="w-full h-full flex flex-col items-center justify-center bg-slate-900 p-6 text-center">
+                                <div class="w-14 h-14 rounded-full bg-sky-600/20 border border-sky-400/30 flex items-center justify-center text-sky-300 mb-3 animate-pulse">
+                                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <span class="text-sm font-bold text-white">Demonstration Video Stream</span>
+                                <span class="text-xs text-slate-400 mt-1">Easily manageable from Admin Panel</span>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Animation / Visual Mechanics Card -->
+                <div class="bg-white rounded-3xl border border-slate-200/90 shadow-lg p-6 sm:p-8 flex flex-col justify-between hover:border-sky-300 transition-colors" data-aos="fade-left">
+                    <div class="mb-5">
+                        <div class="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-[11px] font-extrabold px-3 py-1 rounded-lg uppercase tracking-wider mb-2">
+                            Dynamic Showcase
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mt-1"><%= product.animationTitle || 'Coupler Sealing & Rain Simulation' %></h3>
+                        <p class="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed mt-1.5"><%= product.animationSubtitle || 'High-tensile latch and rubber ring preventing any water loss under high pressure.' %></p>
+                    </div>
+
+                    <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 flex items-center justify-center p-4 shadow-md mt-auto">
+                        <% if (product.animationFile) { %>
+                            <img src="<%= product.animationFile %>" alt="Sprinkler Animation" class="max-h-full max-w-full object-contain">
+                        <% } else if (product.animationUrl) { %>
+                            <img src="<%= product.animationUrl %>" alt="Sprinkler Animation" class="max-h-full max-w-full object-contain">
+                        <% } else { %>
+                            <!-- Interactive CSS/SVG Animation Fallback -->
+                            <div class="w-full h-full flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-t from-slate-950 to-slate-900 rounded-xl p-4">
+                                <div class="relative flex items-center justify-center">
+                                    <div class="w-24 h-24 rounded-full border-4 border-sky-400/30 animate-ping absolute"></div>
+                                    <div class="w-20 h-20 rounded-full border-2 border-sky-400/50 animate-pulse absolute"></div>
+                                    <div class="w-16 h-16 rounded-full bg-sky-500/20 flex items-center justify-center text-sky-300 shadow-lg">
+                                        <svg class="w-8 h-8 animate-spin" style="animation-duration: 8s;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="mt-4 text-center">
+                                    <span class="text-xs font-bold text-sky-300 block">360° Uniform Irrigation Spray Flow</span>
+                                    <span class="text-[11px] text-slate-400">Zero-leakage latch locking system</span>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <% } %>
+
+    <!-- ========================================== -->
+    <!-- 8. ABOUT & KEY FEATURES SECTION -->
+    <!-- ========================================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-16">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            
+            <!-- Left About Sprinkler System Column -->
+            <div class="lg:col-span-6 bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-sm" data-aos="fade-right">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="text-xs font-black tracking-widest text-[#0284c7] uppercase">ABOUT SPRINKLER PIPES</span>
+                    <span class="w-10 h-[2px] bg-[#0284c7]"></span>
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mb-4">
+                    <%= (typeof product !== 'undefined' && product && product.aboutTitle) ? product.aboutTitle : 'Precision Agricultural Micro-Irrigation' %>
+                </h3>
+
+                <% if (typeof product !== 'undefined' && product && product.aboutText) { %>
+                    <% product.aboutText.split('\n\n').forEach(para => { %>
+                        <% if (para.trim()) { %>
+                            <p class="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed mb-4"><%= para.trim() %></p>
+                        <% } %>
+                    <% }) %>
+                <% } else { %>
+                    <p class="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed mb-4">
+                        Solanki HDPE Sprinkler Pipes are engineered specifically to cater to agricultural micro-irrigation and water conservation. Manufactured conforming to IS 14151 (Part 1 for Pipes & Part 2 for Quick-Action Couplers), these piping systems provide uniform water dispersion simulating natural rainfall over crops.
+                    </p>
+                    <p class="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed mb-4">
+                        Fitted with high-strength fusion-welded couplers and rugged latch clamps, our sprinkler pipes allow effortless tool-free assembly and dismantling in the field. Farmers can shift complete pipelines from one acre to another in minimal time without specialized tools or labor.
+                    </p>
+                    <p class="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed">
+                        Constructed using premium UV-stabilized High Density Polyethylene, Solanki Sprinkler Pipes withstand prolonged direct sunlight exposure, aggressive weather fluctuations, and high operating pressures without degradation or cracking.
+                    </p>
+                <% } %>
+
+                <!-- Recommended Applications Grid -->
+                <div class="mt-6 pt-6 border-t border-slate-100">
+                    <h4 class="text-xs font-black text-[#0284c7] uppercase tracking-wider mb-3">Key Applications</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <% if (typeof product !== 'undefined' && product && product.applications && product.applications.length > 0) { %>
+                            <% product.applications.forEach(app => { %>
+                                <div class="flex items-center gap-2 bg-slate-50 border border-slate-200/60 px-3 py-2 rounded-xl text-xs font-semibold text-slate-800">
+                                    <svg class="w-3.5 h-3.5 text-[#0284c7] shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    <span><%= app %></span>
+                                </div>
+                            <% }) %>
+                        <% } else { %>
+                            <div class="flex items-center gap-2 bg-slate-50 border border-slate-200/60 px-3 py-2 rounded-xl text-xs font-semibold text-slate-800">
+                                <svg class="w-3.5 h-3.5 text-[#0284c7] shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Wheat, Mustard & Pulse Crops</span>
+                            </div>
+                            <div class="flex items-center gap-2 bg-slate-50 border border-slate-200/60 px-3 py-2 rounded-xl text-xs font-semibold text-slate-800">
+                                <svg class="w-3.5 h-3.5 text-[#0284c7] shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Horticulture & Vegetable Farms</span>
+                            </div>
+                            <div class="flex items-center gap-2 bg-slate-50 border border-slate-200/60 px-3 py-2 rounded-xl text-xs font-semibold text-slate-800">
+                                <svg class="w-3.5 h-3.5 text-[#0284c7] shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Tea, Coffee & Orchards</span>
+                            </div>
+                            <div class="flex items-center gap-2 bg-slate-50 border border-slate-200/60 px-3 py-2 rounded-xl text-xs font-semibold text-slate-800">
+                                <svg class="w-3.5 h-3.5 text-[#0284c7] shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Dust Suppression in Mines</span>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Key Features Grid -->
+            <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4" data-aos="fade-left">
+                <% if (typeof product !== 'undefined' && product && product.features && product.features.length > 0) { %>
+                    <% product.features.forEach(feat => { %>
+                        <div class="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm hover:border-sky-300 hover:shadow-md transition-all">
+                            <div class="w-10 h-10 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center mb-3">
+                                <% if (feat.icon && (feat.icon.startsWith('http') || feat.icon.startsWith('/'))) { %>
+                                    <img src="<%= feat.icon %>" alt="<%= feat.title %>" class="w-6 h-6 object-contain">
+                                <% } else { %>
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <% } %>
+                            </div>
+                            <h4 class="text-sm font-extrabold text-slate-900 mb-1 leading-snug"><%= feat.title %></h4>
+                            <% if (feat.description) { %>
+                                <p class="text-xs text-slate-500 leading-relaxed font-normal"><%= feat.description %></p>
+                            <% } %>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <div class="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm hover:border-sky-300 hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center mb-3">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                        </div>
+                        <h4 class="text-sm font-extrabold text-slate-900 mb-1 leading-snug">IS 14151 Certified</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed font-normal">Manufactured strictly in accordance with BIS standards Part 1 & Part 2.</p>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm hover:border-sky-300 hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center mb-3">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h4 class="text-sm font-extrabold text-slate-900 mb-1 leading-snug">Quick-Action Coupler & Latch</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed font-normal">Rapid tool-free assembly and dismantling in agricultural fields.</p>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm hover:border-sky-300 hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center mb-3">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        </div>
+                        <h4 class="text-sm font-extrabold text-slate-900 mb-1 leading-snug">High UV Stabilization</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed font-normal">Formulated with carbon black additives for prolonged sunlight exposure.</p>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm hover:border-sky-300 hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center mb-3">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                        </div>
+                        <h4 class="text-sm font-extrabold text-slate-900 mb-1 leading-snug">Up to 50% Water Savings</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed font-normal">Prevents soil erosion and water run-off with uniform, simulated rainfall spray.</p>
+                    </div>
+                <% } %>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 9. FIELD GALLERY & CASE SHOWCASE -->
+    <!-- ========================================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-12">
+        <div class="mb-8 text-left" data-aos="fade-up">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs font-black tracking-widest text-[#0284c7] uppercase">FIELD GALLERY</span>
+                <span class="w-10 h-[2px] bg-[#0284c7]"></span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Sprinkler Systems in Field Application</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6" data-aos="fade-up">
+            <div class="h-64 rounded-2xl overflow-hidden shadow-sm border border-slate-200 group">
+                <img src="<%= (typeof product !== 'undefined' && product && product.galleryImages && product.galleryImages[0]) ? product.galleryImages[0] : '/images/WhatsApp Image 2026-02-04 at 10.01.29.jpeg' %>" alt="Sprinkler Field Application" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <div class="h-64 rounded-2xl overflow-hidden shadow-sm border border-slate-200 group">
+                <img src="<%= (typeof product !== 'undefined' && product && product.galleryImages && product.galleryImages[1]) ? product.galleryImages[1] : '/images/197.jpg.jpeg' %>" alt="Farmer Outreach & Demonstration" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <div class="h-64 rounded-2xl overflow-hidden shadow-sm border border-slate-200 group">
+                <img src="<%= (typeof product !== 'undefined' && product && product.galleryImages && product.galleryImages[2]) ? product.galleryImages[2] : '/images/pipe_deployment.jpeg' %>" alt="Pipeline Deployment in Field" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 10. BOTTOM CTA BANNER -->
+    <!-- ========================================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-12">
+        <div class="relative z-10 w-full p-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            <!-- Left White Card -->
+            <div class="lg:col-span-7 bg-white/95 backdrop-blur rounded-3xl p-6 sm:p-10 border border-white/60">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="text-xs font-black tracking-widest text-[#0284c7] uppercase">SOLANKI SPRINKLER PIPES</span>
+                    <span class="w-10 h-[2px] bg-[#0284c7]"></span>
+                </div>
+
+                <h3 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mb-3">
+                    Let's Transform Agricultural Irrigation Together
+                </h3>
+
+                <p class="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed mb-8">
+                    Partner with Solanki Industries for high-efficiency sprinkler piping solutions engineered for water conservation, farmer prosperity, and maximum crop yield.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-3.5">
+                    <a href="/contact" class="inline-flex items-center gap-2 bg-[#0284c7] hover:bg-[#0369a1] text-white text-xs font-bold px-6 py-3 rounded-xl shadow-md transition-all">
+                        <span>Request a Quote</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </a>
+                    <a href="/contact" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 text-xs font-bold px-6 py-3 rounded-xl transition-all">
+                        <span>Contact Us</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Sector List with Icons -->
+            <div class="lg:col-span-5 flex flex-col space-y-4 pl-0 lg:pl-10 text-slate-800">
+                
+                <div class="flex items-center gap-4 bg-white/60 backdrop-blur border border-slate-200/80 px-5 py-3.5 rounded-2xl shadow-sm">
+                    <div class="w-9 h-9 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                    </div>
+                    <span class="text-sm font-black tracking-wider uppercase">AGRICULTURAL CROPS</span>
+                </div>
+
+                <div class="flex items-center gap-4 bg-white/60 backdrop-blur border border-slate-200/80 px-5 py-3.5 rounded-2xl shadow-sm">
+                    <div class="w-9 h-9 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    </div>
+                    <span class="text-sm font-black tracking-wider uppercase">HORTICULTURE & ORCHARDS</span>
+                </div>
+
+                <div class="flex items-center gap-4 bg-white/60 backdrop-blur border border-slate-200/80 px-5 py-3.5 rounded-2xl shadow-sm">
+                    <div class="w-9 h-9 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    </div>
+                    <span class="text-sm font-black tracking-wider uppercase">TEA & COFFEE PLANTATIONS</span>
+                </div>
+
+                <div class="flex items-center gap-4 bg-white/60 backdrop-blur border border-slate-200/80 px-5 py-3.5 rounded-2xl shadow-sm">
+                    <div class="w-9 h-9 rounded-xl bg-sky-50 text-[#0284c7] flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                    </div>
+                    <span class="text-sm font-black tracking-wider uppercase">WATER CONSERVATION</span>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 11. EXPLORE OTHER PRODUCTS -->
+    <!-- ========================================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-12">
+        <h3 class="text-center font-black text-2xl sm:text-3xl mb-8 uppercase text-slate-900 tracking-tight">
+            Explore Other Products
+        </h3>
+        <div class="flex flex-wrap justify-center gap-8 md:gap-12">
+            <% if (typeof products !== 'undefined' && products.length > 0) { %>
+                <% products.filter(p => !product || (p._id !== product._id && p.id !== 'sprinkler' && p._id !== 'sprinkler')).forEach(p => { %>
+                    <a class="group flex flex-col gap-4 items-center justify-center text-center cursor-pointer bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm hover:border-sky-300 hover:shadow-md transition-all w-64"
+                        href="<%= p.link || '/' + p.slug %>">
+                        <img alt="<%= p.name %>" class="w-40 h-28 object-contain transition-transform duration-300 group-hover:scale-105"
+                            src="<%= p.hoverImage || p.mainImage %>">
+                        <p class="text-sm group-hover:text-[#0284c7] font-extrabold text-slate-900 transition-colors uppercase tracking-wide"><%= p.name %></p>
+                    </a>
+                <% }) %>
+            <% } %>
+
+            <a class="group flex flex-col gap-4 items-center justify-center text-center cursor-pointer bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm hover:border-sky-300 hover:shadow-md transition-all w-64" href="/hdpe">
+                <img alt="HDPE Pipes" class="w-40 h-28 object-contain transition-transform duration-300 group-hover:scale-105" src="/images/product_01.png">
+                <p class="text-sm group-hover:text-[#0284c7] font-extrabold text-slate-900 transition-colors uppercase tracking-wide">HDPE PIPES (IS 4984)</p>
+            </a>
+
+            <a class="group flex flex-col gap-4 items-center justify-center text-center cursor-pointer bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm hover:border-sky-300 hover:shadow-md transition-all w-64" href="/">
+                <div class="w-40 h-28 flex items-center justify-center bg-sky-50 rounded-xl group-hover:bg-[#0284c7] transition-colors">
+                    <svg class="w-10 h-10 text-[#0284c7] group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                </div>
+                <p class="text-sm group-hover:text-[#0284c7] font-extrabold text-slate-900 transition-colors uppercase tracking-wide">BACK TO HOME</p>
+            </a>
+        </div>
+    </section>
+
+</div>
+
+<%- include('partials/footer') %>

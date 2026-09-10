@@ -72,9 +72,24 @@
             </a>
         </div>
 
-        <nav class="hidden md:flex items-center space-x-10">
+        <nav class="hidden md:flex items-center space-x-8">
             <a href="/" class="navbar-text hover:text-blue-600 transition-colors">Home</a>
-            <a href="/about" class="navbar-text hover:text-blue-600 transition-colors">About Us</a>
+            
+            <div class="relative group">
+                <a href="/about" class="navbar-text hover:text-blue-600 transition-colors flex items-center">
+                    About Us
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </a>
+
+                <div
+                    class="absolute left-0 mt-2 w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 bg-white shadow-lg rounded-md py-2 border border-gray-100">
+                    <a href="/about" class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-blue-600 font-medium text-xs">Company Overview</a>
+                    <a href="/founder-message" class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-blue-600 font-medium text-xs">Founder's Message</a>
+                </div>
+            </div>
+
 
             <div class="relative group">
                 <button class="navbar-text text-[#38BDF8] hover:text-blue-600 transition-colors flex items-center">
@@ -86,16 +101,9 @@
 
                 <div
                     class="absolute left-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 bg-white shadow-lg rounded-md py-2 border border-gray-100">
-                    <a href="/hdpe" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-blue-600">HDPE
+                    <a href="/hdpe" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-blue-600 font-medium text-xs">HDPE
                         Water Pipe</a>
-
-                    <a href="/dwc-pipe"
-                        class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-blue-600 flex items-center justify-between">
-                        <span>DWC Pipe</span>
-                        <span
-                            class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Soon</span>
-                    </a>
-                    <a href="/pvc-pipe" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-blue-600">PVC
+                    <a href="/sprinkler" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-blue-600 font-medium text-xs">Sprinkler
                         Pipe</a>
                 </div>
             </div>
@@ -130,6 +138,9 @@
             <a href="/about"
                 class="navbar-text text-base py-4 border-b border-gray-100 hover:text-blue-600 transition-colors">About
                 Us</a>
+            <a href="/founder-message"
+                class="navbar-text text-base py-4 border-b border-gray-100 hover:text-blue-600 transition-colors text-blue-800 font-bold">Founder's
+                Message</a>
 
             <div class="border-b border-gray-100">
                 <button id="products-toggle"
@@ -146,14 +157,8 @@
                     <div class="flex flex-col space-y-8 p-4">
                         <a href="/hdpe" class="text-xs font-semibold text-gray-600 hover:text-blue-600">HDPE Water
                             Pipe</a>
-
-                        <a href="/dwc-pipe"
-                            class="text-xs font-semibold text-gray-600 hover:text-blue-600 flex items-center justify-between">
-                            <span>DWC Pipe</span>
-                            <span
-                                class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Soon</span>
-                        </a>
-                        <a href="/pvc-pipe" class="text-xs font-semibold text-gray-600 hover:text-blue-600">PVC Pipe</a>
+                        <a href="/sprinkler" class="text-xs font-semibold text-gray-600 hover:text-blue-600">Sprinkler Pipe</a>
+                    
                     </div>
                 </div>
             </div>

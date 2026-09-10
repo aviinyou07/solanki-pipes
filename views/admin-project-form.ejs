@@ -46,6 +46,11 @@
                                 <p class="text-[10px] text-gray-400 mt-1">Recommended: high quality banner image.</p>
                             <% } %>
                         </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Display Order / Sequence (0 = first)</label>
+                            <input type="number" name="order" min="0" placeholder="0" value="<%= (project && typeof project.order === 'number') ? project.order : '' %>" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 text-sm">
+                            <p class="text-[10px] text-gray-400 mt-1">Lower numbers appear first. You can also drag & drop rows on the main projects page.</p>
+                        </div>
                         <% if (project && project.image) { %>
                         <div>
                             <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Current Image Preview</label>

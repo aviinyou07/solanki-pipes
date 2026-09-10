@@ -1,0 +1,241 @@
+<%- include('partials/header') %>
+
+<%
+    const f = typeof founderData !== 'undefined' && founderData ? founderData : {};
+    const bannerTagline = f.bannerTagline || 'PIPES FOR A STRONGER TOMORROW';
+    const founderName = f.founderName || 'Sachin Solanki';
+    const founderRole = f.founderRole || 'Founder, Solanki Pipes';
+    const founderQuote = f.founderQuote || 'Quality today for a stronger tomorrow.';
+    const founderImage = f.founderImage || '/images/founder_hritik_solanki.jpg';
+    const categoryLabel = f.categoryLabel || 'FOUNDER’S MESSAGE';
+    const headlinePart1 = f.headlinePart1 || 'Building a';
+    const headlinePart2 = f.headlinePart2 || 'Stronger Tomorrow';
+    const cursiveTagline = f.cursiveTagline || 'More than Pipes, We Build Possibilities';
+    const letterGreeting = f.letterGreeting || 'Dear Valued Customers, Partners and Well-wishers,';
+    const letterParagraph1 = f.letterParagraph1 || 'At Solanki Pipes, our journey has always been driven by a simple belief – that quality infrastructure builds a stronger, healthier and brighter tomorrow. Pipes may be unseen, but they play a vital role in every home, every industry and every community. That is why we are committed to delivering durable, reliable and high-performance piping solutions that stand the test of time.';
+    const letterParagraph2 = f.letterParagraph2 || 'Our focus has always been on innovation, uncompromising quality and customer satisfaction. With every product we manufacture, we aim to create value, build trust and contribute to a more sustainable future.';
+    const letterParagraph3 = f.letterParagraph3 || 'I would like to thank our customers, partners and dedicated team members for being an integral part of this journey. Together, we will continue to build stronger foundations for generations to come.';
+    const signoffText = f.signoffText || 'Warm regards,';
+    const signatureName = f.signatureName || 'Sachin Solanki';
+    const signatureRole = f.signatureRole || 'Founder';
+    const signatureCompany = f.signatureCompany || 'Solanki Pipes';
+    const pipeFittingsImage = f.pipeFittingsImage || '/images/pipe_fittings_render.jpg';
+    const galleryImage1 = f.galleryImage1 || '/images/sp_img1.jpeg';
+    const galleryTitle1 = f.galleryTitle1 || 'High-Speed HDPE Extrusion';
+    const gallerySubtitle1 = f.gallerySubtitle1 || 'Advanced Extrusion';
+    const galleryImage2 = f.galleryImage2 || '/images/Quality.jpeg';
+    const galleryTitle2 = f.galleryTitle2 || 'In-House BIS Testing Lab';
+    const gallerySubtitle2 = f.gallerySubtitle2 || 'Quality Control';
+    const galleryImage3 = f.galleryImage3 || '/images/sp_img2.jpeg';
+    const galleryTitle3 = f.galleryTitle3 || 'High-Capacity Inventory Yards';
+    const gallerySubtitle3 = f.gallerySubtitle3 || 'Storage & Dispatch';
+    const galleryImage4 = f.galleryImage4 || '/images/197.jpg.jpeg';
+    const galleryTitle4 = f.galleryTitle4 || 'Agricultural Exhibition & CSR';
+    const gallerySubtitle4 = f.gallerySubtitle4 || 'Farmer Outreach';
+%>
+
+<!-- Google Fonts for Editorial Serif & Script accents -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+<main class="bg-[#FDFBF7] min-h-screen font-sans">
+    
+    <!-- Top Hero Banner (just below navbar) -->
+    <section class="relative  text-white py-12 px-6 md:px-12 overflow-hidden border-b border-blue-800/40">
+        <!-- Background industrial pipe silhouette overlay -->
+        <div class="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-luminosity" style="background-image: url('/images/sp_img3.jpeg');"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-950/90 via-blue-900/85 to-slate-950/90"></div>
+
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6 relative z-10">
+            <!-- Left: Title & Breadcrumbs -->
+            <div>
+                <h1 class="text-3xl md:text-4xl font-serif text-white tracking-wide font-normal" style="font-family: 'Playfair Display', serif;">
+                    Founder’s Message
+                </h1>
+                <nav class="flex items-center space-x-2 text-xs text-blue-200/80 mt-2 font-medium">
+                    <a href="/" class="hover:text-white transition">Home</a>
+                    <span class="text-blue-300/50">›</span>
+                    <a href="/about" class="hover:text-white transition">About Us</a>
+                    <span class="text-blue-300/50">›</span>
+                    <span class="text-[#38BDF8] font-bold">Founder’s Message</span>
+                </nav>
+            </div>
+
+            <!-- Right: Tagline -->
+            <div class="text-left md:text-right">
+                <span class="text-xs md:text-sm uppercase tracking-widest text-blue-100 font-semibold block">
+                    <%= bannerTagline %>
+                </span>
+                <div class="h-0.5 w-20 bg-[#38BDF8] mt-1.5 md:ml-auto"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Founder Section -->
+    <section class="max-w-7xl mx-auto py-12 lg:py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
+            
+            <!-- Left Column: Founder Photo Card with Overlaid Quote -->
+            <div class="lg:col-span-5 relative rounded-2xl overflow-hidden shadow-2xl bg-blue-950 flex flex-col justify-end min-h-[520px] md:min-h-[600px]">
+                <!-- Portrait Image -->
+                <img src="<%= founderImage %>" alt="<%= founderName %> - <%= founderRole %>" class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-102 transition duration-700">
+                
+
+                <!-- Overlaid Quote Box -->
+                <div class="relative z-10 p-6 md:p-8 text-white">
+                    
+                    <h2 class="text-base font-bold text-white tracking-wide"><%= founderName %></h2>
+                    <p class="text-xs text-blue-200 font-medium"><%= founderRole %></p>
+                </div>
+            </div>
+
+            <!-- Right Column: Editorial Letter & Narrative -->
+            <div class="lg:col-span-7 flex flex-col justify-between relative pt-2">
+                
+                <!-- Top Header & Decorative Quote Mark -->
+                <div class="relative">
+                    <!-- Background Giant Decorative Quote Mark -->
+                    <div class="absolute right-0 -top-6 select-none pointer-events-none text-9xl md:text-[130px] font-serif text-blue-100/80 leading-none opacity-80 font-bold z-0" style="font-family: 'Playfair Display', serif;">
+                        ”
+                    </div>
+
+                    <!-- Small Category Label -->
+                    <div class="flex items-center gap-2 mb-3 relative z-10">
+                        <span class="w-6 h-0.5 bg-blue-600"></span>
+                        <span class="text-xs font-bold uppercase tracking-widest text-blue-700"><%= categoryLabel %></span>
+                    </div>
+
+                    <!-- Main Headline & Cursive Note -->
+                    <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 relative z-10 mb-6">
+                        <h2 class="text-2xl md:text-5xl font-black text-gray-900 tracking-tight leading-tight">
+                            <%= headlinePart1 %><br><span class="text-blue-700"><%= headlinePart2 %></span>
+                        </h2>
+                        
+                        <% if (cursiveTagline) { %>
+                        <div class="text-blue-800/60 text-xl md:text-2xl font-normal transform -rotate-6 select-none self-start sm:self-center" style="font-family: 'Caveat', cursive;">
+                            <%= cursiveTagline %>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Letter Body -->
+                <div class="space-y-4 text-gray-700 text-sm md:text-[15px] leading-relaxed relative z-10 font-medium">
+                    <% if (letterGreeting) { %>
+                    <p class="font-bold text-gray-900 text-base">
+                        <%= letterGreeting %>
+                    </p>
+                    <% } %>
+
+                    <% if (letterParagraph1) { %>
+                    <p><%= letterParagraph1 %></p>
+                    <% } %>
+
+                    <% if (letterParagraph2) { %>
+                    <p><%= letterParagraph2 %></p>
+                    <% } %>
+
+                    <% if (letterParagraph3) { %>
+                    <p><%= letterParagraph3 %></p>
+                    <% } %>
+                </div>
+
+                <!-- Sign-off & Product Render Section -->
+                <div class="pt-6 mt-6 border-t border-gray-200 grid grid-cols-1 sm:grid-cols-12 items-end gap-6 relative z-10">
+                    <!-- Left: Signature & Details -->
+                    <div class="sm:col-span-7 space-y-1">
+                        <% if (signoffText) { %>
+                        <p class="text-xs text-gray-600 font-medium"><%= signoffText %></p>
+                        <% } %>
+                        <div class="py-1">
+                            <span class="text-3xl text-blue-950 font-bold tracking-wide select-none" style="font-family: 'Caveat', cursive;">
+                                <%= signatureName %>
+                            </span>
+                        </div>
+                        <h3 class="text-sm font-bold text-gray-900"><%= signatureName %></h3>
+                        <p class="text-xs text-gray-500 font-semibold leading-tight"><%= signatureRole %></p>
+                        <p class="text-xs text-blue-700 font-semibold leading-tight"><%= signatureCompany %></p>
+                    </div>
+
+                    <!-- Right: Pipe Fittings Graphic -->
+                    <% if (pipeFittingsImage) { %>
+                    <div class="sm:col-span-5 flex justify-end">
+                        <img src="<%= pipeFittingsImage %>" alt="Solanki Pipe Fittings" class="w-48 h-auto object-contain drop-shadow-md rounded-xl">
+                    </div>
+                    <% } %>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Factory & Manufacturing Showcase Gallery -->
+    <section class="max-w-7xl mx-auto ">
+        <div class="bg-white border border-gray-200 rounded-3xl p-6 md:p-8 shadow-sm">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 border-b border-gray-100 pb-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="w-4 h-1 bg-blue-600 rounded"></span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-blue-700">Infrastructure & Impact</span>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-black text-gray-900 uppercase">Leadership In Action</h3>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-800 bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200">
+                        <span class="w-2 h-2 rounded-lg bg-blue-600 animate-pulse"></span>
+                        Fatehabad & Bhiwani Facilities
+                    </span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Image 1 -->
+                <div class="group relative rounded-2xl overflow-hidden shadow-sm bg-gray-900 h-56">
+                    <img src="<%= galleryImage1 %>" alt="<%= galleryTitle1 %>" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent"></div>
+                    <div class="absolute bottom-3.5 left-4 right-4 text-white">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-[#38BDF8] block"><%= gallerySubtitle1 %></span>
+                        <h4 class="text-xs font-bold text-white mt-0.5"><%= galleryTitle1 %></h4>
+                    </div>
+                </div>
+
+                <!-- Image 2 -->
+                <div class="group relative rounded-2xl overflow-hidden shadow-sm bg-gray-900 h-56">
+                    <img src="<%= galleryImage2 %>" alt="<%= galleryTitle2 %>" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent"></div>
+                    <div class="absolute bottom-3.5 left-4 right-4 text-white">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-[#38BDF8] block"><%= gallerySubtitle2 %></span>
+                        <h4 class="text-xs font-bold text-white mt-0.5"><%= galleryTitle2 %></h4>
+                    </div>
+                </div>
+
+                <!-- Image 3 -->
+                <div class="group relative rounded-2xl overflow-hidden shadow-sm bg-gray-900 h-56">
+                    <img src="<%= galleryImage3 %>" alt="<%= galleryTitle3 %>" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent"></div>
+                    <div class="absolute bottom-3.5 left-4 right-4 text-white">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-[#38BDF8] block"><%= gallerySubtitle3 %></span>
+                        <h4 class="text-xs font-bold text-white mt-0.5"><%= galleryTitle3 %></h4>
+                    </div>
+                </div>
+
+                <!-- Image 4 -->
+                <div class="group relative rounded-2xl overflow-hidden shadow-sm bg-gray-900 h-56">
+                    <img src="<%= galleryImage4 %>" alt="<%= galleryTitle4 %>" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent"></div>
+                    <div class="absolute bottom-3.5 left-4 right-4 text-white">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-[#38BDF8] block"><%= gallerySubtitle4 %></span>
+                        <h4 class="text-xs font-bold text-white mt-0.5"><%= galleryTitle4 %></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+ 
+
+</main>
+
+<%- include('partials/footer') %>

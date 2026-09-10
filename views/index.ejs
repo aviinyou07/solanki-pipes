@@ -56,13 +56,10 @@
         <div class="relative w-full h-full flex items-center justify-center">
           <img id="hero-img-0" src="<%= (typeof products !== 'undefined' && products[0]) ? products[0].heroImage : '/images/Hdpe_hero.png' %>"
             class="absolute max-h-[100%] max-w-[100%] object-contain transition-all duration-700 ease-in-out opacity-100 scale-100 z-10 drop-shadow-2xl"
-            alt="<%= (typeof products !== 'undefined' && products[0]) ? products[0].name : 'Product 1' %>">
-          <img id="hero-img-1" src="<%= (typeof products !== 'undefined' && products[1]) ? products[1].heroImage : '/images/dwc_hero.png' %>"
+            alt="<%= (typeof products !== 'undefined' && products[0]) ? products[0].name : 'HDPE Pipes' %>">
+          <img id="hero-img-1" src="<%= (typeof products !== 'undefined' && products[1]) ? products[1].heroImage : '/images/solanki_hdpe_pipes.png' %>"
             class="absolute max-h-[100%] max-w-[100%] object-contain transition-all duration-700 ease-in-out opacity-0 scale-95 z-0 pointer-events-none drop-shadow-2xl"
-            alt="<%= (typeof products !== 'undefined' && products[1]) ? products[1].name : 'Product 2' %>">
-          <img id="hero-img-2" src="<%= (typeof products !== 'undefined' && products[2]) ? products[2].heroImage : '/images/pvc_hero.png' %>"
-            class="absolute max-h-[100%] max-w-[100%] object-contain transition-all duration-700 ease-in-out opacity-0 scale-95 z-0 pointer-events-none drop-shadow-2xl"
-            alt="<%= (typeof products !== 'undefined' && products[2]) ? products[2].name : 'Product 3' %>">
+            alt="<%= (typeof products !== 'undefined' && products[1]) ? products[1].name : 'Sprinkler Pipes' %>">
         </div>
 
         <!-- Image indicators -->
@@ -71,8 +68,6 @@
           <button onclick="setHeroImage(0)" id="hero-dot-0"
             class="w-8 h-2.5 rounded-full bg-blue-600 transition-all duration-300 hover:bg-blue-700 focus:outline-none"></button>
           <button onclick="setHeroImage(1)" id="hero-dot-1"
-            class="w-2.5 h-2.5 rounded-full bg-gray-300 transition-all duration-300 hover:bg-gray-400 focus:outline-none"></button>
-          <button onclick="setHeroImage(2)" id="hero-dot-2"
             class="w-2.5 h-2.5 rounded-full bg-gray-300 transition-all duration-300 hover:bg-gray-400 focus:outline-none"></button>
         </div>
       </div>
@@ -127,27 +122,13 @@
           <div class="flex-none w-64 md:w-72 snap-center group" data-aos="zoom-in" data-aos-delay="200">
             <div
               class="flex flex-col items-center border border-jacksonsPurple p-6 rounded-3xl transition-all hover:bg-jacksonsPurple relative">
-              <h4 class="text-lg md:text-xl font-semibold mb-4 text-center"> DWC PIPE</h4>
+              <h4 class="text-lg md:text-xl font-semibold mb-4 text-center">SPRINKLER PIPES</h4>
               <div class="mb-6 h-40 flex items-center justify-center">
-                <img src="/images/product_03.png" alt="MDPE Water" class="group-hover:hidden max-h-full w-auto">
-                <img src="/images/product_03hover.png" alt="MDPE Water Hover"
-                  class="hidden group-hover:block max-h-full w-auto">
+                <img src="/images/lift_irrigation.jpeg" alt="Sprinkler Pipes" class="group-hover:hidden max-h-full w-auto object-contain">
+                <img src="/images/sp_pipesimg.jpeg" alt="Sprinkler Pipes Hover"
+                  class="hidden group-hover:block max-h-full w-auto object-contain">
               </div>
-              <a href="/dwc-pipe"
-                class="text-xs py-1 px-4 border border-black group-hover:border-white rounded-md transition-colors">more</a>
-            </div>
-          </div>
-
-          <div class="flex-none w-64 md:w-72 snap-center group" data-aos="zoom-in" data-aos-delay="300">
-            <div
-              class="flex flex-col items-center border border-jacksonsPurple p-6 rounded-3xl transition-all hover:bg-jacksonsPurple relative">
-              <h4 class="text-lg md:text-xl font-semibold mb-4 text-center">PVC PIPE</h4>
-              <div class="mb-6 h-40 flex items-center justify-center">
-                <img src="/images/product_04hover.png" alt="MDPE Gas" class="group-hover:hidden max-h-full w-auto">
-                <img src="/images/product_04hover.png" alt="MDPE Gas Hover"
-                  class="hidden group-hover:block max-h-full w-auto">
-              </div>
-              <a href="/pvc-pipe"
+              <a href="/sprinkler"
                 class="text-xs py-1 px-4 border border-black group-hover:border-white rounded-md transition-colors">more</a>
             </div>
           </div>
@@ -715,8 +696,8 @@
             </h2>
 
             <p class="mt-6 text-lg text-gray-600 leading-relaxed max-w-xl">
-              High-quality PVC pipes engineered for durability, strength, and long-lasting
-              performance in residential, commercial, and industrial applications.
+              High-quality HDPE & Sprinkler piping solutions engineered for durability, strength, and long-lasting
+              performance in potable water, micro-irrigation, and infrastructure applications.
             </p>
 
             <!-- Features -->
@@ -850,7 +831,7 @@
     <%- include('partials/footer') %>
       <script>
         let currentHeroImage = 0;
-        const totalHeroImages = 3;
+        const totalHeroImages = 2;
         let heroInterval;
 
         const heroData = [
@@ -860,14 +841,9 @@
             description: "20+ Years of Manufacturing Excellence. Supplying high-quality PE 80 & PE 100 grades, PN 2.5 to PN 10 for a robust tomorrow."
           },
           {
-            badge: "Unmatched Quality",
-            title: "Advanced DWC Pipes for Reliable <br class=\"hidden lg:block\" />\n<span class=\"text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-cyan-500\">Underground Drainage</span>",
-            description: "Engineered for superior load-bearing capacity and long life. The perfect solution for city sewage and industrial effluent disposal."
-          },
-          {
-            badge: "Innovation & Durability",
-            title: "High-Performance PVC Pipes for <br class=\"hidden lg:block\" />\n<span class=\"text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-cyan-500\">Every Application</span>",
-            description: "From plumbing to agriculture, our PVC pipes offer unmatched strength, leak resistance, and eco-friendly performance."
+            badge: "Agricultural Innovation",
+            title: "Quick-Coupler Sprinkler Pipes for <br class=\"hidden lg:block\" />\n<span class=\"text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-cyan-500\">Efficient Micro-Irrigation</span>",
+            description: "IS 14151 certified sprinkler piping systems with quick-locking couplers, delivering up to 50% water savings and higher crop yields."
           }
         ];
 

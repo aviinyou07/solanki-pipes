@@ -1,0 +1,300 @@
+<%- include('partials/admin-header') %>
+
+<div class="p-6">
+
+    <!-- Page Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+            <div class="flex items-center gap-2 mb-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Executive Content Manager</span>
+            </div>
+            <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Founder's <span class="text-blue-600">Message</span></h1>
+            <p class="text-slate-500 text-sm mt-1">Edit all text, founder portrait, letter paragraphs, credentials, and gallery images on the public page.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="/founder-message" target="_blank" class="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition shadow-sm">
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                <span>Preview Public Page</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Edit Form -->
+    <form action="/admin/founder-message" method="POST" enctype="multipart/form-data" class="space-y-8 mb-16">
+        
+        <!-- Section 1: Hero Banner & Tagline -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8 space-y-6">
+            <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 uppercase tracking-wide">1. Top Hero Banner</h3>
+                    <p class="text-xs text-slate-500">Settings for the banner directly below the navigation bar.</p>
+                </div>
+                <span class="px-2.5 py-1 bg-blue-50 text-blue-700 text-[11px] font-bold rounded-md">Banner</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Right Banner Tagline</label>
+                    <input type="text" name="bannerTagline" value="<%= data.bannerTagline %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" placeholder="e.g. PIPES FOR A STRONGER TOMORROW">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Section Category Tag</label>
+                    <input type="text" name="categoryLabel" value="<%= data.categoryLabel %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" placeholder="e.g. FOUNDER’S MESSAGE">
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Founder Profile & Photo -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8 space-y-6">
+            <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 uppercase tracking-wide">2. Founder Profile & Portrait</h3>
+                    <p class="text-xs text-slate-500">Founder's name, designation, quote overlay, and photograph.</p>
+                </div>
+                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[11px] font-bold rounded-md">Profile</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Left: Photo Upload & Preview -->
+                <div class="lg:col-span-4 bg-slate-50 p-5 rounded-2xl border border-slate-200 text-center">
+                    <label class="block text-xs font-bold text-slate-800 uppercase mb-3">Founder Portrait Image</label>
+                    <div class="relative w-44 h-56 mx-auto rounded-xl overflow-hidden shadow-md bg-slate-900 border border-slate-300 mb-4">
+                        <img src="<%= data.founderImage %>" alt="Current Founder Portrait" class="w-full h-full object-cover object-top">
+                    </div>
+                    <p class="text-[11px] text-slate-500 mb-3 truncate font-mono"><%= data.founderImage %></p>
+                    <input type="file" name="founderImage" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                </div>
+
+                <!-- Right: Profile Fields -->
+                <div class="lg:col-span-8 space-y-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Founder Full Name</label>
+                            <input type="text" name="founderName" value="<%= data.founderName %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Founder Designation / Title</label>
+                            <input type="text" name="founderRole" value="<%= data.founderRole %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Overlaid Quote on Portrait</label>
+                        <textarea name="founderQuote" rows="3" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition"><%= data.founderQuote %></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Main Editorial Letter -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8 space-y-6">
+            <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 uppercase tracking-wide">3. Editorial Letter & Content</h3>
+                    <p class="text-xs text-slate-500">Headline, cursive slogan, salutation, and letter body paragraphs.</p>
+                </div>
+                <span class="px-2.5 py-1 bg-amber-50 text-amber-700 text-[11px] font-bold rounded-md">Letter</span>
+            </div>
+
+            <!-- Headline Row -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Headline (Dark Text)</label>
+                    <input type="text" name="headlinePart1" value="<%= data.headlinePart1 %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" placeholder="e.g. Building a">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Headline (Blue Accent Text)</label>
+                    <input type="text" name="headlinePart2" value="<%= data.headlinePart2 %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" placeholder="e.g. Stronger Tomorrow">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Cursive Handwritten Slogan</label>
+                    <input type="text" name="cursiveTagline" value="<%= data.cursiveTagline %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" placeholder="e.g. More than Pipes, We Build Possibilities">
+                </div>
+            </div>
+
+            <!-- Salutation / Greeting -->
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Letter Salutation / Greeting</label>
+                <input type="text" name="letterGreeting" value="<%= data.letterGreeting %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition">
+            </div>
+
+            <!-- Paragraph 1 -->
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Paragraph 1 (The Core Vision & Purpose)</label>
+                <textarea name="letterParagraph1" rows="4" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition"><%= data.letterParagraph1 %></textarea>
+            </div>
+
+            <!-- Paragraph 2 -->
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Paragraph 2 (Quality, Innovation & Trust)</label>
+                <textarea name="letterParagraph2" rows="3" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition"><%= data.letterParagraph2 %></textarea>
+            </div>
+
+            <!-- Paragraph 3 -->
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Paragraph 3 (Gratitude & Looking Ahead)</label>
+                <textarea name="letterParagraph3" rows="3" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition"><%= data.letterParagraph3 %></textarea>
+            </div>
+        </div>
+
+        <!-- Section 4: Sign-off & Pipe Fittings Image -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8 space-y-6">
+            <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 uppercase tracking-wide">4. Sign-off & Signature</h3>
+                    <p class="text-xs text-slate-500">Sign-off text, signature details, and bottom-right product render.</p>
+                </div>
+                <span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 text-[11px] font-bold rounded-md">Sign-off</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Left: Signature Details -->
+                <div class="lg:col-span-8 space-y-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Sign-off Greeting</label>
+                            <input type="text" name="signoffText" value="<%= data.signoffText %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" placeholder="e.g. Warm regards,">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Signature Full Name</label>
+                            <input type="text" name="signatureName" value="<%= data.signatureName %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" placeholder="e.g. Sachin Solanki">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Signature Designation</label>
+                            <input type="text" name="signatureRole" value="<%= data.signatureRole %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" placeholder="e.g. Founder">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Signature Company Name</label>
+                            <input type="text" name="signatureCompany" value="<%= data.signatureCompany %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" placeholder="e.g. Solanki Pipes">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Pipe Fittings Graphic Upload -->
+                <div class="lg:col-span-4 bg-slate-50 p-5 rounded-2xl border border-slate-200 text-center">
+                    <label class="block text-xs font-bold text-slate-800 uppercase mb-3">Pipe Fittings Graphic</label>
+                    <div class="relative w-40 h-28 mx-auto rounded-xl overflow-hidden shadow-sm bg-white border border-slate-300 p-2 mb-3">
+                        <img src="<%= data.pipeFittingsImage %>" alt="Current Pipe Fittings" class="w-full h-full object-contain">
+                    </div>
+                    <p class="text-[11px] text-slate-500 mb-3 truncate font-mono"><%= data.pipeFittingsImage %></p>
+                    <input type="file" name="pipeFittingsImage" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Manufacturing Showcase Gallery -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8 space-y-6">
+            <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 uppercase tracking-wide">5. Manufacturing Showcase Gallery (4 Cards)</h3>
+                    <p class="text-xs text-slate-500">Photos, subtitles, and captions for the showcase gallery strip.</p>
+                </div>
+                <span class="px-2.5 py-1 bg-purple-50 text-purple-700 text-[11px] font-bold rounded-md">Gallery</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Gallery Item 1 -->
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
+                    <span class="text-xs font-bold text-blue-700 uppercase tracking-wider block">Gallery Card 1</span>
+                    <div class="flex items-center gap-4">
+                        <img src="<%= data.galleryImage1 %>" class="w-20 h-16 object-cover rounded-lg border border-slate-300">
+                        <div class="flex-grow">
+                            <input type="file" name="galleryImage1" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Subtitle</label>
+                        <input type="text" name="gallerySubtitle1" value="<%= data.gallerySubtitle1 %>" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Title</label>
+                        <input type="text" name="galleryTitle1" value="<%= data.galleryTitle1 %>" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium">
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
+                    <span class="text-xs font-bold text-blue-700 uppercase tracking-wider block">Gallery Card 2</span>
+                    <div class="flex items-center gap-4">
+                        <img src="<%= data.galleryImage2 %>" class="w-20 h-16 object-cover rounded-lg border border-slate-300">
+                        <div class="flex-grow">
+                            <input type="file" name="galleryImage2" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Subtitle</label>
+                        <input type="text" name="gallerySubtitle2" value="<%= data.gallerySubtitle2 %>" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Title</label>
+                        <input type="text" name="galleryTitle2" value="<%= data.galleryTitle2 %>" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium">
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
+                    <span class="text-xs font-bold text-blue-700 uppercase tracking-wider block">Gallery Card 3</span>
+                    <div class="flex items-center gap-4">
+                        <img src="<%= data.galleryImage3 %>" class="w-20 h-16 object-cover rounded-lg border border-slate-300">
+                        <div class="flex-grow">
+                            <input type="file" name="galleryImage3" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Subtitle</label>
+                        <input type="text" name="gallerySubtitle3" value="<%= data.gallerySubtitle3 %>" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Title</label>
+                        <input type="text" name="galleryTitle3" value="<%= data.galleryTitle3 %>" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium">
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4 -->
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
+                    <span class="text-xs font-bold text-blue-700 uppercase tracking-wider block">Gallery Card 4</span>
+                    <div class="flex items-center gap-4">
+                        <img src="<%= data.galleryImage4 %>" class="w-20 h-16 object-cover rounded-lg border border-slate-300">
+                        <div class="flex-grow">
+                            <input type="file" name="galleryImage4" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Subtitle</label>
+                        <input type="text" name="gallerySubtitle4" value="<%= data.gallerySubtitle4 %>" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Title</label>
+                        <input type="text" name="galleryTitle4" value="<%= data.galleryTitle4 %>" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Submit Button Bar -->
+        <div class="sticky bottom-6 z-30 bg-slate-900/90 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-2xl border border-slate-700 flex items-center justify-between">
+            <div class="hidden sm:block">
+                <p class="text-xs font-bold text-white">Ready to apply changes?</p>
+                <p class="text-[11px] text-slate-400">Updates will immediately reflect on the public Founder's Message page.</p>
+            </div>
+            <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+                <a href="/admin/founder-message" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-xl transition">
+                    Discard
+                </a>
+                <button type="submit" class="px-7 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition shadow-lg shadow-blue-600/30 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span>Save Changes</span>
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+<%- include('partials/admin-footer') %>

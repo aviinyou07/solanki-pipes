@@ -6,9 +6,9 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
             <h1 class="text-3xl font-extrabold text-gray-900 uppercase tracking-tight">Manage <span class="text-blue-600">Projects</span></h1>
-            <p class="text-gray-500 text-sm mt-1">Manage project case studies and portfolio items displayed on the main website.</p>
+            <p class="text-gray-500 text-sm mt-1">Manage project case studies and easily rearrange the display sequence shown on the website.</p>
         </div>
-        <div>
+        <div class="flex items-center gap-3">
             <a href="/admin/projects/add" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-5 rounded-lg shadow-md transition flex items-center gap-2 text-sm">
                 <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
@@ -18,41 +18,84 @@
         </div>
     </div>
 
+    <!-- Reorder Status Notification Toast -->
+    <div id="reorderToast" class="hidden fixed bottom-6 right-6 z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 transition-all transform duration-300">
+        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        <span id="toastMessage">Project sequence updated successfully</span>
+    </div>
+
     <!-- Projects Table / List -->
     <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-12">
-        <div class="p-6 border-b border-gray-200">
-            <h2 class="text-xl font-bold text-gray-800">Current Projects</h2>
+        <div class="p-6 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+                <h2 class="text-xl font-bold text-gray-800">Current Projects</h2>
+                <p class="text-xs text-gray-400 mt-0.5">Drag rows using the handle or use the ▲ / ▼ buttons to set project sequence.</p>
+            </div>
+            <% if (projects && projects.length > 1) { %>
+                <div class="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-blue-100">
+                    <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+                    <span>Drag & Drop / Quick Reorder Enabled</span>
+                </div>
+            <% } %>
         </div>
         
         <% if (projects && projects.length > 0) { %>
-            <!-- Desktop Table view -->
+            <!-- Desktop Table view with Drag and Drop -->
             <div class="hidden md:block overflow-x-auto">
-                <table class="w-full text-left border-collapse">
+                <table class="w-full text-left border-collapse" id="projectsTable">
                     <thead>
                         <tr class="bg-gray-50 text-xs font-bold uppercase tracking-wider text-gray-500 border-b border-gray-200">
-                            <th class="p-4 pl-6">Image</th>
+                            <th class="p-4 pl-6 w-28 text-center">Sequence</th>
+                            <th class="p-4 w-24">Image</th>
                             <th class="p-4">Title</th>
                             <th class="p-4">Category</th>
                             <th class="p-4">Location</th>
                             <th class="p-4">Date</th>
-                            <th class="p-4 pr-6 text-right">Actions</th>
+                            <th class="p-4 pr-6 text-right w-44">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100 text-sm text-gray-700">
-                        <% projects.forEach(project => { %>
-                            <tr class="hover:bg-gray-50/50 transition-colors">
-                                <td class="p-4 pl-6">
-                                    <img src="<%= project.image %>" alt="<%= project.title %>" class="w-16 h-10 object-cover rounded-lg border border-gray-100">
+                    <tbody class="divide-y divide-gray-100 text-sm text-gray-700" id="sortableProjectBody">
+                        <% projects.forEach((project, index) => { %>
+                            <tr class="hover:bg-blue-50/30 transition-colors group cursor-move project-row" draggable="true" data-id="<%= project.id %>">
+                                <!-- Sequence Number & Quick Move Buttons -->
+                                <td class="p-4 pl-6 text-center">
+                                    <div class="flex items-center justify-center gap-1.5">
+                                        <!-- Grip icon -->
+                                        <span class="text-gray-300 group-hover:text-blue-500 transition-colors select-none" title="Drag to reorder">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M7 2a2 2 0 100 4 2 2 0 000-4zm6 0a2 2 0 100 4 2 2 0 000-4zM7 8a2 2 0 100 4 2 2 0 000-4zm6 0a2 2 0 100 4 2 2 0 000-4zM7 14a2 2 0 100 4 2 2 0 000-4zm6 0a2 2 0 100 4 2 2 0 000-4z"></path>
+                                            </svg>
+                                        </span>
+                                        
+                                        <!-- Order Badge -->
+                                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-gray-100 group-hover:bg-blue-100 text-gray-700 group-hover:text-blue-700 font-extrabold text-xs transition-colors order-badge">
+                                            #<%= index + 1 %>
+                                        </span>
+
+                                        <!-- Quick Up/Down buttons -->
+                                        <div class="flex flex-col gap-0.5 ml-1">
+                                            <button type="button" onclick="moveProject('<%= project.id %>', 'up')" <%= index === 0 ? 'disabled' : '' %> class="p-1 rounded text-gray-400 hover:text-blue-600 hover:bg-blue-50 disabled:opacity-20 disabled:hover:bg-transparent disabled:hover:text-gray-400 transition" title="Move Up">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+                                            </button>
+                                            <button type="button" onclick="moveProject('<%= project.id %>', 'down')" <%= index === projects.length - 1 ? 'disabled' : '' %> class="p-1 rounded text-gray-400 hover:text-blue-600 hover:bg-blue-50 disabled:opacity-20 disabled:hover:bg-transparent disabled:hover:text-gray-400 transition" title="Move Down">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td class="p-4 font-bold text-gray-900 max-w-xs truncate"><%= project.title %></td>
+
+                                <td class="p-4">
+                                    <img src="<%= project.image %>" alt="<%= project.title %>" class="w-16 h-10 object-cover rounded-lg border border-gray-100 shadow-sm">
+                                </td>
+                                <td class="p-4 font-bold text-gray-900 max-w-xs truncate" title="<%= project.title %>"><%= project.title %></td>
                                 <td class="p-4">
                                     <span class="bg-blue-50 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-md"><%= project.category %></span>
                                 </td>
                                 <td class="p-4 text-gray-500"><%= project.location || 'N/A' %></td>
                                 <td class="p-4 text-gray-400 font-medium"><%= project.createdDate || 'N/A' %></td>
                                 <td class="p-4 pr-6 text-right">
-                                    <div class="flex items-center justify-end gap-3">
-                                        <a href="/projects/<%= project.id %>" target="_blank" class="text-blue-600 hover:text-blue-800 font-semibold text-xs">View Page</a>
+                                    <div class="flex items-center justify-end gap-2.5">
+                                        <a href="/projects/<%= project.id %>" target="_blank" class="text-blue-600 hover:text-blue-800 font-semibold text-xs">View</a>
                                         <a href="/admin/projects/edit/<%= project.id %>" class="text-amber-600 hover:text-amber-800 font-semibold text-xs border border-amber-200 hover:border-amber-300 rounded px-2.5 py-1 transition-colors">Edit</a>
                                         <form action="/admin/projects/delete/<%= project.id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this project?');" class="inline">
                                             <button type="submit" class="text-rose-600 hover:text-rose-800 font-semibold text-xs border border-rose-200 hover:border-rose-300 rounded px-2.5 py-1 transition-colors">Delete</button>
@@ -65,11 +108,26 @@
                 </table>
             </div>
 
-            <!-- Mobile/Tablet Grid view -->
-            <div class="md:hidden p-4 space-y-4 bg-slate-50/30">
+            <!-- Mobile/Tablet Grid view with Reordering Controls -->
+            <div class="md:hidden p-4 space-y-4 bg-slate-50/30" id="mobileProjectList">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <% projects.forEach(project => { %>
-                        <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm space-y-3 hover:border-blue-200 transition-colors">
+                    <% projects.forEach((project, index) => { %>
+                        <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm space-y-3 hover:border-blue-200 transition-colors relative" data-id="<%= project.id %>">
+                            <!-- Mobile Header with Sequence Badge and Up/Down buttons -->
+                            <div class="flex items-center justify-between pb-2 border-b border-gray-100">
+                                <span class="inline-flex items-center gap-1 text-xs font-extrabold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md">
+                                    Sequence #<%= index + 1 %>
+                                </span>
+                                <div class="flex items-center gap-1">
+                                    <button type="button" onclick="moveProject('<%= project.id %>', 'up')" <%= index === 0 ? 'disabled' : '' %> class="p-1.5 rounded-lg border border-gray-200 text-gray-500 hover:text-blue-600 hover:bg-blue-50 disabled:opacity-20 transition" title="Move Up">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+                                    </button>
+                                    <button type="button" onclick="moveProject('<%= project.id %>', 'down')" <%= index === projects.length - 1 ? 'disabled' : '' %> class="p-1.5 rounded-lg border border-gray-200 text-gray-500 hover:text-blue-600 hover:bg-blue-50 disabled:opacity-20 transition" title="Move Down">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+
                             <div class="flex items-center gap-3">
                                 <img src="<%= project.image %>" alt="<%= project.title %>" class="w-16 h-12 object-cover rounded-lg border border-gray-100 shrink-0">
                                 <div class="min-w-0">
@@ -77,6 +135,7 @@
                                     <h3 class="font-bold text-gray-900 text-sm truncate" title="<%= project.title %>"><%= project.title %></h3>
                                 </div>
                             </div>
+
                             <div class="grid grid-cols-2 gap-2 text-xs text-gray-500 border-t border-b border-gray-50 py-2">
                                 <div>
                                     <span class="block text-[10px] text-gray-400 font-bold uppercase tracking-wider">Location</span>
@@ -87,6 +146,7 @@
                                     <span class="font-medium text-gray-700 truncate block"><%= project.createdDate || 'N/A' %></span>
                                 </div>
                             </div>
+
                             <div class="flex items-center justify-between pt-1">
                                 <a href="/projects/<%= project.id %>" target="_blank" class="text-blue-600 hover:text-blue-800 font-bold text-xs inline-flex items-center gap-0.5">
                                     <span>View Page</span>
@@ -113,5 +173,105 @@
     </div>
 
 </div>
+
+<!-- Client-side Interactive Drag & Drop and Sequence Manager -->
+<script>
+    function showToast(message) {
+        const toast = document.getElementById('reorderToast');
+        const toastMsg = document.getElementById('toastMessage');
+        if (toast && toastMsg) {
+            toastMsg.textContent = message || 'Sequence updated successfully';
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2500);
+        }
+    }
+
+    async function moveProject(id, direction) {
+        try {
+            const response = await fetch(`/admin/projects/move/${id}/${direction}`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                showToast('Sequence updated');
+                setTimeout(() => window.location.reload(), 400);
+            } else {
+                window.location.reload();
+            }
+        } catch (err) {
+            console.error('Error moving project:', err);
+            window.location.reload();
+        }
+    }
+
+    // Drag and drop table sorting
+    document.addEventListener('DOMContentLoaded', () => {
+        const tbody = document.getElementById('sortableProjectBody');
+        if (!tbody) return;
+
+        let draggedRow = null;
+
+        tbody.addEventListener('dragstart', (e) => {
+            draggedRow = e.target.closest('tr');
+            if (draggedRow) {
+                e.dataTransfer.effectAllowed = 'move';
+                draggedRow.classList.add('opacity-40', 'bg-blue-100/50');
+            }
+        });
+
+        tbody.addEventListener('dragend', async (e) => {
+            if (draggedRow) {
+                draggedRow.classList.remove('opacity-40', 'bg-blue-100/50');
+                draggedRow = null;
+            }
+
+            // Remove drag-over classes
+            document.querySelectorAll('#sortableProjectBody tr').forEach(r => {
+                r.classList.remove('border-t-2', 'border-blue-500');
+            });
+
+            // Collect new project sequence
+            const rows = Array.from(tbody.querySelectorAll('tr[data-id]'));
+            const projectIds = rows.map(r => r.getAttribute('data-id'));
+
+            // Update badge numbers immediately in UI
+            rows.forEach((row, idx) => {
+                const badge = row.querySelector('.order-badge');
+                if (badge) badge.textContent = '#' + (idx + 1);
+            });
+
+            // Send batch reorder to server
+            try {
+                const res = await fetch('/admin/projects/reorder', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ projectIds })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Project sequence updated successfully');
+                }
+            } catch (err) {
+                console.error('Failed to save project reorder:', err);
+            }
+        });
+
+        tbody.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            const targetRow = e.target.closest('tr');
+            if (targetRow && targetRow !== draggedRow) {
+                const rect = targetRow.getBoundingClientRect();
+                const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
+                tbody.insertBefore(draggedRow, next ? targetRow.nextSibling : targetRow);
+            }
+        });
+    });
+</script>
 
 <%- include('partials/admin-footer') %>

@@ -2,44 +2,57 @@
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
 
         <!-- Company Logo & Description -->
-        <div class="md:col-span-2">
+        <div class="md:col-span-1 lg:col-span-1">
             <div class="flex flex-col items-start">
-
                 <!-- Logo -->
                 <img src="<%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.footerLogo) ? siteSettings.footerLogo : '/images/SOLANKI-PIPES-LOGO-WHITE.png' %>" alt="Solanki Pipes Logo" class="w-40">
 
                 <!-- Short Description -->
-                <p class="text-white leading-relaxed max-w-md mt-4">
+                <p class="text-white leading-relaxed text-xs mt-4">
                     Solanki Pipes is a trusted manufacturer of high-quality piping solutions,
-                    delivering durability, sustainability, and performance for residential,
-                    agricultural, and commercial applications across India.
+                    delivering durability, sustainability, and performance across India.
                 </p>
-                <p class="text-white font-bold mt-2">
+                <p class="text-white font-bold text-xs mt-2">
                     BIS-Licensed HDPE Pipe Manufacturer — IS 4984:2016
                 </p>
-
             </div>
         </div>
 
+        <!-- Quick Links -->
         <div>
-            <h4 class="text-brand-red font-bold uppercase tracking-wider mb-6">Connect With Us</h4>
-            <div class="space-y-4">
-                <p class="flex items-center gap-3">
+            <h4 class="text-brand-red font-bold uppercase tracking-wider mb-4 text-xs">Quick Links</h4>
+            <ul class="space-y-2 text-xs">
+                <li><a href="/about" class="hover:text-gray-300 transition">About Company</a></li>
+                <li><a href="/founder-message" class="hover:text-cyan-300 font-semibold text-cyan-200 transition">Founder's Message</a></li>
+                <li><a href="/hdpe" class="hover:text-gray-300 transition">HDPE Water Pipes</a></li>
+                <li><a href="/sprinkler" class="hover:text-gray-300 transition">Sprinkler Pipes (IS 14151)</a></li>
+                <li><a href="/quality" class="hover:text-gray-300 transition">Quality Assurance</a></li>
+                <li><a href="/projects" class="hover:text-gray-300 transition">Projects & Portfolio</a></li>
+                <li><a href="/farmers-fair" class="hover:text-gray-300 transition">Farmers' Fair Initiative</a></li>
+                <li><a href="/vendor-empanelment" class="hover:text-gray-300 transition">Vendor Empanelment</a></li>
+                <li><a href="/contact" class="hover:text-gray-300 transition">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 class="text-brand-red font-bold uppercase tracking-wider mb-4 text-xs">Connect With Us</h4>
+            <div class="space-y-3 text-xs">
+                <p class="flex items-center gap-2">
                     <span class="text-white">📞</span>
                     <a href="tel:+919992177822" class="hover:text-gray-300">99921-77822</a> |
                     <a href="tel:+919466458070" class="hover:text-gray-300">94664-58070</a>
                 </p>
 
-                <p class="flex items-center gap-3">
+                <p class="flex items-center gap-2">
                     <span class="text-white">✉️</span>
                     <a href="mailto:sales@solankipipes.com" class="hover:text-gray-300">sales@solankipipes.com</a>
                 </p>
-                <p class="mt-4 leading-relaxed">
+                <p class="leading-relaxed">
                     <strong>Head Office:</strong><br>
                     Solanki Industries, Fatehabad Road, Mehuwala,<br>
                     Fatehabad, Haryana 125053
                 </p>
-                <p class="mt-4 leading-relaxed">
+                <p class="leading-relaxed">
                     <strong>Manufacturing Unit:</strong><br>
                     Khasra No. 115//2/2, Sarsa Ghoghra,<br>
                     Bhiwani, Haryana 127021
@@ -48,9 +61,9 @@
         </div>
 
         <div>
-            <h4 class="text-brand-red font-bold uppercase tracking-wider mb-6">Locate Us</h4>
+            <h4 class="text-brand-red font-bold uppercase tracking-wider mb-4 text-xs">Locate Us</h4>
             <div class="rounded overflow-hidden grayscale contrast-125 opacity-80 hover:opacity-100 transition">
-                <iframe class="w-full h-48" src="
+                <iframe class="w-full h-44" src="
                     https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3475.5347553083116!2d75.34592017552977!3d29.413163275247534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39115f6f5d254d11%3A0x44194b9d5e33a1!2sSolanki%20HDPE%20Pipes%2020mm-1000m!5e0!3m2!1sen!2sin!4v1779205348530!5m2!1sen!2sin"
                     style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
@@ -58,7 +71,7 @@
     </div>
 
     <div
-        class="max-w-6xl mx-auto mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest">
+        class="max-w-6xl mx-auto mt-10 pt-6 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest">
         <p>Copyright © <%= new Date().getFullYear() %> Solanki Industries. All rights reserved.</p>
         <div class="flex gap-4 mt-4 md:mt-0">
             <a href="/privacy" class="hover:text-white">Privacy Policy</a>
