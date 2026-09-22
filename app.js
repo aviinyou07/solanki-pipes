@@ -148,6 +148,7 @@ async function getFounderMessage() {
         if (!doc) {
             doc = await FounderMessage.create({ _id: 'default', ...defaultFounderMessage });
         }
+        return doc;
     } catch (err) {
         console.error('Error fetching FounderMessage:', err);
         return defaultFounderMessage;
@@ -393,7 +394,7 @@ app.get('/about', (req, res) => {
 app.get('/founder-message', async (req, res) => {
     try {
         const founderData = await getFounderMessage();
-        res.render('founder-message', { title: "Founder's Message — Solanki Industries", founderData });
+        res.render('founder-message', { title: "Founder's Message — Solanki Industries", founderData: founderData || defaultFounderMessage });
     } catch (err) {
         console.error('Error loading founder message:', err);
         res.render('founder-message', { title: "Founder's Message — Solanki Industries", founderData: defaultFounderMessage });
@@ -1119,7 +1120,7 @@ app.get('/admin/founder-message', async (req, res) => {
         const founderData = await getFounderMessage();
         res.render('admin-founder-message', { 
             title: 'Admin — Manage Founder Message', 
-            data: founderData, 
+            data: founderData || defaultFounderMessage, 
             activeTab: 'founder-message' 
         });
     } catch (err) {
