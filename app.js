@@ -26,21 +26,40 @@ mongoose.connection.once('open', async () => {
     }
 
     try {
-        const productsFilePath = path.join(__dirname, 'data', 'products.json');
-        if (fs.existsSync(productsFilePath)) {
-            const rawProducts = fs.readFileSync(productsFilePath, 'utf8');
-            const productsData = JSON.parse(rawProducts);
-            
-            // Clean up obsolete products (dwc-pipe, pvc-pipe)
-            await Product.deleteMany({ _id: { $in: ['dwc-pipe', 'pvc-pipe'] } });
+        // Clean up obsolete products (dwc-pipe, pvc-pipe)
+        await Product.deleteMany({ _id: { $in: ['dwc-pipe', 'pvc-pipe'] } });
 
-            for (const p of productsData) {
-                const id = p.id || p._id;
-                const doc = { ...p, _id: id };
-                delete doc.id;
-                await Product.findByIdAndUpdate(id, doc, { upsert: true, new: true, setDefaultsOnInsert: true });
+        // Normalize any legacy SPRINKLER uppercase document to lowercase
+        const upperSprinkler = await Product.findById('SPRINKLER');
+        const lowerSprinkler = await Product.findById('sprinkler');
+        if (upperSprinkler && !lowerSprinkler) {
+            const sprinklerObj = upperSprinkler.toObject();
+            delete sprinklerObj.__v;
+            sprinklerObj._id = 'sprinkler';
+            sprinklerObj.slug = 'sprinkler';
+            sprinklerObj.link = '/sprinkler';
+            await Product.create(sprinklerObj);
+            await Product.findByIdAndDelete('SPRINKLER');
+            console.log('Normalized SPRINKLER id to lowercase sprinkler');
+        } else if (upperSprinkler && lowerSprinkler) {
+            await Product.findByIdAndDelete('SPRINKLER');
+        }
+
+        const productCount = await Product.countDocuments();
+        if (productCount === 0) {
+            const productsFilePath = path.join(__dirname, 'data', 'products.json');
+            if (fs.existsSync(productsFilePath)) {
+                const rawProducts = fs.readFileSync(productsFilePath, 'utf8');
+                const productsData = JSON.parse(rawProducts);
+
+                for (const p of productsData) {
+                    const id = (p.id || p._id).toLowerCase();
+                    const doc = { ...p, _id: id, slug: (p.slug || id).toLowerCase() };
+                    delete doc.id;
+                    await Product.create(doc);
+                }
+                console.log('Successfully auto-seeded initial products (HDPE and Sprinkler)');
             }
-            console.log('Successfully synced and seeded products (HDPE and Sprinkler)');
         }
     } catch (err) {
         console.error('Product seed error:', err.message);
@@ -162,7 +181,10 @@ function getDefaultProducts() {
         if (fs.existsSync(productsFilePath)) {
             const rawProducts = fs.readFileSync(productsFilePath, 'utf8');
             const data = JSON.parse(rawProducts);
-            return data.map(p => ({ ...p, _id: p.id || p._id }));
+            return data.map(p => {
+                const pid = (p.id || p._id || '').toLowerCase();
+                return { ...p, _id: pid, id: pid, slug: (p.slug || pid).toLowerCase() };
+            });
         }
     } catch (e) {
         console.error('Error reading default products.json:', e);
@@ -170,35 +192,76 @@ function getDefaultProducts() {
     return [];
 }
 
-async function getProductsData() {
-    if (mongoose.connection.readyState !== 1) {
-        return getDefaultProducts();
-    }
+// Helper: Synchronize product updates to data/products.json for persistent fallback
+function syncProductToFile(productData) {
     try {
-        const docs = await Product.find().maxTimeMS(2500);
-        if (docs && docs.length > 0) return docs;
-        return getDefaultProducts();
-    } catch (err) {
-        console.error('Error fetching Products from DB:', err.message);
-        return getDefaultProducts();
+        const productsFilePath = path.join(__dirname, 'data', 'products.json');
+        let products = [];
+        if (fs.existsSync(productsFilePath)) {
+            products = JSON.parse(fs.readFileSync(productsFilePath, 'utf8'));
+        }
+        const id = (productData._id || productData.id || productData.slug || '').toString().toLowerCase();
+        if (!id) return;
+
+        const cleanProduct = { ...productData };
+        cleanProduct.id = id;
+        cleanProduct._id = id;
+        cleanProduct.slug = (cleanProduct.slug || id).toString().toLowerCase();
+        delete cleanProduct.__v;
+
+        const index = products.findIndex(p => (p.id || p._id || '').toString().toLowerCase() === id);
+        if (index >= 0) {
+            products[index] = { ...products[index], ...cleanProduct };
+        } else {
+            products.push(cleanProduct);
+        }
+        fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 2), 'utf8');
+    } catch (e) {
+        console.error('Error syncing product to file:', e.message);
     }
 }
 
+async function getProductsData() {
+    if (mongoose.connection.readyState === 1) {
+        try {
+            const docs = await Product.find().sort({ createdDate: 1 }).maxTimeMS(2500);
+            if (docs && docs.length > 0) return docs;
+        } catch (err) {
+            console.error('Error fetching Products from DB:', err.message);
+        }
+    }
+    return getDefaultProducts();
+}
+
 async function getProductById(id) {
-    if (mongoose.connection.readyState !== 1) {
-        const defaults = getDefaultProducts();
-        return defaults.find(p => p._id === id || p.slug === id) || null;
+    if (!id) return null;
+    const lowerId = id.toString().toLowerCase();
+    const upperId = id.toString().toUpperCase();
+
+    if (mongoose.connection.readyState === 1) {
+        try {
+            const doc = await Product.findOne({
+                $or: [
+                    { _id: id },
+                    { _id: lowerId },
+                    { _id: upperId },
+                    { slug: id },
+                    { slug: lowerId },
+                    { slug: upperId }
+                ]
+            }).maxTimeMS(2500);
+            if (doc) return doc;
+        } catch (err) {
+            console.error(`Error fetching Product ${id} from DB:`, err.message);
+        }
     }
-    try {
-        const doc = await Product.findById(id).maxTimeMS(2500);
-        if (doc) return doc;
-        const defaults = getDefaultProducts();
-        return defaults.find(p => p._id === id || p.slug === id) || null;
-    } catch (err) {
-        console.error(`Error fetching Product ${id} from DB:`, err.message);
-        const defaults = getDefaultProducts();
-        return defaults.find(p => p._id === id || p.slug === id) || null;
-    }
+
+    const defaults = getDefaultProducts();
+    return defaults.find(p => {
+        const pId = (p._id || p.id || '').toString().toLowerCase();
+        const pSlug = (p.slug || '').toString().toLowerCase();
+        return pId === lowerId || pSlug === lowerId;
+    }) || null;
 }
 
 // Configure multer storage for file uploads
@@ -446,6 +509,22 @@ app.get('/dwc-pipe', (req, res) => {
 
 app.get('/pvc-pipe', (req, res) => {
     res.redirect('/hdpe');
+});
+
+// Generic product route for any product by slug or id
+app.get(['/product/:id', '/products/:id'], async (req, res, next) => {
+    try {
+        const product = await getProductById(req.params.id);
+        if (!product) return next();
+        const products = await getProductsData();
+        const slug = (product.slug || product._id || '').toLowerCase();
+        if (slug.includes('sprinkler')) {
+            return res.render('sprinkler', { title: `${product.name} — Solanki Pipes`, product, products });
+        }
+        return res.render('hdpe', { title: `${product.name} — Solanki Pipes`, product, products });
+    } catch (err) {
+        next();
+    }
 });
 
 // Route for the quality page
@@ -905,7 +984,7 @@ app.post('/admin/products/add', uploadProductImages, async (req, res) => {
             link,
             badge
         } = req.body;
-        const id = slug || name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        const id = (slug || name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')).toLowerCase();
         
         const mainImage = req.files && req.files['mainImage'] ? `/images/uploads/${req.files['mainImage'][0].filename}` : '/images/product_01.png';
         const hoverImage = req.files && req.files['hoverImage'] ? `/images/uploads/${req.files['hoverImage'][0].filename}` : mainImage;
@@ -924,7 +1003,7 @@ app.post('/admin/products/add', uploadProductImages, async (req, res) => {
 
         const { features, specifications, applications } = parseProductFormArrays(req.body);
 
-        await Product.create({
+        const newProduct = {
             _id: id,
             name,
             slug: id,
@@ -957,7 +1036,12 @@ app.post('/admin/products/add', uploadProductImages, async (req, res) => {
             applications,
             link: link || `/${id}`,
             badge: badge || ''
-        });
+        };
+
+        if (mongoose.connection.readyState === 1) {
+            await Product.create(newProduct);
+        }
+        syncProductToFile(newProduct);
         res.redirect('/admin/products');
     } catch (err) {
         console.error('DB Error:', err);
@@ -968,6 +1052,9 @@ app.post('/admin/products/add', uploadProductImages, async (req, res) => {
 // Admin: Handle edit product POST
 app.post('/admin/products/edit/:id', uploadProductImages, async (req, res) => {
     try {
+        const productId = req.params.id;
+        const lowerId = productId.toString().toLowerCase();
+
         const {
             name,
             slug,
@@ -990,7 +1077,28 @@ app.post('/admin/products/edit/:id', uploadProductImages, async (req, res) => {
             link,
             badge
         } = req.body;
-        const doc = await Product.findById(req.params.id);
+
+        let doc = null;
+        if (mongoose.connection.readyState === 1) {
+            doc = await Product.findOne({
+                $or: [
+                    { _id: productId },
+                    { _id: lowerId },
+                    { _id: productId.toString().toUpperCase() },
+                    { slug: productId },
+                    { slug: lowerId }
+                ]
+            });
+        }
+        if (!doc) {
+            const defaults = getDefaultProducts();
+            const foundDefault = defaults.find(p => (p._id || p.id || '').toLowerCase() === lowerId);
+            if (foundDefault && mongoose.connection.readyState === 1) {
+                doc = await Product.create({ ...foundDefault, _id: lowerId, slug: foundDefault.slug || lowerId });
+            } else if (foundDefault) {
+                doc = foundDefault;
+            }
+        }
         if (!doc) return res.status(404).send('Product not found');
 
         let mainImage = doc.mainImage;
@@ -1000,7 +1108,10 @@ app.post('/admin/products/edit/:id', uploadProductImages, async (req, res) => {
         let bannerImage = doc.bannerImage || '/images/hdpe_02.svg';
         let videoFile = doc.videoFile || '';
         let animationFile = doc.animationFile || '';
-        let galleryImages = doc.galleryImages && doc.galleryImages.length === 3 ? [...doc.galleryImages] : ['/images/hdpe-gallery-1.jpeg', '/images/hdpe-gallery-2.jpeg', '/images/hdpe-gallery-3.jpeg'];
+        let galleryImages = (doc.galleryImages && Array.isArray(doc.galleryImages)) ? [...doc.galleryImages] : ['/images/hdpe-gallery-1.jpeg', '/images/hdpe-gallery-2.jpeg', '/images/hdpe-gallery-3.jpeg'];
+        while (galleryImages.length < 3) {
+            galleryImages.push('/images/hdpe-gallery-1.jpeg');
+        }
 
         if (req.files) {
             if (req.files['mainImage']) mainImage = `/images/uploads/${req.files['mainImage'][0].filename}`;
@@ -1017,9 +1128,9 @@ app.post('/admin/products/edit/:id', uploadProductImages, async (req, res) => {
 
         const { features, specifications, applications } = parseProductFormArrays(req.body);
 
-        await Product.findByIdAndUpdate(req.params.id, {
+        const updatePayload = {
             name,
-            slug: slug || doc.slug,
+            slug: (slug || doc.slug || lowerId).toLowerCase(),
             tagline: tagline !== undefined ? tagline : doc.tagline,
             headline: headline !== undefined ? headline : doc.headline,
             heroSubtitle: heroSubtitle !== undefined ? heroSubtitle : doc.heroSubtitle,
@@ -1044,12 +1155,20 @@ app.post('/admin/products/edit/:id', uploadProductImages, async (req, res) => {
             animationFile,
             animationTitle: animationTitle !== undefined ? animationTitle : doc.animationTitle,
             animationSubtitle: animationSubtitle !== undefined ? animationSubtitle : doc.animationSubtitle,
-            features: features.length > 0 ? features : (doc.features || []),
-            specifications: specifications.length > 0 ? specifications : (doc.specifications || []),
-            applications: applications.length > 0 ? applications : (doc.applications || []),
-            link: link || `/${req.params.id}`,
+            features: (features && features.length > 0) ? features : (doc.features || []),
+            specifications: (specifications && specifications.length > 0) ? specifications : (doc.specifications || []),
+            applications: (applications && applications.length > 0) ? applications : (doc.applications || []),
+            link: link || `/${lowerId}`,
             badge: badge !== undefined ? badge : doc.badge
-        });
+        };
+
+        if (mongoose.connection.readyState === 1 && doc._id) {
+            await Product.findByIdAndUpdate(doc._id, updatePayload, { new: true });
+        }
+
+        // Also sync update to data/products.json for persistent fallback
+        syncProductToFile({ ...updatePayload, _id: doc._id || lowerId });
+
         res.redirect('/admin/products');
     } catch (err) {
         console.error('DB Error:', err);
@@ -1060,11 +1179,25 @@ app.post('/admin/products/edit/:id', uploadProductImages, async (req, res) => {
 // Admin: Handle delete product POST
 app.post('/admin/products/delete/:id', async (req, res) => {
     try {
-        await Product.findByIdAndDelete(req.params.id);
+        const lowerId = req.params.id.toLowerCase();
+        if (mongoose.connection.readyState === 1) {
+            await Product.deleteMany({
+                $or: [{ _id: req.params.id }, { _id: lowerId }, { _id: req.params.id.toUpperCase() }, { slug: lowerId }]
+            });
+        }
+        try {
+            const productsFilePath = path.join(__dirname, 'data', 'products.json');
+            if (fs.existsSync(productsFilePath)) {
+                let products = JSON.parse(fs.readFileSync(productsFilePath, 'utf8'));
+                products = products.filter(p => (p.id || p._id || '').toLowerCase() !== lowerId);
+                fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 2), 'utf8');
+            }
+        } catch (e) {
+            console.error('Error removing product from json:', e.message);
+        }
         res.redirect('/admin/products');
     } catch (err) {
         console.error('DB Error:', err);
-        res.status(500).send('Failed to delete product');
     }
 });
 

@@ -35,7 +35,7 @@
                     <!-- Slug / ID -->
                     <div>
                         <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Slug / ID (URL identifier) *</label>
-                        <input type="text" name="slug" required placeholder="e.g. hdpe, sprinkler" value="<%= product ? product.slug : '' %>" class="w-full border border-gray-300 rounded-lg py-2.5 px-3.5 focus:outline-none focus:border-blue-500 text-sm font-mono" <%= product ? 'readonly' : '' %>>
+                        <input type="text" name="slug" required placeholder="e.g. hdpe, sprinkler" value="<%= product ? (product.slug || product._id || '').toLowerCase() : '' %>" class="w-full border border-gray-300 rounded-lg py-2.5 px-3.5 focus:outline-none focus:border-blue-500 text-sm font-mono" <%= product ? 'readonly' : '' %>>
                         <p class="text-[11px] text-gray-400 mt-1">Primary identifier e.g. /hdpe, /sprinkler</p>
                     </div>
 
@@ -54,7 +54,7 @@
                     <!-- Page Link -->
                     <div>
                         <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Page Link URL</label>
-                        <input type="text" name="link" placeholder="e.g. /hdpe, /sprinkler" value="<%= product ? product.link : '' %>" class="w-full border border-gray-300 rounded-lg py-2.5 px-3.5 focus:outline-none focus:border-blue-500 text-sm font-mono">
+                        <input type="text" name="link" placeholder="e.g. /hdpe, /sprinkler" value="<%= product ? (product.link || '/' + (product.slug || product._id || '')).toLowerCase() : '' %>" class="w-full border border-gray-300 rounded-lg py-2.5 px-3.5 focus:outline-none focus:border-blue-500 text-sm font-mono">
                     </div>
 
                     <!-- Badge Text -->
