@@ -1,0 +1,74 @@
+    </div><!-- End #main-content-wrapper -->
+
+    <!-- ========================================================================= -->
+    <!-- SCRIPTS: Show / Hide Sidebar Toggle & Responsive Mobile Drawer            -->
+    <!-- ========================================================================= -->
+    <script>
+        (function() {
+            // Sidebar Toggle (Desktop & Mobile)
+            const btnSidebarCollapse = document.getElementById('btn-sidebar-collapse');
+            const topSidebarToggle = document.getElementById('top-sidebar-toggle');
+            const htmlEl = document.documentElement;
+
+            function toggleSidebarDesktop() {
+                const isCurrentlyCollapsed = htmlEl.classList.contains('sidebar-collapsed');
+                if (isCurrentlyCollapsed) {
+                    htmlEl.classList.remove('sidebar-collapsed');
+                    try { localStorage.setItem('solanki_sidebar_collapsed', 'false'); } catch (e) {}
+                } else {
+                    htmlEl.classList.add('sidebar-collapsed');
+                    try { localStorage.setItem('solanki_sidebar_collapsed', 'true'); } catch (e) {}
+                }
+            }
+
+            if (btnSidebarCollapse) {
+                btnSidebarCollapse.addEventListener('click', toggleSidebarDesktop);
+            }
+            if (topSidebarToggle) {
+                topSidebarToggle.addEventListener('click', toggleSidebarDesktop);
+            }
+
+            // Mobile Drawer Toggle
+            const openMobileBtn = document.getElementById('open-mobile-sidebar');
+            const closeMobileBtn = document.getElementById('close-mobile-sidebar');
+            const mobileBackdrop = document.getElementById('mobile-sidebar-backdrop');
+            const mobileSidebar = document.getElementById('mobile-sidebar');
+
+            function toggleMobileDrawer(open) {
+                if (!mobileSidebar || !mobileBackdrop) return;
+                if (open) {
+                    mobileBackdrop.classList.remove('hidden');
+                    mobileBackdrop.offsetHeight; // reflow
+                    mobileBackdrop.classList.add('opacity-100');
+                    mobileSidebar.classList.remove('-translate-x-full');
+                    document.body.classList.add('overflow-hidden');
+                } else {
+                    mobileBackdrop.classList.remove('opacity-100');
+                    mobileSidebar.classList.add('-translate-x-full');
+                    document.body.classList.remove('overflow-hidden');
+                    setTimeout(() => {
+                        if (!mobileBackdrop.classList.contains('opacity-100')) {
+                            mobileBackdrop.classList.add('hidden');
+                        }
+                    }, 300);
+                }
+            }
+
+            if (openMobileBtn) openMobileBtn.addEventListener('click', () => toggleMobileDrawer(true));
+            if (closeMobileBtn) closeMobileBtn.addEventListener('click', () => toggleMobileDrawer(false));
+            if (mobileBackdrop) mobileBackdrop.addEventListener('click', () => toggleMobileDrawer(false));
+
+            // Keyboard shortcut: Ctrl + B to toggle sidebar
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && (e.key === 'b' || e.key === 'B')) {
+                    e.preventDefault();
+                    toggleSidebarDesktop();
+                }
+                if (e.key === 'Escape') {
+                    toggleMobileDrawer(false);
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

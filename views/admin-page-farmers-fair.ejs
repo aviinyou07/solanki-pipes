@@ -1,0 +1,240 @@
+<%- include('partials/admin-header') %>
+
+    <div class="flex-grow p-4 max-w-7xl w-full mx-auto">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div>
+                <div class="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
+                    <a href="/admin/pages" class="hover:text-blue-600 transition">Pages</a>
+                    <span>/</span>
+                    <span class="text-blue-600">Farmers' Fair CSR</span>
+                </div>
+                <h1 class="text-3xl font-extrabold text-gray-900 uppercase tracking-tight">Customize <span
+                        class="text-blue-600">Farmers' Fair</span></h1>
+                <p class="text-gray-500 text-sm mt-1">Manage agricultural exhibition sponsorship coverage, event
+                    factsheet, keynote photo, and 4 educational chapters.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="/farmers-fair" target="_blank"
+                    class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-bold py-2.5 px-4 rounded-xl shadow-sm transition flex items-center gap-2 text-xs">
+                    <span>View Live Page</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25">
+                        </path>
+                    </svg>
+                </a>
+                <button type="submit" form="fairForm"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl shadow-md transition flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    <span>Save All Changes</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Edit Form -->
+        <form id="fairForm" action="/admin/pages/farmers-fair" method="POST" enctype="multipart/form-data"
+            class="space-y-8">
+
+            <!-- 1. HEADER & HERO BANNER -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <h2
+                            class="text-base font-extrabold text-slate-800 uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                            1. Initiative Headline & Description
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Top pulse badge tag, event headline, and mission
+                            subtitle</p>
+                    </div>
+                </div>
+                <div class="p-6 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Initiative
+                                Badge</label>
+                            <input type="text" name="badge"
+                                value="<%= data.badge || 'Community & Sustainability Initiative' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Title Part 1</label>
+                            <input type="text" name="titlePart1"
+                                value="<%= data.titlePart1 || 'Sponsorship of Farmers’ Fair' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Title Part 2 (Green
+                                Accent)</label>
+                            <input type="text" name="titlePart2"
+                                value="<%= data.titlePart2 || '& Agricultural Exhibition' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white font-bold">
+                        </div>
+                        <div class="md:col-span-3">
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Hero Description
+                                Paragraph</label>
+                            <textarea name="subtitle" rows="2"
+                                class="w-full text-sm border border-slate-200 rounded-xl p-4 focus:outline-none focus:border-blue-500 bg-white resize-y"><%= data.subtitle || '' %></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. MAIN EVENT MEDIA & FACTSHEET -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <h2
+                            class="text-base font-extrabold text-slate-800 uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                            2. Main Exhibition Photo & Event Factsheet
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Key event photography, coverage caption, and factsheet
+                            attributes</p>
+                    </div>
+                </div>
+                <div class="p-6 space-y-6">
+                    <!-- Media -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Main Event
+                                Photo</label>
+                            <div class="flex items-center gap-4">
+                                <% if (data.mainImage) { %>
+                                    <img src="<%= data.mainImage %>"
+                                        class="w-24 h-16 object-cover rounded-lg border border-slate-200">
+                                    <% } %>
+                                        <div class="flex-grow">
+                                            <input type="file" name="mainImage" accept="image/*"
+                                                class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                            <p class="text-[11px] text-slate-400 mt-1">Featured photo of the exhibition
+                                                pavilion.</p>
+                                        </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Photo Caption Overlay
+                                Text</label>
+                            <textarea name="mainImageCaption" rows="2"
+                                class="w-full text-sm border border-slate-200 rounded-xl p-3 focus:outline-none focus:border-blue-500 bg-white resize-y"><%= data.mainImageCaption || '' %></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Factsheet -->
+                    <div class="border border-emerald-100 rounded-xl p-5 bg-emerald-50/30">
+                        <h3 class="text-xs font-extrabold text-emerald-900 uppercase tracking-wider mb-4">Event
+                            Factsheet Card</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                            <% const facts=data.factsheet || {}; %>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Event
+                                        Name</label>
+                                    <input type="text" name="factEventName" value="<%= facts.eventName || '' %>"
+                                        class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Region /
+                                        State</label>
+                                    <input type="text" name="factRegion" value="<%= facts.region || '' %>"
+                                        class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Sponsored
+                                        By</label>
+                                    <input type="text" name="factSponsoredBy" value="<%= facts.sponsoredBy || '' %>"
+                                        class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:border-blue-500">
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <label class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Key Focus
+                                        Areas</label>
+                                    <input type="text" name="factKeyFocus" value="<%= facts.keyFocus || '' %>"
+                                        class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Quality
+                                        Badge Label</label>
+                                    <input type="text" name="factQualityBadge" value="<%= facts.qualityBadge || '' %>"
+                                        class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:border-blue-500">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 4 NARRATIVE CHAPTERS -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <h2
+                            class="text-base font-extrabold text-slate-800 uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                            3. 4 Educational Narrative Chapters
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Event overview, distinguished presence, technical
+                            demonstrations, and community outreach</p>
+                    </div>
+                </div>
+                <div class="p-6 space-y-6">
+                    <% const sections=data.sections || []; %>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <% for (let i=0; i < 4; i++) { %>
+                                <% const s=sections[i] || {}; %>
+                                    <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/40">
+                                        <div class="flex items-center gap-2 mb-3">
+                                            <span
+                                                class="w-6 h-6 rounded-md bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center">0
+                                                <%= i + 1 %>
+                                            </span>
+                                            <span class="text-xs font-bold text-slate-700 uppercase">Chapter 0<%= i + 1
+                                                    %></span>
+                                        </div>
+                                        <div class="space-y-3">
+                                            <div>
+                                                <label
+                                                    class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Chapter
+                                                    Title</label>
+                                                <input type="text" name="secTitle_<%= i %>" value="<%= s.title || '' %>"
+                                                    class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:border-blue-500 font-bold">
+                                            </div>
+                                            <div>
+                                                <label
+                                                    class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">First
+                                                    Paragraph</label>
+                                                <textarea name="secP1_<%= i %>" rows="3"
+                                                    class="w-full text-xs border border-slate-200 rounded-lg p-2.5 bg-white focus:outline-none focus:border-blue-500 resize-y"><%= s.p1 || '' %></textarea>
+                                            </div>
+                                            <div>
+                                                <label
+                                                    class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Second
+                                                    Paragraph</label>
+                                                <textarea name="secP2_<%= i %>" rows="3"
+                                                    class="w-full text-xs border border-slate-200 rounded-lg p-2.5 bg-white focus:outline-none focus:border-blue-500 resize-y"><%= s.p2 || '' %></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                        </div>
+                </div>
+            </div>
+
+            <!-- Sticky Bottom Actions -->
+            <div
+                class="sticky bottom-6 z-30 bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-slate-200 shadow-xl flex items-center justify-between">
+                <span class="text-xs text-slate-500 font-medium">Changes will instantly update the Farmers' Fair CSR
+                    page.</span>
+                <button type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl shadow-md transition flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    <span>Save All Changes</span>
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <%- include('partials/admin-footer') %>

@@ -1,0 +1,285 @@
+{
+  "home": {
+    "heroBadge": "Welcome to Solanki Pipes",
+    "heroTitle": "Trusted Piping Partner for North India's Water Infrastructure",
+    "heroDescription": "20+ Years of Manufacturing Excellence. Supplying high-quality PE 80 & PE 100 grades, PN 2.5 to PN 10 for a robust tomorrow.",
+    "heroWhatsappText": "Contact Us",
+    "heroSlide2Badge": "Agricultural Innovation",
+    "heroSlide2Title": "Quick-Coupler Sprinkler Pipes for Efficient Micro-Irrigation",
+    "heroSlide2Description": "IS 14151 certified sprinkler piping systems with quick-locking couplers, delivering up to 50% water savings and higher crop yields.",
+    "exploreTitle": "EXPLORE OUR PRODUCT RANGE",
+    "exploreHeading": "What We Produce",
+    "impactSubtitle": "OUR IMPACT",
+    "impactTitle": "Projects & Events",
+    "event1Badge": "Event",
+    "event1Title": "Sponsorship of Farmers’ Fair & Agricultural Exhibition – Haryana",
+    "event1Link": "/farmers-fair",
+    "event1Image": "/images/IMG_0524.jpg.jpeg",
+    "event2Badge": "Community & Sponsorships",
+    "event2Title": "Solanki Pipes Proudly Sponsors JKL (Just Kabaddi League)",
+    "event2Image": "/images/kabadi.jpeg",
+    "dhbvnHeading": "Empanelled with <span class=\"font-bold text-[#0f3d89]\">DHBVN</span>",
+    "dhbvnSubheading": "Strengthening Haryana’s Power Infrastructure with Quality HDPE Pipes",
+    "dhbvnParagraph1": "Solanki Industries (Solanki Pipes) is proud to announce its empanelment with <strong>Dakshin Haryana Bijli Vitran Nigam Limited (DHBVN)</strong> under the category of HDPE Pipes. This achievement reflects our commitment to manufacturing high-quality, ISI-marked HDPE piping solutions that meet the stringent requirements of government infrastructure and utility projects.",
+    "dhbvnParagraph2": "The empanelment enables Solanki Industries to participate in DHBVN-related turnkey and deposit works, supporting the development of reliable underground electrical infrastructure across Haryana.",
+    "dhbvnCertificate": "/images/dhbvn_empanelment.jpg",
+    "dhbvnAccordions": [
+      {
+        "title": "What is DHBVN?",
+        "content": "DHBVN is a state-owned electricity distribution utility engaged in power distribution, electrification, underground cabling, and power infrastructure development projects across Haryana."
+      },
+      {
+        "title": "Why HDPE Pipes are Essential for Electrical Infrastructure",
+        "content": "HDPE (High-Density Polyethylene) pipes have become the preferred choice for underground cable protection due to their exceptional properties: high mechanical strength to withstand external soil loads, corrosion resistance, internal smoothness for cable protection, and long service life exceeding 50 years."
+      },
+      {
+        "title": "Solanki Industries: Trusted HDPE Pipe Manufacturer",
+        "content": "With over two decades of manufacturing expertise, Solanki Industries has established itself as a trusted and premium brand name in the HDPE pipe segment with ISI marked pipes (IS 4984), BIS licensed manufacturing facility, advanced automated production lines, and in-house quality testing laboratory."
+      },
+      {
+        "title": "Supporting Growth, Quality & Compliance",
+        "content": "The DHBVN empanelment reinforces Solanki Industries’ growing contribution to government infrastructure development, supporting DHBVN contractors, turnkey agencies, EPC companies, and government departments with quality-driven products."
+      }
+    ],
+    "typingPrefix": "Solanki Delivering Pipes for Diverse Industries, from Agriculture to Tele-communications, and Infrastructure Development, Building a Better ",
+    "typingHighlight": "Tomorrow.",
+    "futureSectionTitle": "Strong Pipes For a Stronger Future",
+    "futureSectionDescription": "High-quality HDPE & Sprinkler piping solutions engineered for durability, strength, and long-lasting performance in potable water, micro-irrigation, and infrastructure applications.",
+    "features": [
+      {
+        "title": "Durable",
+        "description": "Built for long-lasting performance and strength."
+      },
+      {
+        "title": "Leak Resistant",
+        "description": "Advanced sealing for reliable water flow systems."
+      },
+      {
+        "title": "Low Maintenance",
+        "description": "Hassle-free installation with minimal upkeep."
+      },
+      {
+        "title": "Eco Friendly",
+        "description": "Sustainable materials safe for environment & future."
+      }
+    ],
+    "futureCta1Text": "Request Quote",
+    "futureCta1Link": "#contact",
+    "futureCta2Text": "Download Catalogue",
+    "collectionBanner": "/images/collection.png"
+  },
+  "about": {
+    "badge": "About Us",
+    "introHeading": "About Us",
+    "introParagraph1": "Established in 2005, Solanki Industries (Brand: Solanki Pipes) has grown into a trusted name in the piping industry across India, bringing over 20+ years of manufacturing experience. As a BIS-Licensed manufacturer (CM/L 9100182616), we specialize in HDPE pipes (IS 4984:2016) — water supply, agriculture, and infrastructure applications, in sizes 20 mm to 1000 mm OD across PE 80 and PE 100 grades.",
+    "introParagraph2": "With state-of-the-art manufacturing facilities located at Fatehabad Road, Mehuwala, Fatehabad (Haryana), with an additional manufacturing unit at Sarsa Ghoghra, Bhiwani (Haryana), we are a dynamic, quality-focused organization committed to excellence.",
+    "companyCredentials": {
+      "legalEntity": "Solanki Industries (Partnership Firm)",
+      "gstin": "06ACJFS4876P1Z6",
+      "bisLicence": "CM/L 9100182616 (IS 4984:2016)",
+      "brands": "SOLANKI, S.P."
+    },
+    "excellenceHeading": "Solanki Pipes – Committed to Excellence",
+    "excellenceText": "We are ISO 9001:2015 certified and strictly adhere to all quality management standards and procedures. Our mission is to achieve complete customer satisfaction by delivering high-quality, cost-effective products with timely service and reliable performance.",
+    "visionCalloutBadge": "Leadership Vision",
+    "visionCalloutTitle": "Message from the Founder",
+    "visionCalloutText": "Discover the 20+ year journey, engineering philosophy, and farmer-first commitment behind Solanki Pipes.",
+    "visionCalloutBtn": "Read Founder's Letter →",
+    "sidebarImage1": "/images/sp_img1.jpeg",
+    "sidebarImage2": "/images/sp_img2.jpeg",
+    "bannerImage": "/images/sp_img3.jpeg",
+    "missionTitle": "MISSION",
+    "missionText": "To provide unmatched solutions that help our clients become more productive and profitable.",
+    "visionTitle": "VISION",
+    "visionText": "To become the pioneers in the field of modern Plumbing and Piping technologies and offer customers more value through our products.",
+    "values": [
+      {
+        "title": "Expertise",
+        "description": "We are a dedicated team of dynamic professionals having immense market knowledge."
+      },
+      {
+        "title": "Agile",
+        "description": "Being quick and responsive is ingrained in our culture. We understand your needs and get cracking."
+      },
+      {
+        "title": "Transparent",
+        "description": "We focus and deliver realistic solutions. We are straight-up and honest. We are committed to deliver the best in the industry."
+      },
+      {
+        "title": "Partnership",
+        "description": "Our business is about understanding the needs of our clients. We provide proactive, strategic thinking to clients."
+      }
+    ],
+    "infraTitle": "Our Infrastructure",
+    "infraText": "We are geared up with a strong infrastructural set-up to meet growing client demand. Our facility is equipped with the latest extrusion machinery, in-house testing equipment, and an experienced technical team covering the full range of HDPE pipe manufacturing and applications.",
+    "infraImage1": "/images/sp_pipesimg.jpeg",
+    "infraImage2": "/images/Quality.jpeg"
+  },
+  "contact": {
+    "titlePart1": "CONTACTING",
+    "titlePart2": "SOLANKI",
+    "subtitle": "First Step to Excellence.",
+    "headOfficeTitle": "Head Office",
+    "headOfficeFirm": "Solanki Industries (Partnership Firm) — Brand: Solanki Pipes",
+    "headOfficeAddress": "Fatehabad Road, Mehuwala,\nFatehabad - 125053, Haryana, India.",
+    "manufacturingTitle": "Manufacturing Unit",
+    "manufacturingAddress": "Khasra No. 115//2/2, Sarsa Ghoghra,\nBhiwani, Haryana 127021",
+    "phone1": "99921-77822",
+    "phone2": "94664-58070",
+    "email": "sales@solankipipes.com",
+    "whatsapp": "919992177822",
+    "whatsappBtnText": "Chat on WhatsApp",
+    "formHeading": "LET'S BEGIN TOGETHER\nFOR A NEW PROJECT PIPELINE",
+    "formSubheading": "Reach out to discuss custom specifications, bulk quotations, or project tenders.",
+    "recipientEmail": "sales@solankipipes.com"
+  },
+  "quality": {
+    "heroTitle": "Quality - Excellence Nexus",
+    "heroSubtitle": "Explore Unmatched Piping Excellence on Our Quality Floor",
+    "bannerImage": "/images/sp_img1.jpeg",
+    "imsText": "At the heart of producing and supplying quality products is the Integrated Management System (IMS). Our management is committed to BIS standards (IS 4984:2016) for health, safety, and the environment. Latest technology ensures we produce products that meet customer requirements.",
+    "quoteBannerText": "Where Excellence,\nMeets Expectations,\nAnd Satisfaction\nBecomes The Standard.",
+    "testingSectionTitle": "Comprehensive Quality Testing",
+    "testingPillars": [
+      {
+        "title": "Raw Material Testing",
+        "tests": [
+          "MFR per IS 2530",
+          "Density",
+          "Carbon Black Content per ISO 6964",
+          "Carbon Black Dispersion per ISO 18553"
+        ]
+      },
+      {
+        "title": "Dimensional & Visual",
+        "tests": [
+          "Outer Diameter (OD)",
+          "Wall Thickness & Uniformity",
+          "Ovality Check",
+          "Internal & External Surface Smoothness"
+        ]
+      },
+      {
+        "title": "Finished Pipe Testing",
+        "tests": [
+          "Hydrostatic Pressure Testing",
+          "Reversion Test per IS 4984",
+          "Elongation at Break",
+          "Tensile Strength & Impact Resistance"
+        ]
+      }
+    ]
+  },
+  "downloads": {
+    "headerTitle": "DOWNLOAD CENTER",
+    "headerSubtitle": "Official Documents and Certificates",
+    "documents": [
+      {
+        "id": "1",
+        "icon": "📄",
+        "title": "Company Profile",
+        "description": "Download our corporate profile and overview.",
+        "fileUrl": "/images/Catalog Solanki Pipes.pdf"
+      },
+      {
+        "id": "2",
+        "icon": "📜",
+        "title": "BIS Licence",
+        "description": "IS 4984:2016 Certificate.",
+        "fileUrl": "/images/Catalog Solanki Pipes.pdf"
+      },
+      {
+        "id": "3",
+        "icon": "🏆",
+        "title": "ISO Certificate",
+        "description": "ISO 9001:2015 Quality Management.",
+        "fileUrl": "/images/Catalog Solanki Pipes.pdf"
+      },
+      {
+        "id": "4",
+        "icon": "📋",
+        "title": "GST Certificate",
+        "description": "GST Registration Details.",
+        "fileUrl": "/images/Catalog Solanki Pipes.pdf"
+      },
+      {
+        "id": "5",
+        "icon": "📔",
+        "title": "Product Catalogue",
+        "description": "Complete range of our products (PDF Download).",
+        "fileUrl": "/images/Catalog Solanki Pipes.pdf"
+      },
+      {
+        "id": "6",
+        "icon": "🧪",
+        "title": "Sample Test Certificates",
+        "description": "Quality and material testing reports.",
+        "fileUrl": "/images/Catalog Solanki Pipes.pdf"
+      },
+      {
+        "id": "7",
+        "icon": "🛡️",
+        "title": "MSDS",
+        "description": "Material Safety Data Sheets.",
+        "fileUrl": "/images/Catalog Solanki Pipes.pdf"
+      }
+    ]
+  },
+  "farmersFair": {
+    "badge": "Community & Sustainability Initiative",
+    "titlePart1": "Sponsorship of Farmers’ Fair",
+    "titlePart2": "& Agricultural Exhibition",
+    "subtitle": "Empowering the agricultural heartland of Haryana through advanced irrigation solutions, modern infrastructure education, and direct farmer support.",
+    "mainImage": "/images/197.jpg.jpeg",
+    "mainImageCaption": "Honourable Vice Chairman of Haryana addressing the gathering at the Solanki Pipes Pavilion",
+    "factsheet": {
+      "eventName": "Farmers’ Fair and Agricultural Exhibition",
+      "region": "Rural Region of Haryana, India",
+      "sponsoredBy": "Haryana Solanki Industries (Solanki Pipes)",
+      "keyFocus": "Sustainable Irrigation, Water Conservation & Farmer Education",
+      "qualityBadge": "100% Quality Assured (IS 4984:2016 BIS-Licensed)"
+    },
+    "sections": [
+      {
+        "num": "01",
+        "title": "Event Overview",
+        "p1": "The primary objective of the Farmers’ Fair and Agricultural Exhibition was to introduce the rural farming communities of Haryana to state-of-the-art agricultural technologies, advanced irrigation solutions, and improved crop-management practices. Designed to bridge the gap between innovation and traditional farming, the exhibition acted as a robust educational platform for direct interaction, training, and knowledge-sharing.",
+        "p2": "Farmers were introduced to automated sprinklers, high-durability HDPE pipes, water flow controllers, and soil preservation tools designed to boost overall crop yields while significantly conserving vital natural resources like water and power."
+      },
+      {
+        "num": "02",
+        "title": "Distinguished Presence & State Recognition",
+        "p1": "The event witnessed notable participation from prominent agricultural scientists, university researchers, and government dignitaries, including the Honourable Vice Chairman of Haryana.",
+        "p2": "During his keynote speech, the Vice Chairman commended Solanki Pipes for their dedication to rural empowerment, sustainable water management, and the manufacturing of high-grade, BIS-certified piping solutions."
+      },
+      {
+        "num": "03",
+        "title": "Technical Demonstrations & Farmer Empowerment",
+        "p1": "At our dedicated exhibition pavilion, Solanki Pipes engineers and agricultural consultants hosted live demonstrations showing the impact of modern micro-irrigation systems vs. traditional flood irrigation.",
+        "p2": "Farmers gained hands-on experience evaluating flexible sprinkler layouts, quick-coupling systems, and wear-resistant HDPE pipelines designed to withstand harsh northern weather conditions."
+      },
+      {
+        "num": "04",
+        "title": "Community Impact & Future Initiatives",
+        "p1": "More than 2,500 farmers, agricultural students, and local cooperative leaders visited the Solanki Pipes installation during the fair.",
+        "p2": "Solanki Pipes distributed educational handbooks on water conservation, soil nutrition preservation, and modern piping maintenance to hundreds of farming families, continuing our social pledge to build a greener, more resilient tomorrow."
+      }
+    ]
+  },
+  "vendorEmpanelment": {
+    "headerTitle": "VENDOR EMPANELMENT",
+    "headerSubtitle": "Join our growing network of distributors and partners",
+    "empanelmentTitle": "Current Empanelment List",
+    "empanelmentIntro": "Solanki Industries is proud to be empanelled and approved by various government departments, water boards, and private infrastructural companies across North India. We are continuously expanding our reach to serve more regions efficiently.",
+    "approvedDepartments": [
+      "Dakshin Haryana Bijli Vitran Nigam Limited (DHBVN) - Haryana (Underground HDPE Pipe Category)",
+      "Public Health Engineering Department (PHED) - Haryana",
+      "Water Supply & Sanitation Departments",
+      "Panchayati Raj Institutions",
+      "Major EPC Contractors",
+      "Agriculture and Irrigation Departments"
+    ],
+    "formTitle": "Distributor / Vendor Application",
+    "formRecipientEmail": "sales@solankipipes.com"
+  }
+}

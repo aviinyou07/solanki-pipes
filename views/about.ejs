@@ -1,0 +1,182 @@
+
+ 
+        <%- include('partials/header') %>
+
+    <main>
+        <section class="py-16 px-6 ">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-2/3 space-y-10">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="w-8 h-2 bg-blue-600"></span>
+                            <h2 class="heading-font text-3xl font-black uppercase tracking-tight text-gray-900">
+                                <%= (typeof pageData !== 'undefined' && pageData && pageData.introHeading) ? pageData.introHeading : 'About Us' %>
+                            </h2>
+                            <span class="w-8 h-2 bg-blue-600"></span>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed font-semibold">
+                            <%- (typeof pageData !== 'undefined' && pageData && pageData.introParagraph1) ? pageData.introParagraph1 : 'Established in 2005, Solanki Industries (Brand: Solanki Pipes) has grown into a trusted name in the piping industry across India, bringing over 20+ years of manufacturing experience. As a BIS-Licensed manufacturer (CM/L 9100182616), we specialize in <span class="font-bold text-blue-900">HDPE pipes (IS 4984:2016) — water supply, agriculture, and infrastructure applications, in sizes 20 mm to 1000 mm OD across PE 80 and PE 100 grades.</span>' %>
+                        </p>
+                        <p class="text-gray-700 leading-relaxed font-semibold mt-4">
+                            <%= (typeof pageData !== 'undefined' && pageData && pageData.introParagraph2) ? pageData.introParagraph2 : 'With state-of-the-art manufacturing facilities located at Fatehabad Road, Mehuwala, Fatehabad (Haryana), with an additional manufacturing unit at Sarsa Ghoghra, Bhiwani (Haryana), we are a dynamic, quality-focused organization committed to excellence.' %>
+                        </p>
+                        
+                        <% 
+                          const creds = (typeof pageData !== 'undefined' && pageData && pageData.companyCredentials) ? pageData.companyCredentials : {
+                            legalEntity: 'Solanki Industries (Partnership Firm)',
+                            gstin: '06ACJFS4876P1Z6',
+                            bisLicence: 'CM/L 9100182616 (IS 4984:2016)',
+                            brands: 'SOLANKI, S.P.'
+                          };
+                        %>
+                        <div class="bg-blue-50 p-6 rounded-lg mt-8 border-l-4 border-blue-600">
+                            <h3 class="text-xl font-bold text-blue-900 mb-4 uppercase">Company Credentials</h3>
+                            <ul class="space-y-2 text-gray-800 font-semibold">
+                                <li><span class="text-blue-600 w-32 inline-block">Legal Entity:</span> <%= creds.legalEntity %></li>
+                                <li><span class="text-blue-600 w-32 inline-block">GSTIN:</span> <%= creds.gstin %></li>
+                                <li><span class="text-blue-600 w-32 inline-block">BIS Licence:</span> <%= creds.bisLicence %></li>
+                                <li><span class="text-blue-600 w-32 inline-block">Brands:</span> <%= creds.brands %></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="w-8 h-2 bg-blue-600"></span>
+                            <h2 class="heading-font text-3xl font-black uppercase tracking-tight text-gray-900">
+                                <%= (typeof pageData !== 'undefined' && pageData && pageData.excellenceHeading) ? pageData.excellenceHeading : 'Solanki Pipes – Committed to Excellence' %>
+                            </h2>
+                            <span class="w-8 h-2 bg-blue-600"></span>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed font-semibold">
+                            <%= (typeof pageData !== 'undefined' && pageData && pageData.excellenceText) ? pageData.excellenceText : 'We are ISO 9001:2015 certified and strictly adhere to all quality management standards and procedures. Our mission is to achieve complete customer satisfaction by delivering high-quality, cost-effective products with timely service and reliable performance.' %>
+                        </p>
+                    </div>
+
+                    <!-- Founder Message Callout Banner -->
+                    <div class="bg-gradient-to-r from-blue-900 to-indigo-900 rounded-2xl p-6 md:p-8 text-white shadow-lg flex flex-col sm:flex-row items-center justify-between gap-6 border border-blue-700/50">
+                        <div>
+                            <span class="text-xs font-bold text-cyan-300 uppercase tracking-widest block mb-1">
+                                <%= (typeof pageData !== 'undefined' && pageData && pageData.visionCalloutBadge) ? pageData.visionCalloutBadge : 'Leadership Vision' %>
+                            </span>
+                            <h3 class="text-xl font-black uppercase">
+                                <%= (typeof pageData !== 'undefined' && pageData && pageData.visionCalloutTitle) ? pageData.visionCalloutTitle : 'Message from the Founder' %>
+                            </h3>
+                            <p class="text-sm text-blue-100 mt-1 max-w-lg">
+                                <%= (typeof pageData !== 'undefined' && pageData && pageData.visionCalloutText) ? pageData.visionCalloutText : 'Discover the 20+ year journey, engineering philosophy, and farmer-first commitment behind Solanki Pipes.' %>
+                            </p>
+                        </div>
+                        <a href="/founder-message" class="shrink-0 bg-cyan-400 hover:bg-cyan-300 text-blue-950 font-bold px-6 py-3 rounded-xl text-xs uppercase tracking-wider transition shadow-md">
+                            <%= (typeof pageData !== 'undefined' && pageData && pageData.visionCalloutBtn) ? pageData.visionCalloutBtn : "Read Founder's Letter →" %>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/3 flex flex-col gap-6">
+                     <img src="<%= (typeof pageData !== 'undefined' && pageData && pageData.sidebarImage1) ? pageData.sidebarImage1 : '/images/sp_img1.jpeg' %>" alt="Industrial Pipe Stacks"
+                        class="w-full drop-shadow-2xl rounded-lg object-cover">
+                    <img src="<%= (typeof pageData !== 'undefined' && pageData && pageData.sidebarImage2) ? pageData.sidebarImage2 : '/images/sp_img2.jpeg' %>" alt="Industrial Pipe Stacks"
+                        class="w-full drop-shadow-2xl rounded-lg object-cover">
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16  border-t border-gray-100">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="mb-12 border-b-8 border-blue-600 overflow-hidden rounded-t-lg">
+                    <img src="<%= (typeof pageData !== 'undefined' && pageData && pageData.bannerImage) ? pageData.bannerImage : '/images/sp_img3.jpeg' %>" class="w-full h-full md:h-96 object-cover"
+                        alt="Industrial Pipeline">
+                </div>
+
+                <div class="relative pt-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-32 mb-12">
+                        <!-- Mission Box -->
+                        <div class="flex flex-col gap-4">
+                            <h3 class="text-3xl font-black text-blue-600 text-center md:text-left tracking-wider">
+                                <%= (typeof pageData !== 'undefined' && pageData && pageData.missionTitle) ? pageData.missionTitle : 'MISSION' %>
+                            </h3>
+                            <div class="p-6 border-2 border-blue-600 shadow-md rounded-2xl bg-white/60 backdrop-blur-sm">
+                                <p class="text-sm font-semibold text-gray-800 leading-relaxed">
+                                    <%= (typeof pageData !== 'undefined' && pageData && pageData.missionText) ? pageData.missionText : 'To provide unmatched solutions that help our clients become more productive and profitable.' %>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Vision Box -->
+                        <div class="flex flex-col gap-4 text-right items-end">
+                            <h3 class="text-3xl font-black text-blue-600 text-center md:text-right tracking-wider">
+                                <%= (typeof pageData !== 'undefined' && pageData && pageData.visionTitle) ? pageData.visionTitle : 'VISION' %>
+                            </h3>
+                            <div class="p-6 border-2 border-blue-600 shadow-md text-right rounded-2xl bg-white/60 backdrop-blur-sm w-full">
+                                <p class="text-sm font-semibold text-gray-800 leading-relaxed">
+                                    <%= (typeof pageData !== 'undefined' && pageData && pageData.visionText) ? pageData.visionText : 'To become the pioneers in the field of modern Plumbing and Piping technologies and offer customers more value through our products.' %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Values Timeline Section -->
+                    <div class="relative py-8">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                            <div class="bg-blue-600 text-white font-black text-xs px-4 py-2 rounded-full shadow-lg border-2 border-white uppercase tracking-wider">
+                                VALUES
+                            </div>
+                        </div>
+                        <div class="relative h-2 bg-blue-500 w-full rounded-full">
+                            <div class="absolute -top-1 left-1/4 w-4 h-4 bg-blue-600 rounded-full"></div>
+                            <div class="absolute -top-1 left-1/2 w-4 h-4 bg-blue-600 rounded-full"></div>
+                            <div class="absolute -top-1 left-3/4 w-4 h-4 bg-blue-600 rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <%
+                      const aboutValues = (typeof pageData !== 'undefined' && pageData && pageData.values && pageData.values.length) ? pageData.values : [
+                        { title: 'Expertise', description: 'We are a dedicated team of dynamic professionals having immense market knowledge.' },
+                        { title: 'Agile', description: 'Being quick and responsive is ingrained in our culture. We understand your needs and get cracking.' },
+                        { title: 'Transparent', description: 'We focus and deliver realistic solutions. We are straight-up and honest. We are committed to deliver the best in the industry.' },
+                        { title: 'Partnership', description: 'Our business is about understanding the needs of our clients. We provide proactive, strategic thinking to clients.' }
+                      ];
+                    %>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mt-12">
+                        <% aboutValues.forEach(val => { %>
+                            <div class="border-l-4 border-blue-600 pl-4">
+                                <h4 class="font-black text-blue-600 uppercase italic"><%= val.title %></h4>
+                                <p class="text-xs mt-2 font-bold text-gray-600 italic"><%= val.description %></p>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 px-6 bg-gray-50">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 items-stretch">
+                <div class="md:w-1/3 border-4 border-blue-500 p-8 flex flex-col justify-center ">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-6 h-2 bg-blue-600"></span>
+                        <h2 class="heading-font text-2xl font-black uppercase text-gray-900">
+                            <%= (typeof pageData !== 'undefined' && pageData && (pageData.infraTitle || pageData.infraHeading)) ? (pageData.infraTitle || pageData.infraHeading) : 'Our Infrastructure' %>
+                        </h2>
+                        <span class="w-6 h-2 bg-blue-600"></span>
+                    </div>
+                    <p class="text-gray-800 font-bold text-sm leading-relaxed">
+                        <%= (typeof pageData !== 'undefined' && pageData && pageData.infraText) ? pageData.infraText : 'We are geared up with a strong infrastructural set-up to meet growing client demand. Our facility is equipped with the latest extrusion machinery, in-house testing equipment, and an experienced technical team covering the full range of HDPE pipe manufacturing and applications.' %>
+                    </p>
+                </div>
+
+                <div class="md:w-2/3 grid grid-cols-2 gap-4">
+                    <div class="overflow-hidden rounded shadow-lg bg-gray-100 flex items-center justify-center min-h-[220px]">
+                        <img src="<%= (typeof pageData !== 'undefined' && pageData && pageData.infraImage1) ? pageData.infraImage1 : '/images/sp_pipesimg.jpeg' %>"
+                            class="w-full h-full object-cover hover:scale-105 transition duration-500"
+                            alt="Factory Floor">
+                    </div>
+                    <div class="overflow-hidden rounded shadow-lg bg-gray-100 flex items-center justify-center min-h-[220px]">
+                        <img src="<%= (typeof pageData !== 'undefined' && pageData && pageData.infraImage2) ? pageData.infraImage2 : '/images/Quality.jpeg' %>"
+                            class="w-full h-full object-cover hover:scale-105 transition duration-500"
+                            alt="Pipe Extrusion">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>
+    

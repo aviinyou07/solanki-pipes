@@ -1,0 +1,204 @@
+<%- include('partials/header') %>
+
+<main class="bg-[#FDFBF7] min-h-screen font-sans">
+    
+    <!-- Hero Section with Background Accent -->
+    <header class="py-12 px-6 text-center max-w-6xl mx-auto">
+        <div class="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full text-emerald-800 text-xs font-bold tracking-wider uppercase mb-4">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <%= (typeof pageData !== 'undefined' && pageData && pageData.badge) ? pageData.badge : 'Community & Sustainability Initiative' %>
+        </div>
+        <h1 class="text-3xl md:text-5xl lg:text-6xl font-light tracking-tight text-gray-900 uppercase">
+            <%= (typeof pageData !== 'undefined' && pageData && pageData.titlePart1) ? pageData.titlePart1 : 'Sponsorship of Farmers’ Fair' %>
+            <span class="block text-2xl md:text-4xl lg:text-5xl font-medium text-emerald-800 mt-2">
+                <%= (typeof pageData !== 'undefined' && pageData && pageData.titlePart2) ? pageData.titlePart2 : '& Agricultural Exhibition' %>
+            </span>
+        </h1>
+        <p class="mt-4 text-base md:text-lg font-medium text-gray-600 max-w-3xl mx-auto">
+            <%= (typeof pageData !== 'undefined' && pageData && pageData.subtitle) ? pageData.subtitle : 'Empowering the agricultural heartland of Haryana through advanced irrigation solutions, modern infrastructure education, and direct farmer support.' %>
+        </p>
+    </header>
+
+    <!-- Visual Showcase / Banner Grid -->
+    <section class="max-w-6xl mx-auto px-6 mb-16">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+            <!-- Left Side: Main Event Image -->
+            <div class="lg:col-span-2 relative h-[350px] md:h-[450px] rounded-3xl overflow-hidden shadow-xl border border-gray-100 group">
+                <img src="<%= (typeof pageData !== 'undefined' && pageData && pageData.mainImage) ? pageData.mainImage : '/images/197.jpg.jpeg' %>" alt="Sponsorship of Farmers' Fair & Agricultural Exhibition" class="w-full h-full object-cover group-hover:scale-102 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                <div class="absolute bottom-6 left-6 right-6">
+                    <span class="bg-cyan-400 text-black text-xs font-bold px-3 py-1 rounded-md uppercase tracking-wider mb-2 inline-block">Official Event Coverage</span>
+                    <h2 class="text-lg md:text-2xl font-bold text-white leading-tight">
+                        <%= (typeof pageData !== 'undefined' && pageData && pageData.mainImageCaption) ? pageData.mainImageCaption : 'Honourable Vice Chairman of Haryana addressing the gathering at the Solanki Pipes Pavilion' %>
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Right Side: Quick Factsheet Card -->
+            <% 
+              const factsheet = (typeof pageData !== 'undefined' && pageData && pageData.factsheet) ? pageData.factsheet : {
+                eventName: 'Farmers’ Fair and Agricultural Exhibition',
+                region: 'Rural Region of Haryana, India',
+                sponsoredBy: 'Haryana Solanki Industries (Solanki Pipes)',
+                keyFocus: 'Sustainable Irrigation, Water Conservation & Farmer Education',
+                qualityBadge: '100% Quality Assured (IS 4984:2016 BIS-Licensed)'
+              };
+            %>
+            <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-md flex flex-col justify-between relative overflow-hidden">
+                <div class="absolute -right-16 -top-16 w-32 h-32 rounded-full bg-emerald-50/50"></div>
+                <div class="relative">
+                    <h3 class="text-xs uppercase font-extrabold tracking-widest text-[#1E3A8A] mb-4">Event Factsheet</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-gray-400 block tracking-wider">Event Name</span>
+                            <span class="text-sm font-semibold text-gray-800"><%= factsheet.eventName %></span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-gray-400 block tracking-wider">Region / State</span>
+                            <span class="text-sm font-semibold text-gray-800"><%= factsheet.region %></span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-gray-400 block tracking-wider">Sponsored By</span>
+                            <span class="text-sm font-bold text-[#1E3A8A]"><%= factsheet.sponsoredBy %></span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-gray-400 block tracking-wider">Key Focus</span>
+                            <span class="text-sm font-semibold text-emerald-800"><%= factsheet.keyFocus %></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 border-t border-gray-100 pt-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-gray-900"><%= factsheet.qualityBadge || '100% Quality Assured' %></h4>
+                            <p class="text-[10px] text-gray-500 font-medium">IS 4984:2016 BIS-Licensed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Sections Grid -->
+    <section class="max-w-6xl mx-auto px-6 mb-16">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            
+            <!-- Left 2 Columns: Detailed Narrative -->
+            <% 
+              const narrativeSections = (typeof pageData !== 'undefined' && pageData && pageData.sections && pageData.sections.length) ? pageData.sections : [
+                {
+                  num: '01',
+                  title: 'Event Overview',
+                  p1: 'The primary objective of the Farmers’ Fair and Agricultural Exhibition was to introduce the rural farming communities of Haryana to state-of-the-art agricultural technologies, advanced irrigation solutions, and improved crop-management practices. Designed to bridge the gap between innovation and traditional farming, the exhibition acted as a robust educational platform for direct interaction, training, and knowledge-sharing.',
+                  p2: 'Farmers were introduced to automated sprinklers, high-durability HDPE pipes, water flow controllers, and soil preservation tools designed to boost overall crop yields while significantly conserving vital natural resources like water and power.'
+                },
+                {
+                  num: '02',
+                  title: 'Distinguished Presence & State Recognition',
+                  p1: 'The event witnessed notable participation from prominent agricultural scientists, university researchers, and government dignitaries, including the Honourable Vice Chairman of Haryana.',
+                  p2: 'During his keynote speech, the Vice Chairman commended Solanki Pipes for their dedication to rural empowerment, sustainable water management, and the manufacturing of high-grade, BIS-certified piping solutions.'
+                },
+                {
+                  num: '03',
+                  title: 'Technical Demonstrations & Farmer Empowerment',
+                  p1: 'At our dedicated exhibition pavilion, Solanki Pipes engineers and agricultural consultants hosted live demonstrations showing the impact of modern micro-irrigation systems vs. traditional flood irrigation.',
+                  p2: 'Farmers gained hands-on experience evaluating flexible sprinkler layouts, quick-coupling systems, and wear-resistant HDPE pipelines designed to withstand harsh northern weather conditions.'
+                },
+                {
+                  num: '04',
+                  title: 'Community Impact & Future Initiatives',
+                  p1: 'More than 2,500 farmers, agricultural students, and local cooperative leaders visited the Solanki Pipes installation during the fair.',
+                  p2: 'Solanki Pipes distributed educational handbooks on water conservation, soil nutrition preservation, and modern piping maintenance to hundreds of farming families, continuing our social pledge to build a greener, more resilient tomorrow.'
+                }
+              ];
+            %>
+            <div class="lg:col-span-2 space-y-12">
+                <% narrativeSections.forEach((sec, sIdx) => { %>
+                    <div class="bg-white rounded-3xl p-8 border border-gray-50 shadow-sm space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg <%= sIdx % 2 === 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-blue-100 text-blue-800' %> flex items-center justify-center font-bold text-sm"><%= sec.num || ('0' + (sIdx + 1)) %></div>
+                            <h3 class="text-xl font-extrabold text-[#1E3A8A] uppercase tracking-wide"><%= sec.title %></h3>
+                        </div>
+                        <hr class="border-gray-100">
+                        <p class="text-gray-700 leading-relaxed text-base">
+                            <%= sec.p1 %>
+                        </p>
+                        <% if (sec.p2) { %>
+                            <p class="text-gray-700 leading-relaxed text-base">
+                                <%= sec.p2 %>
+                            </p>
+                        <% } %>
+                    </div>
+                <% }) %>
+            </div>
+
+            <!-- Right Column: Interactive Banner & Brand Promise -->
+            <div class="space-y-8">
+                
+                <!-- Commitment Spotlight Card -->
+                <div class="bg-gradient-to-br from-[#1E3A8A] to-[#1E40AF] text-white rounded-3xl p-8 shadow-lg relative overflow-hidden">
+                    <!-- Decorative Circle Backgrounds -->
+                    <div class="absolute -left-12 -bottom-12 w-36 h-36 rounded-full bg-white/5"></div>
+                    <div class="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-cyan-400/10"></div>
+                    
+                    <span class="text-cyan-400 text-xs font-extrabold uppercase tracking-wider block mb-2">Our Promise</span>
+                    <h4 class="text-2xl font-extrabold leading-tight">
+                        Commitment to Farmers’ Future
+                    </h4>
+                    <hr class="border-white/10 my-4">
+                    <p class="text-sm text-blue-100 leading-relaxed font-medium">
+                        The farmers’ fair created deep awareness and opened brand-new pathways for empowering local growers and strengthening their future stability.
+                    </p>
+                    <p class="text-sm text-blue-100 leading-relaxed font-medium mt-4">
+                        Solanki Pipes remains passionately dedicated to supporting the agricultural community and actively contributing to the long-term prosperity of farmers across Haryana.
+                    </p>
+                    
+                    <div class="mt-8 flex items-center gap-2 text-cyan-400 text-xs font-bold tracking-wider uppercase">
+                        <span>Cultivating Progress</span>
+                        <span>•</span>
+                        <span>Empowering Lives</span>
+                    </div>
+                </div>
+
+                <!-- Secondary Gallery/Image showing Sachin Solanki or banner -->
+                <div class="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm space-y-4">
+                    <h4 class="text-sm font-extrabold text-gray-800 uppercase tracking-wider">Corporate Leadership</h4>
+                    <div class="rounded-2xl overflow-hidden h-48 bg-gray-100">
+                        <img src="/images/IMG_0524.jpg.jpeg" alt="Corporate Leadership at Event" class="w-full h-full object-cover">
+                    </div>
+                    <p class="text-xs text-gray-500 leading-relaxed font-semibold">
+                        Solanki Pipes Executive Team member interacting with community organizations, representing our dedication to corporate social responsibility (CSR) and agricultural extension services.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+        
+        <!-- Bottom Impact Call-To-Action Banner -->
+        <div class="mt-12 bg-emerald-800 text-white rounded-3xl p-8 md:p-10 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden shadow-lg">
+            <div class="absolute right-0 bottom-0 w-64 h-64 rounded-full bg-emerald-900/40 translate-x-12 translate-y-12"></div>
+            <div class="max-w-2xl relative">
+                <span class="text-emerald-300 text-xs font-extrabold uppercase tracking-wider">Join Hands For Sustainable Agriculture</span>
+                <h4 class="text-2xl md:text-3xl font-extrabold mt-1 leading-tight">
+                    Upgrade Your Irrigation Grids with IS-Certified Piping Configurations
+                </h4>
+                <p class="text-sm text-emerald-100 mt-2 font-medium">
+                    Enquire today to receive customized technical support, wholesale supply schedules, and localized distribution details.
+                </p>
+            </div>
+            <a href="/contact" class="bg-white hover:bg-emerald-50 text-emerald-900 px-6 py-3.5 font-bold rounded-xl text-sm transition uppercase whitespace-nowrap shadow-md relative shrink-0">
+                Contact Our Irrigation Division
+            </a>
+        </div>
+    </section>
+
+</main>
+
+<%- include('partials/footer') %>

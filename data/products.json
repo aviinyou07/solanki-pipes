@@ -1,0 +1,250 @@
+[
+  {
+    "_id": "hdpe",
+    "name": "HDPE PIPES",
+    "slug": "hdpe",
+    "shortDescription": "High-Density Polyethylene (HDPE) Pipes conforming to IS 4984:2016, engineered for robust water infrastructure, industrial fluid transfer, and municipal supply.",
+    "mainImage": "/images/product_01.png",
+    "hoverImage": "/images/product_01hover.png",
+    "heroImage": "/images/Hdpe_hero.png",
+    "detailImage": "/images/hdpepage.png",
+    "bannerImage": "/images/hdpe_02.svg",
+    "galleryImages": [
+      "/images/hdpe-gallery-1.jpeg",
+      "/images/hdpe-gallery-2.jpeg",
+      "/images/hdpe-gallery-3.jpeg"
+    ],
+    "link": "/hdpe",
+    "badge": "BIS Certified",
+    "createdDate": "2026-08-05T13:50:40.404Z",
+    "aboutText": "High Density Polyethylene (HDPE) pipes represent one of the most versatile and durable polymer piping solutions used across water, gas, industrial and infrastructure sectors. Manufactured from PE 80 or PE 100 grade resins, HDPE pipes provide excellent toughness, flexibility and resistance to environmental stress cracking. Their ability to withstand impact, chemicals and cyclic loading makes them especially suitable for both buried and above-ground applications where reliability and longevity are critical.\r\n\r\nAt Solanki Pipes, our HDPE range covers a broad spectrum of diameters and pressure classes to meet diverse engineering requirements. The material's low permeability and smooth internal bore reduce friction losses and improve hydraulic performance, which is particularly important for potable water distribution and long-distance transfer.\r\n\r\nJoining methods for HDPE such as butt fusion, electrofusion and mechanical fittings produce strong, leak-free integrals that often equal or exceed the parent pipe strength when installed correctly. This reliability lowers the need for frequent repairs and contributes to a lower lifecycle cost compared to metallic alternatives.",
+    "aboutTitle": "About HDPE Pipes",
+    "animationFile": "",
+    "animationSubtitle": "Superior SCGR (Slow Crack Growth Resistance) ensuring 100% leak-proof reliability in seismic and high-load zones.",
+    "animationTitle": "Engineered Flow Dynamics & High Flexibility",
+    "animationUrl": "",
+    "applications": [
+      "Potable Water Supply Networks",
+      "Industrial Effluent & Chemical Transfer",
+      "Lift Irrigation & River Basin Projects",
+      "Submersible Pump Delivery Mains",
+      "Sewerage & Wastewater Disposal",
+      "Underground Cable Ducting Conduits"
+    ],
+    "features": [
+      {
+        "title": "100% Virgin PE80 / PE100",
+        "description": "Manufactured strictly with certified prime virgin raw materials.",
+        "icon": "https://cdn-icons-png.flaticon.com/512/1705/1705833.png"
+      },
+      {
+        "title": "Flexibility & Crush Resistance",
+        "description": "Absorbs water hammer surges and adjusts seamlessly to soil settlement.",
+        "icon": "https://cdn-icons-png.flaticon.com/512/9368/9368310.png"
+      },
+      {
+        "title": "Hydrostatic Strength",
+        "description": "High pressure resistance from PN 2.5 up to PN 16.",
+        "icon": "https://cdn-icons-png.flaticon.com/512/3100/3100137.png"
+      },
+      {
+        "title": "Chemical & Corrosion Proof",
+        "description": "Completely inert to aggressive chemicals, acids, and alkalis.",
+        "icon": "https://cdn-icons-png.flaticon.com/512/2921/2921313.png"
+      },
+      {
+        "title": "Lightweight & Easy Installation",
+        "description": "Significant reduction in transportation and handling labor costs.",
+        "icon": "https://cdn-icons-png.flaticon.com/512/2954/2954847.png"
+      },
+      {
+        "title": "SCGR Resistance",
+        "description": "Exceptional Slow Crack Growth Resistance prevents pipeline failure.",
+        "icon": "https://cdn-icons-png.flaticon.com/512/3233/3233934.png"
+      },
+      {
+        "title": "Hygienic & Anti-Bacterial",
+        "description": "Safe for drinking water conveying without bio-film accumulation.",
+        "icon": "https://cdn-icons-png.flaticon.com/512/2865/2865792.png"
+      },
+      {
+        "title": "Leak-Free Monolithic Joints",
+        "description": "Butt-fusion welds ensure seamless, homogenous joint strength.",
+        "icon": "https://cdn-icons-png.flaticon.com/512/1000/1000974.png"
+      }
+    ],
+    "headline": "HDPE PIPES",
+    "heroSubtitle": "Solanki Pipes manufactures HDPE Pipes from 20 mm to 1000 mm OD with pressure ratings from PN 2.5 to PN 10, in PE 80 and PE 100 grades, conforming to IS 4984:2016.",
+    "materialGrade": "PE 80 / PE 100 Virgin Polymers",
+    "pressureRating": "PN 2.5 to PN 16 (SDR 7.4 to SDR 17)",
+    "sizeRange": "20 mm to 1000 mm OD",
+    "standards": "IS 4984:2016",
+    "tagline": "Better pipe, Better life",
+    "videoDescription": "Experience our high-speed automated extrusion line and in-house hydrostatic burst testing guaranteeing 50+ years of operational lifecycle.",
+    "videoFile": "",
+    "videoTitle": "Solanki HDPE Extrusion & BIS Testing Demonstration",
+    "videoUrl": "",
+    "specifications": [
+      {
+        "size": "63 mm",
+        "classType": "Class 1 / Class 2",
+        "wallThickness": "1.80 - 2.80 mm",
+        "workingPressure": "2.5 - 4.0 kg/cm²"
+      },
+      {
+        "size": "34mm",
+        "classType": "Class 1 / Class 2",
+        "wallThickness": "1.80 - 2.80 mm",
+        "workingPressure": "2.5 - 4.0 kg/cm²"
+      }
+    ],
+    "id": "hdpe"
+  },
+  {
+    "_id": "sprinkler",
+    "aboutText": "Solanki sprinkler pipes are extruded from PE 63 / PE 80 grade HDPE. Each length has an HDPE male coupler at one end and a female coupler with an elastomeric sealing ring at the other. Lengths join by hand and separate just as easily, so a sprinkler line can be laid, run and shifted to the next set without tools, solvent or threading.\r\n\r\nThe range is made in Class 2, rated for a maximum working pressure of 0.32 MPa (3.2 kg/cm²) at 30 °C, in outside diameters from 63 mm to 200 mm. The pipes serve as mains, sub-mains and laterals of portable sprinkler systems. Class 2 is the right choice when the system's total pressure stays within 3.2 kg/cm² and the water is no warmer than 35 °C. Total pressure means the sprinkler operating pressure, plus friction loss in pipes and fittings, plus static lift.\r\n\r\nThe HDPE is carbon-black stabilised for long hours in open sun. Every pipe is printed with brand, size, class and batch code, so each length can be traced to its production batch. Made at our plant in Fatehabad, Haryana.",
+    "aboutTitle": "About Our Quick-Coupled Sprinkler Pipe",
+    "animationFile": "",
+    "animationSubtitle": "The female coupler carries an elastomeric sealing ring. With the male end pushed home, water pressure presses the ring onto the joint as the line fills, so the seal tightens as pressure rises. Drain the line and the lengths separate by hand.",
+    "animationTitle": "How the Quick Coupler Seals",
+    "animationUrl": "",
+    "applications": [
+      "Portable sprinkler irrigation for field crops",
+      "Sprinkler mains, sub-mains and laterals",
+      "Irrigation on sandy or uneven land",
+      "Vegetables, fodder and nursery crops",
+      "Water conveyance from pump or tubewell to field"
+    ],
+    "badge": "Quick-Coupled · Agriculture",
+    "bannerImage": "/images/hdpe_02.svg",
+    "createdDate": "2026-09-03T09:02:55.464Z",
+    "detailImage": "/images/uploads/detailImage-1788756079072-941841286.png",
+    "features": [
+      {
+        "icon": "https://cdn-icons-png.flaticon.com/512/1705/1705833.png",
+        "title": "Tool-Free Quick Coupling",
+        "description": "Male and female HDPE couplers on every length. Join or separate the line by hand, with no tools, solvent or threading.",
+        "_id": "6ab4e14e2bb549f60c348611"
+      },
+      {
+        "icon": "https://cdn-icons-png.flaticon.com/512/1705/1705833.png",
+        "title": "Pressure-Activated Seal",
+        "description": "The elastomeric ring in the female coupler presses tighter as line pressure builds, keeping joints tight in operation.",
+        "_id": "6ab4e14e2bb549f60c348612"
+      },
+      {
+        "icon": "https://cdn-icons-png.flaticon.com/512/1705/1705833.png",
+        "title": "Class 2 · 3.2 kg/cm²",
+        "description": "Rated for 0.32 MPa maximum working pressure at 30 °C across 63 to 200 mm OD.",
+        "_id": "6ab4e14e2bb549f60c348613"
+      },
+      {
+        "icon": "https://cdn-icons-png.flaticon.com/512/1705/1705833.png",
+        "title": "Built for Open Fields",
+        "description": "Carbon-black stabilised HDPE for long hours in direct sun on the field surface.",
+        "_id": "6ab4e14e2bb549f60c348614"
+      },
+      {
+        "icon": "https://cdn-icons-png.flaticon.com/512/1705/1705833.png",
+        "title": "Easy to Shift",
+        "description": "Light, flexible HDPE lengths are simple to carry, lay and reposition between sets.",
+        "_id": "6ab4e14e2bb549f60c348615"
+      },
+      {
+        "icon": "https://cdn-icons-png.flaticon.com/512/1705/1705833.png",
+        "title": "Batch-Traceable",
+        "description": "Brand, size, class and batch code printed on every pipe.",
+        "_id": "6ab4e14e2bb549f60c348616"
+      }
+    ],
+    "galleryImages": [
+      "/images/uploads/gallery1-1788756094235-352927402.png",
+      "/images/uploads/gallery2-1788756094238-237230567.png",
+      "/images/uploads/gallery3-1788756094239-958300898.png"
+    ],
+    "headline": "Quick-Coupled HDPE Sprinkler Pipe",
+    "heroImage": "/images/uploads/heroImage-1788756079071-112087305.png",
+    "heroSubtitle": "Portable HDPE sprinkler pipe with quick couplers. Join by hand, shift from set to set without tools.",
+    "hoverImage": "/images/uploads/hoverImage-1788756079070-708299387.png",
+    "link": "/sprinkler",
+    "mainImage": "/images/uploads/mainImage-1788756064676-298304279.png",
+    "materialGrade": "PE 63 / PE 80 HDPE",
+    "name": "HDPE Sprinkler Pipe",
+    "pressureRating": "Class 2: 0.32 MPa (3.2 kg/cm²) max. working pressure at 30 °C",
+    "shortDescription": "Class 2 (3.2 kg/cm²) quick-coupled HDPE sprinkler pipe, 63 to 200 mm OD, for the mains, sub-mains and laterals of portable sprinkler systems.",
+    "sizeRange": "63 mm to 200 mm OD",
+    "slug": "sprinkler",
+    "specifications": [
+      {
+        "size": "63 mm",
+        "classType": "Class 2",
+        "wallThickness": "2.00 - 2.40 mm",
+        "workingPressure": "3.2 kg/cm²",
+        "_id": "6ab4e14e2bb549f60c348617"
+      },
+      {
+        "size": "75 mm",
+        "classType": "Class 2",
+        "wallThickness": "2.50 - 2.90 mm",
+        "workingPressure": "3.2 kg/cm²",
+        "_id": "6ab4e14e2bb549f60c348618"
+      },
+      {
+        "size": "90 mm",
+        "classType": "Class 2",
+        "wallThickness": "2.90 - 3.40 mm",
+        "workingPressure": "3.2 kg/cm²",
+        "_id": "6ab4e14e2bb549f60c348619"
+      },
+      {
+        "size": "110 mm",
+        "classType": "Class 2",
+        "wallThickness": "3.40 - 3.90 mm",
+        "workingPressure": "3.2 kg/cm²",
+        "_id": "6ab4e14e2bb549f60c34861a"
+      },
+      {
+        "size": "125 mm",
+        "classType": "Class 2",
+        "wallThickness": "3.80 - 4.50 mm",
+        "workingPressure": "3.2 kg/cm²",
+        "_id": "6ab4e14e2bb549f60c34861b"
+      },
+      {
+        "size": "140 mm",
+        "classType": "Class 2",
+        "wallThickness": "4.30 - 5.00 mm",
+        "workingPressure": "3.2 kg/cm²",
+        "_id": "6ab4e14e2bb549f60c34861c"
+      },
+      {
+        "size": "160 mm",
+        "classType": "Class 2",
+        "wallThickness": "4.90 - 5.60 mm",
+        "workingPressure": "3.2 kg/cm²",
+        "_id": "6ab4e14e2bb549f60c34861d"
+      },
+      {
+        "size": "180 mm",
+        "classType": "Class 2",
+        "wallThickness": "5.50 - 6.30 mm",
+        "workingPressure": "3.2 kg/cm²",
+        "_id": "6ab4e14e2bb549f60c34861e"
+      },
+      {
+        "size": "200 mm",
+        "classType": "Class 2",
+        "wallThickness": "6.10 - 7.00 mm",
+        "workingPressure": "3.2 kg/cm²",
+        "_id": "6ab4e14e2bb549f60c34861f"
+      }
+    ],
+    "standards": "IS 17425:2026",
+    "tagline": "Better pipe, Better life",
+    "videoDescription": "A sprinkler line being coupled by hand, pressurised, then drained and moved to the next set.",
+    "videoFile": "",
+    "videoTitle": "Joining & Shifting a Solanki Sprinkler Line",
+    "videoUrl": "",
+    "id": "sprinkler"
+  }
+]

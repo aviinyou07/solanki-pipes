@@ -1,0 +1,168 @@
+<footer class="bg-[#1e40af] text-white pt-12 md:pt-14 pb-8 px-6 sm:px-10 lg:px-16 text-sm relative">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+
+            <!-- Column 1: Company Logo, Description & Accreditation -->
+            <div class="lg:col-span-4 flex flex-col items-start space-y-4">
+                <a href="/" class="inline-block transition-transform duration-300 hover:scale-105">
+                    <img src="<%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.footerLogo) ? siteSettings.footerLogo : '/images/SOLANKI-PIPES-LOGO-WHITE.png' %>" 
+                         alt="Solanki Pipes Logo" 
+                         class="w-36 sm:w-40 h-auto drop-shadow-sm">
+                </a>
+
+                <p class="text-white text-xs sm:text-[13px] leading-relaxed font-normal max-w-sm">
+                    Solanki Pipes is a trusted manufacturer of high-quality piping solutions, delivering durability, sustainability, and performance across India.
+                </p>
+
+                <div class="pt-1">
+                    <p class="text-white font-bold text-xs sm:text-[13px] leading-snug">
+                        BIS-Licensed HDPE Pipe Manufacturer<br>— IS 4984:2016
+                    </p>
+                </div>
+
+                <% 
+                    const fb = (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.facebook) ? siteSettings.facebook : '';
+                    const ig = (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.instagram) ? siteSettings.instagram : '';
+                    const li = (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.linkedin) ? siteSettings.linkedin : '';
+                %>
+                <% if (fb || ig || li) { %>
+                <div class="flex items-center gap-2.5 pt-2">
+                    <% if (fb) { %>
+                    <a href="<%= fb %>" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-blue-900/60 hover:bg-blue-500 text-white flex items-center justify-center transition border border-white/20 hover:scale-105" title="Facebook">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <% } %>
+                    <% if (ig) { %>
+                    <a href="<%= ig %>" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-blue-900/60 hover:bg-pink-600 text-white flex items-center justify-center transition border border-white/20 hover:scale-105" title="Instagram">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <% } %>
+                    <% if (li) { %>
+                    <a href="<%= li %>" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-blue-900/60 hover:bg-blue-600 text-white flex items-center justify-center transition border border-white/20 hover:scale-105" title="LinkedIn">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <% } %>
+                </div>
+                <% } %>
+            </div>
+
+            <!-- Column 2: Quick Links -->
+            <div class="lg:col-span-2">
+                <h4 class="text-white font-bold uppercase tracking-wider text-xs sm:text-[13.5px] mb-4">
+                    QUICK LINKS
+                </h4>
+                <ul class="space-y-2 text-xs sm:text-[13px] font-semibold text-white">
+                    <li><a href="/about" class="hover:underline transition-all">About Company</a></li>
+                    <li><a href="/founder-message" class="hover:underline transition-all">Founder's Message</a></li>
+                    <li><a href="/hdpe" class="hover:underline transition-all">HDPE Water Pipes</a></li>
+                    <li><a href="/sprinkler" class="hover:underline transition-all">Sprinkler Pipes (IS 14151)</a></li>
+                    <li><a href="/quality" class="hover:underline transition-all">Quality Assurance</a></li>
+                    <li><a href="/projects" class="hover:underline transition-all">Projects &amp; Portfolio</a></li>
+                    <li><a href="/farmers-fair" class="hover:underline transition-all">Farmers' Fair Initiative</a></li>
+                    <li><a href="/vendor-empanelment" class="hover:underline transition-all">Vendor Empanelment</a></li>
+                    <li><a href="/contact" class="hover:underline transition-all">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Connect With Us -->
+            <div class="lg:col-span-3">
+                <h4 class="text-white font-bold uppercase tracking-wider text-xs sm:text-[13.5px] mb-4">
+                    CONNECT WITH US
+                </h4>
+                <div class="space-y-3.5 text-xs sm:text-[13px]">
+                    <!-- Phone -->
+                    <% 
+                        const phone1 = (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.phone1) ? siteSettings.phone1 : '99921-77822';
+                        const phone2 = (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.phone2) ? siteSettings.phone2 : '94664-58070';
+                    %>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5 text-[#ef4444] shrink-0 fill-current" viewBox="0 0 24 24">
+                            <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
+                        <div class="font-bold text-white tracking-wide">
+                            <a href="tel:+<%= phone1.replace(/[^0-9]/g, '') %>" class="hover:underline"><%= phone1 %></a>
+                            <span class="mx-1">|</span>
+                            <a href="tel:+<%= phone2.replace(/[^0-9]/g, '') %>" class="hover:underline"><%= phone2 %></a>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5 text-white shrink-0 fill-current" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        <a href="mailto:<%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.email) ? siteSettings.email : 'sales@solankipipes.com' %>" class="font-bold text-white hover:underline">
+                            <%= (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.email) ? siteSettings.email : 'sales@solankipipes.com' %>
+                        </a>
+                    </div>
+
+                    <!-- Head Office -->
+                    <% 
+                        let headOfficeFormatted = (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.headOffice)
+                            ? siteSettings.headOffice
+                            : 'Solanki Industries, Fatehabad Road,\nMehuwala,\nFatehabad, Haryana 125053';
+                        if (!headOfficeFormatted.includes('\n')) {
+                            headOfficeFormatted = headOfficeFormatted
+                                .replace(/Fatehabad Road,\s*Mehuwala,\s*/, 'Fatehabad Road,\nMehuwala,\n')
+                                .replace(/Mehuwala,\s*/, 'Mehuwala,\n');
+                        }
+                    %>
+                    <div class="leading-relaxed">
+                        <p class="font-bold text-white">Head Office:</p>
+                        <p class="text-white font-medium whitespace-pre-line"><%= headOfficeFormatted %></p>
+                    </div>
+
+                    <!-- Manufacturing Unit -->
+                    <% 
+                        let mfgUnitFormatted = (typeof siteSettings !== 'undefined' && siteSettings && siteSettings.manufacturingUnit)
+                            ? siteSettings.manufacturingUnit
+                            : 'Khasra No. 115//2/2, Sarsa Ghoghra,\nBhiwani, Haryana 127021';
+                        if (!mfgUnitFormatted.includes('\n')) {
+                            mfgUnitFormatted = mfgUnitFormatted.replace(/Sarsa Ghoghra,\s*/, 'Sarsa Ghoghra,\n');
+                        }
+                    %>
+                    <div class="leading-relaxed">
+                        <p class="font-bold text-white">Manufacturing Unit:</p>
+                        <p class="text-white font-medium whitespace-pre-line"><%= mfgUnitFormatted %></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 4: Locate Us Map -->
+            <div class="lg:col-span-3">
+                <h4 class="text-white font-bold uppercase tracking-wider text-xs sm:text-[13.5px] mb-4">
+                    LOCATE US
+                </h4>
+                <div class="rounded-xl overflow-hidden shadow-sm border border-white/20 bg-white">
+                    <iframe class="w-full h-36 sm:h-40 border-0" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3475.5347553083116!2d75.34592017552977!3d29.413163275247534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39115f6f5d254d11%3A0x44194b9d5e33a1!2sSolanki%20HDPE%20Pipes%2020mm-1000m!5e0!3m2!1sen!2sin!4v1779205348530!5m2!1sen!2sin" 
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Horizontal Divider -->
+        <div class="border-t border-[#1f2937] my-8 sm:my-9"></div>
+
+        <!-- Sub-footer Bottom Bar -->
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] sm:text-xs font-bold text-white tracking-wider uppercase">
+            <p>COPYRIGHT © <%= new Date().getFullYear() %> SOLANKI INDUSTRIES. ALL RIGHTS RESERVED.</p>
+            <div class="flex items-center gap-6 sm:gap-8">
+                <a href="/privacy" class="hover:underline transition-all">PRIVACY POLICY</a>
+                <a href="/terms" class="hover:underline transition-all">TERMS OF USE</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100,
+        easing: 'ease-in-out',
+    });
+</script>

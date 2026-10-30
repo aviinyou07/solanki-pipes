@@ -1,0 +1,381 @@
+<%- include('partials/admin-header') %>
+
+    <div class="flex-grow p-4 max-w-7xl w-full mx-auto">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div>
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-2 border border-blue-100">
+                    <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                    Full Website Customization
+                </div>
+                <h1 class="text-3xl font-extrabold text-gray-900 uppercase tracking-tight">Page Content <span
+                        class="text-blue-600">Customizer</span></h1>
+                <p class="text-gray-500 text-sm mt-1">Select any page below to customize its headlines, descriptions,
+                    media, feature cards, and section contents in real-time.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="/" target="_blank"
+                    class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-bold py-2.5 px-4 rounded-xl shadow-sm transition flex items-center gap-2 text-xs">
+                    <span>View Live Website</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25">
+                        </path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Grid of Pages -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+
+            <!-- 1. Home Page -->
+            <div
+                class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group hover:border-blue-300">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 group-hover:scale-105 transition-transform">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                            </svg>
+                        </div>
+                        <span
+                            class="bg-emerald-50 text-emerald-700 text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-100">Live
+                            & Editable</span>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">Home
+                        Page</h3>
+                    <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Hero slider & badges, DHBVN announcement &
+                        4 interactive accordions, typing banner, and features showcase.</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Hero
+                            Carousel</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">DHBVN
+                            Accordions</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Features
+                            Matrix</span>
+                    </div>
+                </div>
+                <div class="bg-slate-50/70 p-4 border-t border-slate-100 flex items-center justify-between">
+                    <a href="/" target="_blank"
+                        class="text-xs font-semibold text-slate-500 hover:text-slate-800">Preview ↗</a>
+                    <a href="/admin/pages/home"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 rounded-lg shadow-sm transition flex items-center gap-1.5">
+                        <span>Edit Sections</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 2. About Us Page -->
+            <div
+                class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group hover:border-indigo-300">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center border border-indigo-100 group-hover:scale-105 transition-transform">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                            </svg>
+                        </div>
+                        <span
+                            class="bg-emerald-50 text-emerald-700 text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-100">Live
+                            & Editable</span>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">About
+                        Us</h3>
+                    <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Company history, legal credentials (GSTIN,
+                        BIS), mission & vision, 4 core value pillars, and factory infrastructure.</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+                        <span
+                            class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Credentials</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Mission
+                            & Vision</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">4
+                            Values</span>
+                    </div>
+                </div>
+                <div class="bg-slate-50/70 p-4 border-t border-slate-100 flex items-center justify-between">
+                    <a href="/about" target="_blank"
+                        class="text-xs font-semibold text-slate-500 hover:text-slate-800">Preview ↗</a>
+                    <a href="/admin/pages/about"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 rounded-lg shadow-sm transition flex items-center gap-1.5">
+                        <span>Edit Sections</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. Contact Us Page -->
+            <div
+                class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group hover:border-cyan-300">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center border border-cyan-100 group-hover:scale-105 transition-transform">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3.6-3.091c-.567-.02-1.12-.058-1.65-.114M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H3.75A2.25 2.25 0 011.5 13.5v-3a2.25 2.25 0 012.25-2.25h3z" />
+                            </svg>
+                        </div>
+                        <span
+                            class="bg-emerald-50 text-emerald-700 text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-100">Live
+                            & Editable</span>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">
+                        Contact Us</h3>
+                    <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Office & manufacturing plant addresses,
+                        direct support numbers, WhatsApp channel, and project inquiry form.</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Head
+                            Office</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Plant
+                            Unit</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Inquiry
+                            Lead Box</span>
+                    </div>
+                </div>
+                <div class="bg-slate-50/70 p-4 border-t border-slate-100 flex items-center justify-between">
+                    <a href="/contact" target="_blank"
+                        class="text-xs font-semibold text-slate-500 hover:text-slate-800">Preview ↗</a>
+                    <a href="/admin/pages/contact"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 rounded-lg shadow-sm transition flex items-center gap-1.5">
+                        <span>Edit Sections</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4. Quality Assurance Page -->
+            <div
+                class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group hover:border-purple-300">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100 group-hover:scale-105 transition-transform">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.25-8.25-3.286zm0 13.036h.008v.008H12v-.008z" />
+                            </svg>
+                        </div>
+                        <span
+                            class="bg-emerald-50 text-emerald-700 text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-100">Live
+                            & Editable</span>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">
+                        Quality Assurance</h3>
+                    <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">IMS standards philosophy, testing lab
+                        banner, inspirational quote banner, and 3 comprehensive testing pillars.</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">IMS
+                            Philosophy</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">3
+                            Testing Pillars</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Testing
+                            Lab Banner</span>
+                    </div>
+                </div>
+                <div class="bg-slate-50/70 p-4 border-t border-slate-100 flex items-center justify-between">
+                    <a href="/quality" target="_blank"
+                        class="text-xs font-semibold text-slate-500 hover:text-slate-800">Preview ↗</a>
+                    <a href="/admin/pages/quality"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 rounded-lg shadow-sm transition flex items-center gap-1.5">
+                        <span>Edit Sections</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 5. Downloads Center Page -->
+            <div
+                class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group hover:border-amber-300">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100 group-hover:scale-105 transition-transform">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                            </svg>
+                        </div>
+                        <span
+                            class="bg-emerald-50 text-emerald-700 text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-100">Live
+                            & Editable</span>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">
+                        Download Center</h3>
+                    <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Manage downloadable corporate profiles, BIS
+                        licenses, ISO certificates, test certificates, brochures, and PDF files.</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Upload
+                            PDFs</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Catalog
+                            Files</span>
+                        <span
+                            class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Add/Remove
+                            Docs</span>
+                    </div>
+                </div>
+                <div class="bg-slate-50/70 p-4 border-t border-slate-100 flex items-center justify-between">
+                    <a href="/downloads" target="_blank"
+                        class="text-xs font-semibold text-slate-500 hover:text-slate-800">Preview ↗</a>
+                    <a href="/admin/pages/downloads"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 rounded-lg shadow-sm transition flex items-center gap-1.5">
+                        <span>Edit Sections</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 6. Farmers' Fair CSR Event Page -->
+            <div
+                class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group hover:border-emerald-300">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 group-hover:scale-105 transition-transform">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
+                            </svg>
+                        </div>
+                        <span
+                            class="bg-emerald-50 text-emerald-700 text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-100">Live
+                            & Editable</span>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">
+                        Farmers’ Fair CSR</h3>
+                    <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Exhibition banner image, event factsheet,
+                        keynote speech highlights, and 4 detailed educational event chapters.</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Event
+                            Factsheet</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">4
+                            Chapters</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Coverage
+                            Photo</span>
+                    </div>
+                </div>
+                <div class="bg-slate-50/70 p-4 border-t border-slate-100 flex items-center justify-between">
+                    <a href="/farmers-fair" target="_blank"
+                        class="text-xs font-semibold text-slate-500 hover:text-slate-800">Preview ↗</a>
+                    <a href="/admin/pages/farmers-fair"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 rounded-lg shadow-sm transition flex items-center gap-1.5">
+                        <span>Edit Sections</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 7. Vendor Empanelment Page -->
+            <div
+                class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group hover:border-teal-300">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center border border-teal-100 group-hover:scale-105 transition-transform">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                            </svg>
+                        </div>
+                        <span
+                            class="bg-emerald-50 text-emerald-700 text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-100">Live
+                            & Editable</span>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">Vendor
+                        Empanelment</h3>
+                    <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Government empanelment details, approved
+                        board lists (DHBVN, PHED, Panchayati Raj), and dealer application settings.</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Approved
+                            Boards</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Dealer
+                            Form</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Tender
+                            Depts</span>
+                    </div>
+                </div>
+                <div class="bg-slate-50/70 p-4 border-t border-slate-100 flex items-center justify-between">
+                    <a href="/vendor-empanelment" target="_blank"
+                        class="text-xs font-semibold text-slate-500 hover:text-slate-800">Preview ↗</a>
+                    <a href="/admin/pages/vendor-empanelment"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 rounded-lg shadow-sm transition flex items-center gap-1.5">
+                        <span>Edit Sections</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 8. Founder's Message Page -->
+            <div
+                class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group hover:border-rose-300">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-100 group-hover:scale-105 transition-transform">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                            </svg>
+                        </div>
+                        <span
+                            class="bg-emerald-50 text-emerald-700 text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-100">Live
+                            & Editable</span>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">
+                        Founder's Message</h3>
+                    <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Personal letter by Sachin Solanki,
+                        signature details, executive photo, quotes, and 4 high-resolution gallery highlights.</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Founder
+                            Letter</span>
+                        <span
+                            class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Signature</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Gallery
+                            Media</span>
+                    </div>
+                </div>
+                <div class="bg-slate-50/70 p-4 border-t border-slate-100 flex items-center justify-between">
+                    <a href="/founder-message" target="_blank"
+                        class="text-xs font-semibold text-slate-500 hover:text-slate-800">Preview ↗</a>
+                    <a href="/admin/founder-message"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 rounded-lg shadow-sm transition flex items-center gap-1.5">
+                        <span>Edit Sections</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <%- include('partials/admin-footer') %>

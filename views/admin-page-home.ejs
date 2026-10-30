@@ -1,0 +1,471 @@
+<%- include('partials/admin-header') %>
+
+    <div class="flex-grow p-4 max-w-7xl w-full mx-auto">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div>
+                <div class="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
+                    <a href="/admin/pages" class="hover:text-blue-600 transition">Pages</a>
+                    <span>/</span>
+                    <span class="text-blue-600">Home Page</span>
+                </div>
+                <h1 class="text-3xl font-extrabold text-gray-900 uppercase tracking-tight">Customize <span
+                        class="text-blue-600">Home Page</span></h1>
+                <p class="text-gray-500 text-sm mt-1">Change hero carousel, DHBVN announcement, 4 interactive
+                    accordions, typing banner, and product feature cards.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="/" target="_blank"
+                    class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-bold py-2.5 px-4 rounded-xl shadow-sm transition flex items-center gap-2 text-xs">
+                    <span>View Live Page</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25">
+                        </path>
+                    </svg>
+                </a>
+                <button type="submit" form="homeForm"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl shadow-md transition flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    <span>Save All Changes</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Edit Form -->
+        <form id="homeForm" action="/admin/pages/home" method="POST" enctype="multipart/form-data" class="space-y-8">
+
+            <!-- 1. HERO SECTION -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <h2
+                            class="text-base font-extrabold text-slate-800 uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                            1. Hero Slider & Call To Action
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Top-of-fold headlines, badge tags, and WhatsApp CTA
+                            button text</p>
+                    </div>
+                </div>
+                <div class="p-6 space-y-6">
+                    <!-- Slide 1 (HDPE Primary) -->
+                    <div class="border border-slate-100 rounded-xl p-5 bg-slate-50/30">
+                        <h3
+                            class="text-xs font-bold text-blue-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-[10px]">Slide 1</span>
+                            Primary HDPE Spotlight
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Hero Badge
+                                    Tag</label>
+                                <input type="text" name="heroBadge" value="<%= data.heroBadge || '' %>"
+                                    class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">WhatsApp Button
+                                    Text</label>
+                                <input type="text" name="heroWhatsappText"
+                                    value="<%= data.heroWhatsappText || 'Contact Us' %>"
+                                    class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Hero Main Title
+                                    (HTML Supported)</label>
+                                <input type="text" name="heroTitle" value="<%= data.heroTitle || '' %>"
+                                    class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Hero Description
+                                    / Subtitle</label>
+                                <textarea name="heroDescription" rows="2"
+                                    class="w-full text-sm border border-slate-200 rounded-xl p-4 focus:outline-none focus:border-blue-500 bg-white resize-y"><%= data.heroDescription || '' %></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 (Sprinkler Secondary) -->
+                    <div class="border border-slate-100 rounded-xl p-5 bg-slate-50/30">
+                        <h3
+                            class="text-xs font-bold text-emerald-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 text-[10px]">Slide 2</span>
+                            Sprinkler & Irrigation Spotlight
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Slide 2 Badge
+                                    Tag</label>
+                                <input type="text" name="heroSlide2Badge" value="<%= data.heroSlide2Badge || '' %>"
+                                    class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Slide 2
+                                    Title</label>
+                                <input type="text" name="heroSlide2Title" value="<%= data.heroSlide2Title || '' %>"
+                                    class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Slide 2
+                                    Description</label>
+                                <textarea name="heroSlide2Description" rows="2"
+                                    class="w-full text-sm border border-slate-200 rounded-xl p-4 focus:outline-none focus:border-blue-500 bg-white resize-y"><%= data.heroSlide2Description || '' %></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. PRODUCT SECTION HEADINGS -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-base font-extrabold text-slate-800 uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                            2. Product Range Section Headings
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Customize the section title and heading above the horizontal product cards</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Section Small Tag</label>
+                            <input type="text" name="exploreTitle" value="<%= data.exploreTitle || 'EXPLORE OUR PRODUCT RANGE' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Main Heading</label>
+                            <input type="text" name="exploreHeading" value="<%= data.exploreHeading || 'What We Produce' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. PROJECTS & EVENTS CARDS -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-base font-extrabold text-slate-800 uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                            3. Impact & Events Showcase Cards
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Edit section title and the two event/sponsorship highlight cards next to the featured project</p>
+                    </div>
+                </div>
+                <div class="p-6 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Section Subtitle</label>
+                            <input type="text" name="impactSubtitle" value="<%= data.impactSubtitle || 'OUR IMPACT' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Section Title</label>
+                            <input type="text" name="impactTitle" value="<%= data.impactTitle || 'Projects & Events' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
+                        <!-- Event Card 1 -->
+                        <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/40 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase">Top Event Card</span>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Badge Tag</label>
+                                <input type="text" name="event1Badge" value="<%= data.event1Badge || 'Event' %>"
+                                    class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Title / Heading</label>
+                                <input type="text" name="event1Title" value="<%= data.event1Title || 'Sponsorship of Farmers’ Fair & Agricultural Exhibition – Haryana' %>"
+                                    class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Link (URL)</label>
+                                <input type="text" name="event1Link" value="<%= data.event1Link || '/farmers-fair' %>"
+                                    class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Image</label>
+                                <div class="flex items-center gap-3">
+                                    <% if (data.event1Image) { %>
+                                        <img src="<%= data.event1Image %>" class="w-16 h-12 object-cover rounded border border-slate-200">
+                                    <% } %>
+                                    <input type="file" name="event1Image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event Card 2 -->
+                        <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/40 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[10px] font-bold uppercase">Bottom Event / Sponsorship Card</span>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Badge Tag</label>
+                                <input type="text" name="event2Badge" value="<%= data.event2Badge || 'Community & Sponsorships' %>"
+                                    class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Title / Heading</label>
+                                <input type="text" name="event2Title" value="<%= data.event2Title || 'Solanki Pipes Proudly Sponsors JKL (Just Kabaddi League)' %>"
+                                    class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Link (URL, optional)</label>
+                                <input type="text" name="event2Link" value="<%= data.event2Link || '' %>"
+                                    class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white" placeholder="e.g. /contact or leave empty">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Image</label>
+                                <div class="flex items-center gap-3">
+                                    <% if (data.event2Image) { %>
+                                        <img src="<%= data.event2Image %>" class="w-16 h-12 object-cover rounded border border-slate-200">
+                                    <% } %>
+                                    <input type="file" name="event2Image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. DHBVN EMPANELMENT SECTION -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <h2
+                            class="text-base font-extrabold text-slate-800 uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                            4. DHBVN Empanelment Announcement & Accordions
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Edit official government empanelment headline,
+                            certificate image, and the 4 interactive dropdown accordions.</p>
+                    </div>
+                </div>
+                <div class="p-6 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Section Heading (HTML
+                                supported)</label>
+                            <input type="text" name="dhbvnHeading" value="<%= data.dhbvnHeading || '' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Subheading</label>
+                            <input type="text" name="dhbvnSubheading" value="<%= data.dhbvnSubheading || '' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Announcement
+                                Paragraph 1</label>
+                            <textarea name="dhbvnParagraph1" rows="3"
+                                class="w-full text-sm border border-slate-200 rounded-xl p-4 focus:outline-none focus:border-blue-500 bg-white resize-y"><%= data.dhbvnParagraph1 || '' %></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Announcement
+                                Paragraph 2</label>
+                            <textarea name="dhbvnParagraph2" rows="2"
+                                class="w-full text-sm border border-slate-200 rounded-xl p-4 focus:outline-none focus:border-blue-500 bg-white resize-y"><%= data.dhbvnParagraph2 || '' %></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">DHBVN Certificate
+                                Image</label>
+                            <div class="flex items-center gap-4">
+                                <% if (data.dhbvnCertificate) { %>
+                                    <img src="<%= data.dhbvnCertificate %>"
+                                        class="w-20 h-24 object-cover rounded-lg border border-slate-200 shadow-sm">
+                                    <% } %>
+                                        <div class="flex-grow">
+                                            <input type="file" name="dhbvnCertificate" accept="image/*"
+                                                class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                            <p class="text-[11px] text-slate-400 mt-1">Upload an image file to update
+                                                the certificate preview shown on the homepage.</p>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 Accordions -->
+                    <div class="pt-4 border-t border-slate-100">
+                        <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-4">4 Interactive
+                            Accordion Blocks</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <% const accordions=data.dhbvnAccordions || []; %>
+                                <% for (let i=0; i < 4; i++) { %>
+                                    <% const acc=accordions[i] || {}; %>
+                                        <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50">
+                                            <span
+                                                class="inline-block text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded uppercase mb-2">Accordion
+                                                <%= i + 1 %>
+                                            </span>
+                                            <div class="space-y-3">
+                                                <div>
+                                                    <label
+                                                        class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Accordion
+                                                        Title</label>
+                                                    <input type="text" name="accTitle_<%= i %>"
+                                                        value="<%= acc.title || '' %>"
+                                                        class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 bg-white">
+                                                </div>
+                                                <div>
+                                                    <label
+                                                        class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Accordion
+                                                        Text Content</label>
+                                                    <textarea name="accContent_<%= i %>" rows="3"
+                                                        class="w-full text-xs border border-slate-200 rounded-lg p-3 focus:outline-none focus:border-blue-500 bg-white resize-y"><%= acc.content || '' %></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. INTERACTIVE TYPING BANNER -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <h2
+                            class="text-base font-extrabold text-slate-800 uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                            5. Interactive Animated Typing Banner
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Configure typewriter effect headline on dark blue
+                            banner.</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Main Typing
+                                Text</label>
+                            <textarea name="typingPrefix" rows="3"
+                                class="w-full text-sm border border-slate-200 rounded-xl p-3 focus:outline-none focus:border-blue-500 bg-white resize-y"><%= data.typingPrefix || '' %></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Highlighted Ending
+                                Word</label>
+                            <input type="text" name="typingHighlight" value="<%= data.typingHighlight || 'Tomorrow.' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                            <p class="text-[11px] text-slate-400 mt-2">Types in distinct glowing white/cyan font to
+                                conclude the animated statement.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. STRONG PIPES & FEATURES SECTION -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <h2
+                            class="text-base font-extrabold text-slate-800 uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                            6. "Strong Pipes for a Stronger Future" & 4 Features
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Bottom callout section with 4 quality badges,
+                            collection image, and download catalog action.</p>
+                    </div>
+                </div>
+                <div class="p-6 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Section Title</label>
+                            <input type="text" name="futureSectionTitle" value="<%= data.futureSectionTitle || '' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Collection Banner
+                                Image</label>
+                            <div class="flex items-center gap-3">
+                                <% if (data.collectionBanner) { %>
+                                    <img src="<%= data.collectionBanner %>"
+                                        class="w-16 h-12 object-contain bg-slate-100 rounded-lg p-1">
+                                    <% } %>
+                                        <input type="file" name="collectionBanner" accept="image/*"
+                                            class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            </div>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Section
+                                Description</label>
+                            <textarea name="futureSectionDescription" rows="2"
+                                class="w-full text-sm border border-slate-200 rounded-xl p-3 focus:outline-none focus:border-blue-500 bg-white resize-y"><%= data.futureSectionDescription || '' %></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">CTA Button 1
+                                Text</label>
+                            <input type="text" name="futureCta1Text"
+                                value="<%= data.futureCta1Text || 'Request Quote' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">CTA Button 2
+                                Text</label>
+                            <input type="text" name="futureCta2Text"
+                                value="<%= data.futureCta2Text || 'Download Catalogue' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                        </div>
+                    </div>
+
+                    <!-- 4 Feature Cards -->
+                    <div class="pt-4 border-t border-slate-100">
+                        <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-4">4 Feature
+                            Highlights</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                            <% const feats=data.features || []; %>
+                                <% for (let i=0; i < 4; i++) { %>
+                                    <% const f=feats[i] || {}; %>
+                                        <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50">
+                                            <span
+                                                class="inline-block text-[10px] font-bold text-cyan-700 bg-cyan-50 px-2 py-0.5 rounded uppercase mb-2">Feature
+                                                <%= i + 1 %>
+                                            </span>
+                                            <div class="space-y-3">
+                                                <div>
+                                                    <label
+                                                        class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Title</label>
+                                                    <input type="text" name="featTitle_<%= i %>"
+                                                        value="<%= f.title || '' %>"
+                                                        class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 bg-white">
+                                                </div>
+                                                <div>
+                                                    <label
+                                                        class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Description</label>
+                                                    <textarea name="featDesc_<%= i %>" rows="2"
+                                                        class="w-full text-xs border border-slate-200 rounded-lg p-2.5 focus:outline-none focus:border-blue-500 bg-white resize-y"><%= f.description || '' %></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sticky Bottom Actions -->
+            <div
+                class="sticky bottom-6 z-30 bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-slate-200 shadow-xl flex items-center justify-between">
+                <span class="text-xs text-slate-500 font-medium">Any changes made will update the live Home page
+                    immediately.</span>
+                <button type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl shadow-md transition flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    <span>Save All Changes</span>
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <%- include('partials/admin-footer') %>

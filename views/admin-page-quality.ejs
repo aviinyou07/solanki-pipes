@@ -1,0 +1,213 @@
+<%- include('partials/admin-header') %>
+
+    <div class="flex-grow p-4 max-w-7xl w-full mx-auto">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div>
+                <div class="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
+                    <a href="/admin/pages" class="hover:text-blue-600 transition">Pages</a>
+                    <span>/</span>
+                    <span class="text-blue-600">Quality Assurance</span>
+                </div>
+                <h1 class="text-3xl font-extrabold text-gray-900 uppercase tracking-tight">Customize <span
+                        class="text-blue-600">Quality Page</span></h1>
+                <p class="text-gray-500 text-sm mt-1">Manage quality hero banner, IMS philosophy, inspirational quote
+                    banner, and 3 comprehensive testing modules.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="/quality" target="_blank"
+                    class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-bold py-2.5 px-4 rounded-xl shadow-sm transition flex items-center gap-2 text-xs">
+                    <span>View Live Page</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25">
+                        </path>
+                    </svg>
+                </a>
+                <button type="submit" form="qualityForm"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl shadow-md transition flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    <span>Save All Changes</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Note on Certifications -->
+        <div
+            class="mb-6 p-4 rounded-xl bg-blue-50 border border-blue-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-blue-900 font-medium">
+            <div class="flex items-center gap-2.5">
+                <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                </svg>
+                <span>Certifications shown on the Quality page (BIS, ISO, DHBVN) can also be added, edited or removed
+                    separately in <a href="/admin/certifications"
+                        class="underline font-bold text-blue-700 hover:text-blue-900">Manage Certifications</a>.</span>
+            </div>
+            <a href="/admin/certifications"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1.5 rounded-lg transition shrink-0 text-center">Manage
+                Certifications ↗</a>
+        </div>
+
+        <!-- Edit Form -->
+        <form id="qualityForm" action="/admin/pages/quality" method="POST" enctype="multipart/form-data"
+            class="space-y-8">
+
+            <!-- 1. HEADER & HERO BANNER -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <h2
+                            class="text-base font-extrabold text-slate-800 uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                            1. Quality Hero & Lab Banner Image
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Top bold headline, subtitle, and testing laboratory
+                            banner image</p>
+                    </div>
+                </div>
+                <div class="p-6 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Page Headline</label>
+                            <input type="text" name="heroTitle"
+                                value="<%= data.heroTitle || 'Quality - Excellence Nexus' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Headline
+                                Subtitle</label>
+                            <input type="text" name="heroSubtitle"
+                                value="<%= data.heroSubtitle || 'Explore Unmatched Piping Excellence on Our Quality Floor' %>"
+                                class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Testing Laboratory
+                                Banner Image</label>
+                            <div class="flex items-center gap-4">
+                                <% if (data.bannerImage) { %>
+                                    <img src="<%= data.bannerImage %>"
+                                        class="w-24 h-16 object-cover rounded-lg border border-slate-200">
+                                    <% } %>
+                                        <div class="flex-grow">
+                                            <input type="file" name="bannerImage" accept="image/*"
+                                                class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                            <p class="text-[11px] text-slate-400 mt-1">Wide landscape photo of quality
+                                                control or extrusion floor.</p>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. IMS STATEMENT & QUOTE BANNER -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <h2
+                            class="text-base font-extrabold text-slate-800 uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                            2. IMS Quality Statement & Quote Banner
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Integrated Management System standards and
+                            inspirational quote</p>
+                    </div>
+                </div>
+                <div class="p-6 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Integrated Management
+                                System (IMS) Text</label>
+                            <textarea name="imsText" rows="4"
+                                class="w-full text-sm border border-slate-200 rounded-xl p-4 focus:outline-none focus:border-blue-500 bg-white resize-y"><%= data.imsText || '' %></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Inspirational Quote
+                                Banner (Purple Bar)</label>
+                            <textarea name="quoteBannerText" rows="4"
+                                class="w-full text-sm border border-slate-200 rounded-xl p-4 focus:outline-none focus:border-blue-500 bg-white resize-y"><%= data.quoteBannerText || '' %></textarea>
+                            <p class="text-[11px] text-slate-400 mt-1">Supports line breaks to match typography on the
+                                purple banner.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. COMPREHENSIVE QUALITY TESTING PILLARS -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <h2
+                            class="text-base font-extrabold text-slate-800 uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                            3. Comprehensive Quality Testing (3 Pillars)
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Configure the 3 testing protocol categories and their
+                            bullet point tests</p>
+                    </div>
+                </div>
+                <div class="p-6 space-y-6">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase">Section Title</label>
+                        <input type="text" name="testingSectionTitle"
+                            value="<%= data.testingSectionTitle || 'Comprehensive Quality Testing' %>"
+                            class="w-full text-sm border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 bg-white">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <% const pillars=data.testingPillars || []; %>
+                            <% for (let i=0; i < 3; i++) { %>
+                                <% const p=pillars[i] || {}; %>
+                                    <% const testsText=Array.isArray(p.tests) ? p.tests.join('\n') : (p.tests || '' );
+                                        %>
+                                        <div class="border border-blue-200 rounded-xl p-4 bg-blue-50/40">
+                                            <span
+                                                class="inline-block text-[10px] font-bold text-blue-700 bg-blue-100/70 px-2 py-0.5 rounded uppercase mb-3">Pillar
+                                                <%= i + 1 %>
+                                            </span>
+                                            <div class="space-y-3">
+                                                <div>
+                                                    <label
+                                                        class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Pillar
+                                                        Heading</label>
+                                                    <input type="text" name="pillarTitle_<%= i %>"
+                                                        value="<%= p.title || '' %>"
+                                                        class="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:border-blue-500 font-bold">
+                                                </div>
+                                                <div>
+                                                    <label
+                                                        class="block text-[11px] font-bold text-slate-700 mb-1 uppercase">Tests
+                                                        List (One per line)</label>
+                                                    <textarea name="pillarTests_<%= i %>" rows="5"
+                                                        class="w-full text-xs border border-slate-200 rounded-lg p-2.5 bg-white focus:outline-none focus:border-blue-500 resize-y"
+                                                        placeholder="MFR per IS 2530&#10;Density&#10;Carbon Black Content"><%= testsText %></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sticky Bottom Actions -->
+            <div
+                class="sticky bottom-6 z-30 bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-slate-200 shadow-xl flex items-center justify-between">
+                <span class="text-xs text-slate-500 font-medium">Changes will instantly update the Quality Assurance
+                    page.</span>
+                <button type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl shadow-md transition flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    <span>Save All Changes</span>
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <%- include('partials/admin-footer') %>
