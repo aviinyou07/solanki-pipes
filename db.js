@@ -11,9 +11,19 @@ try {
 
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/solanki_pipes';
 
-mongoose.connect(mongoURI)
+mongoose.set('bufferCommands', false);
+
+mongoose.connection.on('error', (err) => {
+    console.warn('MongoDB connection runtime warning:', err.message);
+});
+
+mongoose.connect(mongoURI, { serverSelectionTimeoutMS: 5000 })
   .then(() => console.log('Connected to MongoDB successfully'))
   .catch((err) => console.error('MongoDB connection error:', err));
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.warn('Unhandled Rejection intercepted:', reason && reason.message ? reason.message : reason);
+});
 
 // Define Project Schema
 const projectSchema = new mongoose.Schema({
@@ -149,7 +159,7 @@ const founderMessageSchema = new mongoose.Schema({
     _id: { type: String, default: 'default' },
     bannerTagline: { type: String, default: 'PIPES FOR A STRONGER TOMORROW' },
     founderName: { type: String, default: 'Sachin Solanki' },
-    founderRole: { type: String, default: 'Founder, Solanki Pipes' },
+    founderRole: { type: String, default: 'Head of Operations, Solanki Pipes' },
     founderQuote: { type: String, default: 'Quality today for a stronger tomorrow.' },
     founderImage: { type: String, default: '/images/founder_hritik_solanki.jpg' },
     categoryLabel: { type: String, default: 'FOUNDER’S MESSAGE' },
@@ -162,8 +172,8 @@ const founderMessageSchema = new mongoose.Schema({
     letterParagraph3: { type: String, default: 'I would like to thank our customers, partners and dedicated team members for being an integral part of this journey. Together, we will continue to build stronger foundations for generations to come.' },
     signoffText: { type: String, default: 'Warm regards,' },
     signatureName: { type: String, default: 'Sachin Solanki' },
-    signatureRole: { type: String, default: 'Founder' },
-    signatureCompany: { type: String, default: 'Solanki Pipes' },
+    signatureRole: { type: String, default: 'Head of Operations' },
+    signatureCompany: { type: String, default: 'Solanki Industries (Solanki Pipes)' },
     pipeFittingsImage: { type: String, default: '/images/pipe_fittings_render.jpg' },
     galleryImage1: { type: String, default: '/images/sp_img1.jpeg' },
     galleryTitle1: { type: String, default: 'High-Speed HDPE Extrusion' },
@@ -177,13 +187,100 @@ const founderMessageSchema = new mongoose.Schema({
     galleryImage4: { type: String, default: '/images/197.jpg.jpeg' },
     galleryTitle4: { type: String, default: 'Agricultural Exhibition & CSR' },
     gallerySubtitle4: { type: String, default: 'Farmer Outreach' },
+    leaders: { type: Array, default: [] },
     updatedAt: { type: Date, default: Date.now }
-});
+}, { strict: false });
 
 // Define PageContent Schema for customizable pages
 const pageContentSchema = new mongoose.Schema({
     _id: { type: String, required: true }, // e.g. 'home', 'about', 'contact', 'quality', 'downloads', 'farmers-fair', 'vendor-empanelment'
     data: { type: mongoose.Schema.Types.Mixed, default: {} },
+    updatedAt: { type: Date, default: Date.now }
+});
+
+// Define Leader Schema
+const leaderSchema = new mongoose.Schema({
+    id: { type: String, required: true },
+    name: { type: String, required: true },
+    designation: { type: String, default: '' },
+    roleLabel: { type: String, default: 'A MESSAGE FROM THE FOUNDER' },
+    headline: { type: String, default: '' },
+    headlineHighlight: { type: String, default: '' },
+    greeting: { type: String, default: 'Dear Valued Customers, Partners and Well-wishers,' },
+    paragraphs: [{ type: String }],
+    quote: { type: String, default: '' },
+    closing: { type: String, default: 'Warm regards,' },
+    signature: { type: String, default: '' },
+    signatureName: { type: String, default: '' },
+    signatureType: { type: String, default: 'typed' },
+    portraitImage: { type: String, default: '/images/sukinder_solanki.jpg' },
+    supportingImage: { type: String, default: '/images/pipe_fittings_render.jpg' },
+    companyName: { type: String, default: 'SOLANKI PIPES' },
+    socialLinks: {
+        linkedin: { type: String, default: '' },
+        twitter: { type: String, default: '' },
+        email: { type: String, default: '' }
+    },
+    displayOrder: { type: Number, default: 0 },
+    status: { type: String, default: 'active' },
+    updatedAt: { type: Date, default: Date.now }
+});
+
+// Define LeadershipActionCard Schema
+const leadershipActionCardSchema = new mongoose.Schema({
+    id: { type: String, required: true },
+    category: { type: String, required: true },
+    title: { type: String, required: true },
+    description: { type: String, default: '' },
+    image: { type: String, default: '/images/sp_img1.jpeg' },
+    displayOrder: { type: Number, default: 0 },
+    status: { type: String, default: 'active' },
+    updatedAt: { type: Date, default: Date.now }
+});
+
+// Define LeadershipPageSetting Schema
+const leadershipPageSettingSchema = new mongoose.Schema({
+    _id: { type: String, default: 'default' },
+    pageTitle: { type: String, default: 'Leadership Messages' },
+    breadcrumbHome: { type: String, default: 'Home' },
+    breadcrumbAbout: { type: String, default: 'About Us' },
+    breadcrumbCurrent: { type: String, default: 'Leadership Messages' },
+    tagline: { type: String, default: 'PIPES FOR A STRONGER TOMORROW' },
+    showTagline: { type: Boolean, default: true },
+    actionSubtitle: { type: String, default: 'INFRASTRUCTURE & IMPACT' },
+    actionTitle: { type: String, default: 'LEADERSHIP IN ACTION' },
+    actionLocationBadge: { type: String, default: '• Fatehabad & Bhiwani Facilities' },
+    carousel: {
+        autoplay: { type: Boolean, default: true },
+        autoplaySpeed: { type: Number, default: 6000 },
+        pauseOnHover: { type: Boolean, default: true },
+        showArrows: { type: Boolean, default: true },
+        showDots: { type: Boolean, default: true },
+        showLeaderTabs: { type: Boolean, default: true },
+        transitionStyle: { type: String, default: 'slide' },
+        transitionSpeed: { type: Number, default: 500 },
+        enableSwipe: { type: Boolean, default: true },
+        defaultActiveSlide: { type: Number, default: 0 }
+    },
+    updatedAt: { type: Date, default: Date.now }
+});
+
+// Define PopupSetting Schema for Home Page Promotional/Announcement Modal
+const popupSettingSchema = new mongoose.Schema({
+    _id: { type: String, default: 'default' },
+    enabled: { type: Boolean, default: true },
+    badgeText: { type: String, default: 'Special Announcement' },
+    badgeColor: { type: String, default: 'rose' },
+    title: { type: String, default: 'High-Performance HDPE Pipes' },
+    titleHighlight: { type: String, default: 'at Factory Best Prices!' },
+    description: { type: String, default: 'Supplying BIS-licensed PE80 & PE100 HDPE water and sewerage pipes up to 1000 mm diameter directly from our Fatehabad & Bhiwani manufacturing plants.' },
+    image: { type: String, default: '/images/sp_img1.jpeg' },
+    ctaText: { type: String, default: 'Explore Products' },
+    ctaLink: { type: String, default: '/hdpe' },
+    ctaTarget: { type: String, default: '_self' },
+    ctaColor: { type: String, default: 'emerald' },
+    displayFrequency: { type: String, default: 'every_refresh' },
+    delaySeconds: { type: Number, default: 0.5 },
     updatedAt: { type: Date, default: Date.now }
 });
 
@@ -194,6 +291,10 @@ const Product = mongoose.model('Product', productSchema);
 const SiteSetting = mongoose.model('SiteSetting', siteSettingSchema);
 const FounderMessage = mongoose.model('FounderMessage', founderMessageSchema);
 const PageContent = mongoose.model('PageContent', pageContentSchema);
+const Leader = mongoose.model('Leader', leaderSchema);
+const LeadershipActionCard = mongoose.model('LeadershipActionCard', leadershipActionCardSchema);
+const LeadershipPageSetting = mongoose.model('LeadershipPageSetting', leadershipPageSettingSchema);
+const PopupSetting = mongoose.model('PopupSetting', popupSettingSchema);
 
 module.exports = {
     mongoose,
@@ -203,7 +304,11 @@ module.exports = {
     Product,
     SiteSetting,
     FounderMessage,
-    PageContent
+    PageContent,
+    Leader,
+    LeadershipActionCard,
+    LeadershipPageSetting,
+    PopupSetting
 };
 
 

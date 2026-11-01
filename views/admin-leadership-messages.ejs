@@ -1,0 +1,1510 @@
+<%- include('partials/admin-header') %>
+
+<%
+    const d = (typeof data !== 'undefined' && data) ? data : {};
+    const settings = d.settings || {};
+    const carouselSettings = settings.carousel || {};
+    const leaders = Array.isArray(d.leaders) ? d.leaders : [];
+    const actionCards = Array.isArray(d.actionCards) ? d.actionCards : [];
+
+    const activeLeaderCount = leaders.filter(l => l.status === 'active').length;
+    const inactiveLeaderCount = leaders.length - activeLeaderCount;
+    const activeActionCount = actionCards.filter(c => c.status === 'active').length;
+%>
+
+<div class="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full">
+
+    <!-- Top Page Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+            <div class="flex items-center gap-2 mb-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Executive Content System</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                Leadership <span class="text-blue-600">Messages CMS</span>
+            </h1>
+            <p class="text-slate-500 text-xs sm:text-sm mt-1">
+                Manage leadership profiles, dynamic messages, carousel behavior, hero banner, and action cards.
+            </p>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="/leadership-messages" target="_blank" class="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition shadow-xs">
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                <span>Preview Public Page</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Alert / Flash Notifications -->
+    <% if (typeof query !== 'undefined' && query.saved) { %>
+    <div class="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-center gap-3 shadow-xs">
+        <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+        <div>
+            <p class="text-xs sm:text-sm font-bold">Changes saved successfully!</p>
+            <p class="text-xs text-emerald-600">Leadership messages and settings are live on the website.</p>
+        </div>
+    </div>
+    <% } else if (typeof query !== 'undefined' && query.error) { %>
+    <div class="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 flex items-center gap-3 shadow-xs">
+        <svg class="w-5 h-5 text-rose-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+        <div>
+            <p class="text-xs sm:text-sm font-bold">Operation failed</p>
+            <p class="text-xs text-rose-600"><%= query.error %></p>
+        </div>
+    </div>
+    <% } %>
+
+    <!-- Global Floating Action Toast -->
+    <div id="actionToast" class="hidden fixed bottom-6 right-6 z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 transition-all transform duration-300">
+        <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+        <span id="toastMessage">Saved successfully</span>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="border-b border-slate-200 mb-8">
+        <nav class="flex space-x-2 sm:space-x-8 overflow-x-auto scrollbar-none" aria-label="Tabs">
+            <button type="button" class="tab-btn active inline-flex items-center gap-2 py-4 px-1 border-b-2 border-blue-600 text-xs sm:text-sm font-bold text-blue-600 whitespace-nowrap focus:outline-none" data-tab-target="tab-leaders">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                <span>Leadership Members</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700"><%= leaders.length %></span>
+            </button>
+
+            <button type="button" class="tab-btn inline-flex items-center gap-2 py-4 px-1 border-b-2 border-transparent text-xs sm:text-sm font-semibold text-slate-500 hover:text-slate-700 hover:border-slate-300 whitespace-nowrap focus:outline-none" data-tab-target="tab-actions">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                <span>Leadership in Action</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600"><%= actionCards.length %></span>
+            </button>
+
+            <button type="button" class="tab-btn inline-flex items-center gap-2 py-4 px-1 border-b-2 border-transparent text-xs sm:text-sm font-semibold text-slate-500 hover:text-slate-700 hover:border-slate-300 whitespace-nowrap focus:outline-none" data-tab-target="tab-carousel">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
+                <span>Carousel Settings</span>
+            </button>
+
+            <button type="button" class="tab-btn inline-flex items-center gap-2 py-4 px-1 border-b-2 border-transparent text-xs sm:text-sm font-semibold text-slate-500 hover:text-slate-700 hover:border-slate-300 whitespace-nowrap focus:outline-none" data-tab-target="tab-hero">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" /></svg>
+                <span>Hero Banner</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- TAB 1: LEADERSHIP MEMBERS -->
+    <div id="tab-leaders" class="tab-content space-y-6">
+        
+        <!-- Summary Stats Card & Add Button -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+            <div class="flex items-center gap-4 sm:gap-6">
+                <div>
+                    <span class="block text-2xl font-black text-slate-900"><%= leaders.length %></span>
+                    <span class="block text-xs font-semibold text-slate-500">Total Leaders</span>
+                </div>
+                <div class="h-8 w-px bg-slate-200"></div>
+                <div>
+                    <span class="block text-2xl font-black text-emerald-600"><%= activeLeaderCount %></span>
+                    <span class="block text-xs font-semibold text-slate-500">Active</span>
+                </div>
+                <div class="h-8 w-px bg-slate-200"></div>
+                <div>
+                    <span class="block text-2xl font-black text-slate-400"><%= inactiveLeaderCount %></span>
+                    <span class="block text-xs font-semibold text-slate-500">Inactive</span>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="btnAddLeader" class="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                    <span>Add New Leader</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Leaders List Table -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+            <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900">Current Leadership Team</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Drag rows using the handle or use the up/down arrows to change carousel display sequence.</p>
+                </div>
+                <% if (leaders.length > 1) { %>
+                <div class="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-blue-100">
+                    <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
+                    <span>Drag & Drop Reordering Enabled</span>
+                </div>
+                <% } %>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse" id="leadersTable">
+                    <thead>
+                        <tr class="bg-slate-50 text-[11px] font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200">
+                            <th class="p-4 pl-6 w-24 text-center">Order</th>
+                            <th class="p-4 w-20">Photo</th>
+                            <th class="p-4">Name & Title</th>
+                            <th class="p-4">Role Label</th>
+                            <th class="p-4">Status</th>
+                            <th class="p-4 text-center">Paragraphs</th>
+                            <th class="p-4 pr-6 text-right w-44">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 text-xs sm:text-sm text-slate-700" id="leadersSortableBody">
+                        <% if (leaders.length === 0) { %>
+                            <tr>
+                                <td colspan="7" class="p-8 text-center text-slate-400">
+                                    No leadership members configured yet. Click "Add New Leader" above to create one.
+                                </td>
+                            </tr>
+                        <% } else { %>
+                            <% leaders.forEach((leader, index) => { %>
+                                <tr class="hover:bg-blue-50/30 transition-colors group cursor-move leader-row" draggable="true" data-id="<%= leader.id %>">
+                                    <!-- Sequence Handle -->
+                                    <td class="p-4 pl-6 text-center">
+                                        <div class="flex items-center justify-center gap-1.5">
+                                            <span class="cursor-grab text-slate-300 group-hover:text-slate-600 transition" title="Drag to reorder">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16" /></svg>
+                                            </span>
+                                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-100 font-bold text-slate-700 text-xs leader-order-num">
+                                                <%= index + 1 %>
+                                            </span>
+                                        </div>
+                                    </td>
+
+                                    <!-- Photo Thumbnail -->
+                                    <td class="p-4">
+                                        <div class="w-12 h-14 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0">
+                                            <img src="<%= leader.portraitImage || '/images/sukinder_solanki.jpg' %>" alt="<%= leader.name %>" class="w-full h-full object-cover">
+                                        </div>
+                                    </td>
+
+                                    <!-- Name & Designation -->
+                                    <td class="p-4">
+                                        <div class="font-bold text-slate-900"><%= leader.name %></div>
+                                        <div class="text-xs text-blue-600 font-semibold"><%= leader.designation %></div>
+                                        <% if (leader.companyName) { %>
+                                            <div class="text-[11px] text-slate-400"><%= leader.companyName %></div>
+                                        <% } %>
+                                    </td>
+
+                                    <!-- Role Label -->
+                                    <td class="p-4">
+                                        <span class="inline-block px-2.5 py-1 rounded-md text-[11px] font-bold bg-slate-100 text-slate-700">
+                                            <%= leader.roleLabel || 'A MESSAGE FROM THE LEADER' %>
+                                        </span>
+                                    </td>
+
+                                    <!-- Status Toggle -->
+                                    <td class="p-4">
+                                        <button type="button" class="btn-toggle-status inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all border <%= leader.status === 'active' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-100 text-slate-500 border-slate-200' %>" data-id="<%= leader.id %>" data-status="<%= leader.status %>">
+                                            <span class="w-2 h-2 rounded-full <%= leader.status === 'active' ? 'bg-emerald-500' : 'bg-slate-400' %>"></span>
+                                            <span><%= leader.status === 'active' ? 'Active' : 'Inactive' %></span>
+                                        </button>
+                                    </td>
+
+                                    <!-- Paragraphs Count -->
+                                    <td class="p-4 text-center">
+                                        <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600">
+                                            <%= (Array.isArray(leader.paragraphs) ? leader.paragraphs.length : 1) %> ¶
+                                        </span>
+                                    </td>
+
+                                    <!-- Actions -->
+                                    <td class="p-4 pr-6 text-right">
+                                        <div class="flex items-center justify-end gap-1.5">
+                                            <!-- Quick Move Buttons -->
+                                            <button type="button" class="btn-move-leader p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition" data-dir="up" title="Move Up">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" /></svg>
+                                            </button>
+                                            <button type="button" class="btn-move-leader p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition" data-dir="down" title="Move Down">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                                            </button>
+
+                                            <!-- Edit Button -->
+                                            <button type="button" class="btn-edit-leader p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition" data-id="<%= leader.id %>" title="Edit Leader">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                                            </button>
+
+                                            <!-- Delete Button -->
+                                            <button type="button" class="btn-delete-leader p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg transition" data-id="<%= leader.id %>" data-name="<%= leader.name %>" title="Delete Leader">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- TAB 2: LEADERSHIP IN ACTION CARDS -->
+    <div id="tab-actions" class="tab-content hidden space-y-6">
+        
+        <!-- Header Controls for Action Section -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 space-y-6 shadow-xs">
+            <div class="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900">Leadership in Action — Section Settings</h3>
+                    <p class="text-xs text-slate-500">Configure the title, category tag, and facility badge shown above the action cards on the public page.</p>
+                </div>
+                <button type="button" id="btnSaveActionHeaders" class="px-4 py-2 bg-slate-900 hover:bg-blue-600 text-white rounded-xl text-xs font-bold transition shadow-xs">
+                    Save Section Headings
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Category Subtitle</label>
+                    <input type="text" id="actionSubtitleInput" value="<%= settings.actionSubtitle || 'INFRASTRUCTURE & IMPACT' %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" placeholder="e.g. INFRASTRUCTURE & IMPACT">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Main Section Title</label>
+                    <input type="text" id="actionTitleInput" value="<%= settings.actionTitle || 'LEADERSHIP IN ACTION' %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" placeholder="e.g. LEADERSHIP IN ACTION">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Location Badge Pill</label>
+                    <input type="text" id="actionLocationBadgeInput" value="<%= settings.actionLocationBadge || '• Fatehabad & Bhiwani Facilities' %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" placeholder="e.g. • Fatehabad & Bhiwani Facilities">
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Cards Management Header & Add Card -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+            <div>
+                <h3 class="text-base font-bold text-slate-900">Infrastructure & Impact Cards</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Cards rendered in a dynamic grid beneath the leadership message.</p>
+            </div>
+            <div>
+                <button type="button" id="btnAddActionCard" class="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                    <span>Add New Action Card</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Action Cards Table -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse" id="actionCardsTable">
+                    <thead>
+                        <tr class="bg-slate-50 text-[11px] font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200">
+                            <th class="p-4 pl-6 w-24 text-center">Order</th>
+                            <th class="p-4 w-28">Image</th>
+                            <th class="p-4">Category</th>
+                            <th class="p-4">Title & Description</th>
+                            <th class="p-4">Status</th>
+                            <th class="p-4 pr-6 text-right w-36">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 text-xs sm:text-sm text-slate-700" id="actionCardsSortableBody">
+                        <% if (actionCards.length === 0) { %>
+                            <tr>
+                                <td colspan="6" class="p-8 text-center text-slate-400">
+                                    No action cards created yet. Click "Add New Action Card" above to add one.
+                                </td>
+                            </tr>
+                        <% } else { %>
+                            <% actionCards.forEach((card, index) => { %>
+                                <tr class="hover:bg-blue-50/30 transition-colors group cursor-move action-card-row" draggable="true" data-id="<%= card.id %>">
+                                    <td class="p-4 pl-6 text-center">
+                                        <div class="flex items-center justify-center gap-1.5">
+                                            <span class="cursor-grab text-slate-300 group-hover:text-slate-600 transition">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16" /></svg>
+                                            </span>
+                                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-100 font-bold text-slate-700 text-xs card-order-num">
+                                                <%= index + 1 %>
+                                            </span>
+                                        </div>
+                                    </td>
+
+                                    <td class="p-4">
+                                        <div class="w-20 h-14 rounded-xl overflow-hidden bg-slate-900 border border-slate-200 shrink-0">
+                                            <img src="<%= card.image || '/images/sp_img1.jpeg' %>" alt="<%= card.title %>" class="w-full h-full object-cover">
+                                        </div>
+                                    </td>
+
+                                    <td class="p-4">
+                                        <span class="inline-block px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-100 uppercase">
+                                            <%= card.category %>
+                                        </span>
+                                    </td>
+
+                                    <td class="p-4">
+                                        <div class="font-bold text-slate-900"><%= card.title %></div>
+                                        <% if (card.description) { %>
+                                        <div class="text-xs text-slate-500 line-clamp-1 mt-0.5"><%= card.description %></div>
+                                        <% } %>
+                                    </td>
+
+                                    <td class="p-4">
+                                        <button type="button" class="btn-toggle-card-status inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all border <%= card.status === 'active' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-100 text-slate-500 border-slate-200' %>" data-id="<%= card.id %>" data-status="<%= card.status %>">
+                                            <span class="w-2 h-2 rounded-full <%= card.status === 'active' ? 'bg-emerald-500' : 'bg-slate-400' %>"></span>
+                                            <span><%= card.status === 'active' ? 'Active' : 'Inactive' %></span>
+                                        </button>
+                                    </td>
+
+                                    <td class="p-4 pr-6 text-right">
+                                        <div class="flex items-center justify-end gap-1.5">
+                                            <button type="button" class="btn-edit-card p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition" data-id="<%= card.id %>" title="Edit Card">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                                            </button>
+                                            <button type="button" class="btn-delete-card p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg transition" data-id="<%= card.id %>" data-title="<%= card.title %>" title="Delete Card">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- TAB 3: CAROUSEL SETTINGS -->
+    <div id="tab-carousel" class="tab-content hidden space-y-6">
+        <form id="carouselSettingsForm" class="bg-white rounded-2xl border border-slate-200 shadow-xs p-6 sm:p-8 space-y-8">
+            <div class="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900">Leadership Carousel Configuration</h3>
+                    <p class="text-xs text-slate-500">Fine-tune the behavior, timing, navigation arrows, pagination, and animations on the public website.</p>
+                </div>
+                <button type="submit" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs">
+                    Save Carousel Settings
+                </button>
+            </div>
+
+            <!-- Grid of Toggles -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Autoplay Toggle -->
+                <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <span class="block text-xs font-bold text-slate-800 uppercase">Enable Autoplay</span>
+                        <span class="block text-[11px] text-slate-500 mt-0.5">Slides advance automatically</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="settingAutoplay" class="sr-only peer" <%= carouselSettings.autoplay !== false ? 'checked' : '' %>>
+                        <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
+                </div>
+
+                <!-- Pause on Hover -->
+                <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <span class="block text-xs font-bold text-slate-800 uppercase">Pause on Hover</span>
+                        <span class="block text-[11px] text-slate-500 mt-0.5">Stops timer when cursor enters</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="settingPauseOnHover" class="sr-only peer" <%= carouselSettings.pauseOnHover !== false ? 'checked' : '' %>>
+                        <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
+                </div>
+
+                <!-- Navigation Arrows -->
+                <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <span class="block text-xs font-bold text-slate-800 uppercase">Navigation Arrows</span>
+                        <span class="block text-[11px] text-slate-500 mt-0.5">Show left/right floating arrows</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="settingShowArrows" class="sr-only peer" <%= carouselSettings.showArrows !== false ? 'checked' : '' %>>
+                        <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
+                </div>
+
+                <!-- Pagination Dots -->
+                <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <span class="block text-xs font-bold text-slate-800 uppercase">Pagination Dots</span>
+                        <span class="block text-[11px] text-slate-500 mt-0.5">Show indicator dots below carousel</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="settingShowDots" class="sr-only peer" <%= carouselSettings.showDots !== false ? 'checked' : '' %>>
+                        <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
+                </div>
+
+                <!-- Leader Navigation Tabs -->
+                <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <span class="block text-xs font-bold text-slate-800 uppercase">Leader Tabs / Pills</span>
+                        <span class="block text-[11px] text-slate-500 mt-0.5">Show clickable person cards below</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="settingShowLeaderTabs" class="sr-only peer" <%= carouselSettings.showLeaderTabs !== false ? 'checked' : '' %>>
+                        <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
+                </div>
+
+                <!-- Mobile Swipe -->
+                <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 flex items-center justify-between">
+                    <div>
+                        <span class="block text-xs font-bold text-slate-800 uppercase">Mobile Touch Swipe</span>
+                        <span class="block text-[11px] text-slate-500 mt-0.5">Allow swiping left/right on mobile</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="settingEnableSwipe" class="sr-only peer" <%= carouselSettings.enableSwipe !== false ? 'checked' : '' %>>
+                        <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
+                </div>
+
+            </div>
+
+            <!-- Parameters (Speed, Style, Default Slide) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-slate-100">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Autoplay Interval (Milliseconds)</label>
+                    <input type="number" id="settingAutoplaySpeed" min="2000" max="20000" step="500" value="<%= carouselSettings.autoplaySpeed || 6000 %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition">
+                    <p class="text-[11px] text-slate-400 mt-1">6000 ms = 6 seconds</p>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Transition Style</label>
+                    <select id="settingTransitionStyle" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition">
+                        <option value="slide" <%= carouselSettings.transitionStyle === 'slide' ? 'selected' : '' %>>Slide Transition</option>
+                        <option value="fade" <%= carouselSettings.transitionStyle === 'fade' ? 'selected' : '' %>>Fade Transition</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Default Active Slide</label>
+                    <select id="settingDefaultActiveSlide" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition">
+                        <% leaders.forEach((l, idx) => { %>
+                            <option value="<%= idx %>" <%= (Number(carouselSettings.defaultActiveSlide) || 0) === idx ? 'selected' : '' %>>Slide <%= idx + 1 %>: <%= l.name %></option>
+                        <% }); %>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- TAB 4: HERO BANNER & PAGE SETTINGS -->
+    <div id="tab-hero" class="tab-content hidden space-y-6">
+        <form id="heroSettingsForm" class="bg-white rounded-2xl border border-slate-200 shadow-xs p-6 sm:p-8 space-y-6">
+            <div class="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900">Hero Banner & Breadcrumbs</h3>
+                    <p class="text-xs text-slate-500">Edit the top banner heading, breadcrumb labels, and right tagline.</p>
+                </div>
+                <button type="submit" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs">
+                    Save Hero Settings
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Page Main Title</label>
+                    <input type="text" id="settingPageTitle" value="<%= settings.pageTitle || 'Leadership Messages' %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" placeholder="e.g. Leadership Messages">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Right-Side Tagline</label>
+                    <input type="text" id="settingTagline" value="<%= settings.tagline || 'PIPES FOR A STRONGER TOMORROW' %>" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" placeholder="e.g. PIPES FOR A STRONGER TOMORROW">
+                </div>
+            </div>
+
+            <!-- Breadcrumbs customizer -->
+            <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-4">
+                <span class="block text-xs font-bold text-slate-800 uppercase">Breadcrumb Navigation Labels</span>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-500 mb-1">Level 1</label>
+                        <input type="text" id="settingBreadcrumbHome" value="<%= settings.breadcrumbHome || 'Home' %>" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-500 mb-1">Level 2</label>
+                        <input type="text" id="settingBreadcrumbAbout" value="<%= settings.breadcrumbAbout || 'About Us' %>" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-500 mb-1">Level 3 (Current)</label>
+                        <input type="text" id="settingBreadcrumbCurrent" value="<%= settings.breadcrumbCurrent || 'Leadership Messages' %>" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-800">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Show / Hide Tagline -->
+            <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 flex items-center justify-between">
+                <div>
+                    <span class="block text-xs font-bold text-slate-800 uppercase">Display Right-Side Tagline</span>
+                    <span class="block text-[11px] text-slate-500 mt-0.5">Toggle display of right-side banner motto on the public page</span>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="settingShowTagline" class="sr-only peer" <%= settings.showTagline !== false ? 'checked' : '' %>>
+                    <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<!-- ADD / EDIT LEADER MODAL -->
+<div id="leaderModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 flex flex-col">
+        
+        <!-- Modal Header -->
+        <div class="p-6 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white z-20">
+            <div>
+                <h3 class="text-lg font-bold text-slate-900" id="leaderModalTitle">Add New Leader</h3>
+                <p class="text-xs text-slate-500">Provide full biographical details, editorial message, images and quote.</p>
+            </div>
+            <button type="button" id="btnCloseLeaderModal" class="p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+        </div>
+
+        <!-- Modal Body Form -->
+        <form id="leaderForm" class="p-6 sm:p-8 space-y-8 flex-grow">
+            <input type="hidden" id="leaderId" name="id">
+
+            <!-- 1. Basic Information -->
+            <div class="space-y-4">
+                <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider">1. Basic Information</h4>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Full Name *</label>
+                        <input type="text" id="leaderName" name="name" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white" placeholder="e.g. Sukinder Solanki">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Designation *</label>
+                        <input type="text" id="leaderDesignation" name="designation" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white" placeholder="e.g. Founder">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Role Heading Label</label>
+                        <input type="text" id="leaderRoleLabel" name="roleLabel" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white" placeholder="e.g. A MESSAGE FROM THE FOUNDER">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Company Name</label>
+                        <input type="text" id="leaderCompanyName" name="companyName" value="SOLANKI PIPES" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Display Order</label>
+                        <input type="number" id="leaderDisplayOrder" name="displayOrder" min="1" value="1" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white">
+                    </div>
+                    <div class="flex items-center gap-3 pt-6">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="leaderStatus" name="status" checked class="sr-only peer">
+                            <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                        </label>
+                        <span class="text-xs font-bold text-slate-700 uppercase" id="leaderStatusLabel">Active Status</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Images & Visuals -->
+            <div class="space-y-4 pt-4 border-t border-slate-100">
+                <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider">2. Images & Visuals</h4>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <!-- Portrait Image -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-700 uppercase">Leader Portrait</label>
+                        <div class="w-full h-44 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 relative overflow-hidden flex flex-col items-center justify-center p-2 group hover:border-blue-400 transition">
+                            <img id="portraitPreview" src="/images/sukinder_solanki.jpg" alt="Preview" class="absolute inset-0 w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-slate-900/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-bold">
+                                Click or drag to change
+                            </div>
+                            <input type="file" id="portraitImageInput" name="portraitImage" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
+                        </div>
+                        <input type="text" id="portraitImageUrl" name="portraitImageUrl" placeholder="or enter image URL" class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs">
+                    </div>
+
+                    <!-- Signature Image or Typed Alternative -->
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-bold text-slate-700 uppercase">Signature</label>
+                            <select id="signatureTypeSelect" name="signatureType" class="text-[11px] font-semibold border border-slate-200 rounded-md px-1.5 py-0.5 bg-white text-slate-700">
+                                <option value="typed">Typed Script</option>
+                                <option value="image">Upload Image</option>
+                            </select>
+                        </div>
+                        
+                        <div id="signatureTypedBox" class="w-full h-44 rounded-2xl border border-slate-200 bg-slate-50 p-4 flex flex-col justify-center items-center">
+                            <span class="text-xs text-slate-400 mb-1">Live Cursive Preview</span>
+                            <span id="signatureScriptPreview" class="text-3xl text-blue-950 font-bold tracking-wide" style="font-family: 'Caveat', cursive;">Sukinder Solanki</span>
+                            <input type="text" id="signatureNameInput" name="signatureName" placeholder="Signature text..." class="mt-3 w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-medium text-center">
+                        </div>
+
+                        <div id="signatureImageBox" class="hidden w-full h-44 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 relative overflow-hidden flex flex-col items-center justify-center p-2 group hover:border-blue-400 transition">
+                            <img id="signaturePreview" src="" alt="Preview" class="absolute inset-0 w-full h-full object-contain p-4 hidden">
+                            <div class="text-center p-2 pointer-events-none" id="signaturePlaceholder">
+                                <svg class="w-6 h-6 text-slate-400 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
+                                <span class="text-xs text-slate-500 font-semibold">Upload Signature File</span>
+                            </div>
+                            <input type="file" id="signatureImageInput" name="signatureImage" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
+                        </div>
+                    </div>
+
+                    <!-- Supporting Image -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-700 uppercase">Supporting Image</label>
+                        <div class="w-full h-44 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 relative overflow-hidden flex flex-col items-center justify-center p-2 group hover:border-blue-400 transition">
+                            <img id="supportingPreview" src="/images/pipe_fittings_render.jpg" alt="Preview" class="absolute inset-0 w-full h-full object-contain p-2">
+                            <div class="absolute inset-0 bg-slate-900/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-bold">
+                                Click or drag to change
+                            </div>
+                            <input type="file" id="supportingImageInput" name="supportingImage" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
+                        </div>
+                        <input type="text" id="supportingImageUrl" name="supportingImageUrl" placeholder="or enter image URL" class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Message Content & Dynamic Paragraphs -->
+            <div class="space-y-4 pt-4 border-t border-slate-100">
+                <div class="flex items-center justify-between">
+                    <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider">3. Message Narrative & Paragraphs</h4>
+                    <span class="text-xs text-slate-400 font-semibold">Unlimited Paragraphs</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Main Headline</label>
+                        <input type="text" id="leaderHeadline" name="headline" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white" placeholder="e.g. Building a Stronger Tomorrow,">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Headline Accent / Highlight (Blue)</label>
+                        <input type="text" id="leaderHeadlineHighlight" name="headlineHighlight" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white" placeholder="e.g. Metre by Metre">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Greeting Line</label>
+                    <input type="text" id="leaderGreeting" name="greeting" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white" placeholder="e.g. Dear Valued Customers, Partners and Well-wishers,">
+                </div>
+
+                <!-- Dynamic Paragraphs Manager -->
+                <div class="space-y-3 pt-2">
+                    <div class="flex items-center justify-between">
+                        <label class="block text-xs font-bold text-slate-700 uppercase">Message Paragraphs</label>
+                        <button type="button" id="btnAddParagraph" class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1 rounded-lg transition">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                            <span>Add Paragraph</span>
+                        </button>
+                    </div>
+
+                    <div id="paragraphsContainer" class="space-y-3">
+                        <!-- Dynamic paragraph cards injected via JS -->
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Quote (Overlaid on Photo Card)</label>
+                        <input type="text" id="leaderQuote" name="quote" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white" placeholder="e.g. A strong and reliable piping network builds a stronger nation.">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Closing Sign-off Text</label>
+                        <input type="text" id="leaderClosing" name="closing" value="Warm regards," class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="pt-6 border-t border-slate-100 flex items-center justify-end gap-3 sticky bottom-0 bg-white z-20">
+                <button type="button" id="btnCancelLeaderModal" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">
+                    Cancel
+                </button>
+                <button type="submit" id="btnSubmitLeaderModal" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center gap-2">
+                    <span id="btnSubmitLeaderText">Save Leader</span>
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<!-- ADD / EDIT ACTION CARD MODAL -->
+<div id="actionCardModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-xl w-full shadow-2xl border border-slate-200 flex flex-col">
+        
+        <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+            <div>
+                <h3 class="text-lg font-bold text-slate-900" id="actionModalTitle">Add Action Card</h3>
+                <p class="text-xs text-slate-500">Infrastructure showcase card for the Leadership in Action section.</p>
+            </div>
+            <button type="button" id="btnCloseActionModal" class="p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+        </div>
+
+        <form id="actionCardForm" class="p-6 space-y-5">
+            <input type="hidden" id="cardId" name="id">
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Category Label *</label>
+                <input type="text" id="cardCategory" name="category" required placeholder="e.g. MANUFACTURING" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 uppercase focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Card Title *</label>
+                <input type="text" id="cardTitle" name="title" required placeholder="e.g. HDPE Pipe up to 1000 mm Dia" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Optional Description</label>
+                <textarea id="cardDescription" name="description" rows="2" placeholder="Brief subtitle or technical detail..." class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Card Image</label>
+                <div class="w-full h-36 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 relative overflow-hidden flex flex-col items-center justify-center p-2 group hover:border-blue-400 transition">
+                    <img id="cardImagePreview" src="/images/sp_img1.jpeg" alt="Card Preview" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-slate-900/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-bold">
+                        Click or drag to change
+                    </div>
+                    <input type="file" id="cardImageInput" name="cardImage" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
+                </div>
+                <input type="text" id="cardImageUrl" name="cardImageUrl" placeholder="or enter image URL..." class="mt-2 w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs">
+            </div>
+
+            <div class="flex items-center justify-between pt-2">
+                <div class="flex items-center gap-3">
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="cardStatus" name="status" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                    </label>
+                    <span class="text-xs font-bold text-slate-700 uppercase" id="cardStatusLabel">Active Status</span>
+                </div>
+
+                <div class="w-24">
+                    <input type="number" id="cardDisplayOrder" name="displayOrder" min="1" value="1" placeholder="Order" class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-center">
+                </div>
+            </div>
+
+            <div class="pt-5 border-t border-slate-100 flex items-center justify-end gap-3">
+                <button type="button" id="btnCancelActionModal" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">
+                    Cancel
+                </button>
+                <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs">
+                    Save Action Card
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<!-- CLIENT JAVASCRIPT: TABS, DRAG-AND-DROP, DYNAMIC PARAGRAPHS, AND ASYNC APIs -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Toast notification utility
+    const toast = document.getElementById('actionToast');
+    const toastMessage = document.getElementById('toastMessage');
+    function showToast(msg, isSuccess = true) {
+        if (!toast || !toastMessage) return;
+        toastMessage.textContent = msg;
+        toast.className = `fixed bottom-6 right-6 z-50 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 transition-all transform duration-300 ${isSuccess ? 'bg-slate-900' : 'bg-rose-900'}`;
+        toast.classList.remove('hidden');
+        setTimeout(() => {
+            toast.classList.add('hidden');
+        }, 3500);
+    }
+
+    // 1. Tab Navigation Handling
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-tab-target');
+            
+            // Activate button style
+            tabBtns.forEach(b => {
+                b.className = 'tab-btn inline-flex items-center gap-2 py-4 px-1 border-b-2 border-transparent text-xs sm:text-sm font-semibold text-slate-500 hover:text-slate-700 hover:border-slate-300 whitespace-nowrap focus:outline-none';
+            });
+            btn.className = 'tab-btn active inline-flex items-center gap-2 py-4 px-1 border-b-2 border-blue-600 text-xs sm:text-sm font-bold text-blue-600 whitespace-nowrap focus:outline-none';
+
+            // Show target content
+            tabContents.forEach(c => c.classList.add('hidden'));
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) targetContent.classList.remove('hidden');
+        });
+    });
+
+    // 2. Dynamic Paragraphs Manager
+    const paragraphsContainer = document.getElementById('paragraphsContainer');
+    const btnAddParagraph = document.getElementById('btnAddParagraph');
+
+    function createParagraphRow(text = '') {
+        const row = document.createElement('div');
+        row.className = 'paragraph-item flex items-start gap-2 bg-slate-50 border border-slate-200 p-3 rounded-xl transition';
+        row.innerHTML = `
+            <span class="text-xs font-bold text-slate-400 mt-2 shrink-0 paragraph-index">¶</span>
+            <textarea class="paragraph-textarea w-full bg-white border border-slate-200 rounded-lg p-2.5 text-xs font-medium text-slate-800 leading-relaxed focus:outline-none focus:ring-1 focus:ring-blue-500" rows="3" placeholder="Enter paragraph content...">${text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+            <div class="flex flex-col gap-1 shrink-0">
+                <button type="button" class="btn-para-up p-1 text-slate-400 hover:text-slate-700 rounded hover:bg-slate-200 transition" title="Move Up">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+                </button>
+                <button type="button" class="btn-para-down p-1 text-slate-400 hover:text-slate-700 rounded hover:bg-slate-200 transition" title="Move Down">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                <button type="button" class="btn-para-del p-1 text-rose-500 hover:text-rose-700 rounded hover:bg-rose-50 transition" title="Remove Paragraph">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6" /></svg>
+                </button>
+            </div>
+        `;
+
+        // Up button
+        row.querySelector('.btn-para-up').addEventListener('click', () => {
+            const prev = row.previousElementSibling;
+            if (prev) {
+                paragraphsContainer.insertBefore(row, prev);
+                updateParagraphIndices();
+            }
+        });
+
+        // Down button
+        row.querySelector('.btn-para-down').addEventListener('click', () => {
+            const next = row.nextElementSibling;
+            if (next) {
+                paragraphsContainer.insertBefore(next, row);
+                updateParagraphIndices();
+            }
+        });
+
+        // Delete button
+        row.querySelector('.btn-para-del').addEventListener('click', () => {
+            if (paragraphsContainer.querySelectorAll('.paragraph-item').length > 1) {
+                row.remove();
+                updateParagraphIndices();
+            } else {
+                row.querySelector('textarea').value = '';
+            }
+        });
+
+        return row;
+    }
+
+    function updateParagraphIndices() {
+        const rows = paragraphsContainer.querySelectorAll('.paragraph-item');
+        rows.forEach((r, idx) => {
+            const badge = r.querySelector('.paragraph-index');
+            if (badge) badge.textContent = `¶ ${idx + 1}`;
+        });
+    }
+
+    if (btnAddParagraph) {
+        btnAddParagraph.addEventListener('click', () => {
+            const newRow = createParagraphRow('');
+            paragraphsContainer.appendChild(newRow);
+            updateParagraphIndices();
+            newRow.querySelector('textarea').focus();
+        });
+    }
+
+    // 3. Signature Type Switcher & Live Preview
+    const signatureTypeSelect = document.getElementById('signatureTypeSelect');
+    const signatureTypedBox = document.getElementById('signatureTypedBox');
+    const signatureImageBox = document.getElementById('signatureImageBox');
+    const signatureNameInput = document.getElementById('signatureNameInput');
+    const signatureScriptPreview = document.getElementById('signatureScriptPreview');
+    const leaderNameInput = document.getElementById('leaderName');
+
+    if (signatureTypeSelect) {
+        signatureTypeSelect.addEventListener('change', () => {
+            if (signatureTypeSelect.value === 'image') {
+                signatureTypedBox.classList.add('hidden');
+                signatureImageBox.classList.remove('hidden');
+            } else {
+                signatureImageBox.classList.add('hidden');
+                signatureTypedBox.classList.remove('hidden');
+            }
+        });
+    }
+
+    if (signatureNameInput && signatureScriptPreview) {
+        signatureNameInput.addEventListener('input', () => {
+            signatureScriptPreview.textContent = signatureNameInput.value || leaderNameInput.value || 'Signature';
+        });
+    }
+
+    if (leaderNameInput) {
+        leaderNameInput.addEventListener('input', () => {
+            if (!signatureNameInput.value && signatureScriptPreview) {
+                signatureScriptPreview.textContent = leaderNameInput.value || 'Signature';
+            }
+        });
+    }
+
+    // Image previews on file selection
+    function setupImagePreview(fileInputId, previewImgId) {
+        const fileInput = document.getElementById(fileInputId);
+        const previewImg = document.getElementById(previewImgId);
+        if (!fileInput || !previewImg) return;
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (re) => {
+                    previewImg.src = re.target.result;
+                    previewImg.classList.remove('hidden');
+                    const ph = document.getElementById('signaturePlaceholder');
+                    if (ph && fileInputId === 'signatureImageInput') ph.classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    setupImagePreview('portraitImageInput', 'portraitPreview');
+    setupImagePreview('signatureImageInput', 'signaturePreview');
+    setupImagePreview('supportingImageInput', 'supportingPreview');
+    setupImagePreview('cardImageInput', 'cardImagePreview');
+
+    // 4. Modal Open / Close Logic for Leaders
+    const leaderModal = document.getElementById('leaderModal');
+    const btnAddLeader = document.getElementById('btnAddLeader');
+    const btnCloseLeaderModal = document.getElementById('btnCloseLeaderModal');
+    const btnCancelLeaderModal = document.getElementById('btnCancelLeaderModal');
+    const leaderForm = document.getElementById('leaderForm');
+    const leaderModalTitle = document.getElementById('leaderModalTitle');
+
+    function openLeaderModal(leaderData = null) {
+        leaderForm.reset();
+        paragraphsContainer.innerHTML = '';
+
+        if (leaderData) {
+            leaderModalTitle.textContent = 'Edit Leader Profile';
+            document.getElementById('leaderId').value = leaderData.id || '';
+            document.getElementById('leaderName').value = leaderData.name || '';
+            document.getElementById('leaderDesignation').value = leaderData.designation || '';
+            document.getElementById('leaderRoleLabel').value = leaderData.roleLabel || 'A MESSAGE FROM THE FOUNDER';
+            document.getElementById('leaderCompanyName').value = leaderData.companyName || 'SOLANKI PIPES';
+            document.getElementById('leaderHeadline').value = leaderData.headline || '';
+            document.getElementById('leaderHeadlineHighlight').value = leaderData.headlineHighlight || '';
+            document.getElementById('leaderGreeting').value = leaderData.greeting || '';
+            document.getElementById('leaderQuote').value = leaderData.quote || '';
+            document.getElementById('leaderClosing').value = leaderData.closing || 'Warm regards,';
+            document.getElementById('leaderDisplayOrder').value = leaderData.displayOrder || 1;
+            document.getElementById('leaderStatus').checked = leaderData.status !== 'inactive';
+
+            // Portrait
+            if (leaderData.portraitImage) {
+                document.getElementById('portraitPreview').src = leaderData.portraitImage;
+                document.getElementById('portraitImageUrl').value = leaderData.portraitImage;
+            }
+
+            // Supporting Image
+            if (leaderData.supportingImage) {
+                document.getElementById('supportingPreview').src = leaderData.supportingImage;
+                document.getElementById('supportingImageUrl').value = leaderData.supportingImage;
+            }
+
+            // Signature
+            signatureTypeSelect.value = leaderData.signatureType || 'typed';
+            if (leaderData.signatureType === 'image') {
+                signatureTypedBox.classList.add('hidden');
+                signatureImageBox.classList.remove('hidden');
+                if (leaderData.signature) {
+                    const sp = document.getElementById('signaturePreview');
+                    sp.src = leaderData.signature;
+                    sp.classList.remove('hidden');
+                    const sph = document.getElementById('signaturePlaceholder');
+                    if (sph) sph.classList.add('hidden');
+                }
+            } else {
+                signatureImageBox.classList.add('hidden');
+                signatureTypedBox.classList.remove('hidden');
+                document.getElementById('signatureNameInput').value = leaderData.signatureName || leaderData.name || '';
+                signatureScriptPreview.textContent = leaderData.signatureName || leaderData.name || 'Signature';
+            }
+
+            // Paragraphs
+            const paras = Array.isArray(leaderData.paragraphs) && leaderData.paragraphs.length > 0 ? leaderData.paragraphs : [''];
+            paras.forEach(p => {
+                paragraphsContainer.appendChild(createParagraphRow(p));
+            });
+            updateParagraphIndices();
+        } else {
+            leaderModalTitle.textContent = 'Add New Leader';
+            document.getElementById('leaderId').value = '';
+            document.getElementById('portraitPreview').src = '/images/sukinder_solanki.jpg';
+            document.getElementById('supportingPreview').src = '/images/pipe_fittings_render.jpg';
+            signatureTypeSelect.value = 'typed';
+            signatureTypedBox.classList.remove('hidden');
+            signatureImageBox.classList.add('hidden');
+            signatureScriptPreview.textContent = 'New Leader';
+            paragraphsContainer.appendChild(createParagraphRow(''));
+            updateParagraphIndices();
+        }
+
+        leaderModal.classList.remove('hidden');
+    }
+
+    function closeLeaderModal() {
+        leaderModal.classList.add('hidden');
+    }
+
+    if (btnAddLeader) btnAddLeader.addEventListener('click', () => openLeaderModal(null));
+    if (btnCloseLeaderModal) btnCloseLeaderModal.addEventListener('click', closeLeaderModal);
+    if (btnCancelLeaderModal) btnCancelLeaderModal.addEventListener('click', closeLeaderModal);
+
+    // Edit Leader Click
+    document.querySelectorAll('.btn-edit-leader').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-id');
+            try {
+                const res = await fetch(`/api/leadership/${id}`);
+                const json = await res.json();
+                if (json.success && json.leader) {
+                    openLeaderModal(json.leader);
+                } else {
+                    alert('Could not load leader details');
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Error loading leader details');
+            }
+        });
+    });
+
+    // Delete Leader Click
+    document.querySelectorAll('.btn-delete-leader').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-id');
+            const name = btn.getAttribute('data-name');
+            if (confirm(`Are you sure you want to delete "${name}"? This action cannot be undone.`)) {
+                try {
+                    const res = await fetch(`/api/leadership/${id}`, { method: 'DELETE' });
+                    const json = await res.json();
+                    if (json.success) {
+                        showToast('Leader removed successfully');
+                        setTimeout(() => window.location.reload(), 600);
+                    } else {
+                        alert(json.message || 'Failed to delete leader');
+                    }
+                } catch (e) {
+                    console.error(e);
+                    alert('Error deleting leader');
+                }
+            }
+        });
+    });
+
+    // Toggle Leader Active Status
+    document.querySelectorAll('.btn-toggle-status').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-id');
+            const curStatus = btn.getAttribute('data-status');
+            const newStatus = curStatus === 'active' ? 'inactive' : 'active';
+            try {
+                const res = await fetch(`/api/leadership/${id}/status`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus })
+                });
+                const json = await res.json();
+                if (json.success) {
+                    showToast(`Status updated: ${newStatus}`);
+                    setTimeout(() => window.location.reload(), 500);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        });
+    });
+
+    // Handle Leader Form Submit (Multipart / AJAX)
+    if (leaderForm) {
+        leaderForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('btnSubmitLeaderModal');
+            const submitText = document.getElementById('btnSubmitLeaderText');
+            submitBtn.disabled = true;
+            submitText.textContent = 'Saving...';
+
+            try {
+                const formData = new FormData();
+                const id = document.getElementById('leaderId').value;
+                if (id) formData.append('id', id);
+
+                formData.append('name', document.getElementById('leaderName').value);
+                formData.append('designation', document.getElementById('leaderDesignation').value);
+                formData.append('roleLabel', document.getElementById('leaderRoleLabel').value);
+                formData.append('companyName', document.getElementById('leaderCompanyName').value);
+                formData.append('headline', document.getElementById('leaderHeadline').value);
+                formData.append('headlineHighlight', document.getElementById('leaderHeadlineHighlight').value);
+                formData.append('greeting', document.getElementById('leaderGreeting').value);
+                formData.append('quote', document.getElementById('leaderQuote').value);
+                formData.append('closing', document.getElementById('leaderClosing').value);
+                formData.append('displayOrder', document.getElementById('leaderDisplayOrder').value);
+                formData.append('status', document.getElementById('leaderStatus').checked ? 'active' : 'inactive');
+                
+                // Images
+                const portraitInput = document.getElementById('portraitImageInput');
+                if (portraitInput.files && portraitInput.files[0]) {
+                    formData.append('portraitImage', portraitInput.files[0]);
+                } else {
+                    formData.append('portraitImage', document.getElementById('portraitImageUrl').value);
+                }
+
+                const supportingInput = document.getElementById('supportingImageInput');
+                if (supportingInput.files && supportingInput.files[0]) {
+                    formData.append('supportingImage', supportingInput.files[0]);
+                } else {
+                    formData.append('supportingImage', document.getElementById('supportingImageUrl').value);
+                }
+
+                // Signature
+                const sigType = signatureTypeSelect.value;
+                formData.append('signatureType', sigType);
+                if (sigType === 'image') {
+                    const sigInput = document.getElementById('signatureImageInput');
+                    if (sigInput.files && sigInput.files[0]) {
+                        formData.append('signatureImage', sigInput.files[0]);
+                    }
+                } else {
+                    formData.append('signatureName', document.getElementById('signatureNameInput').value || document.getElementById('leaderName').value);
+                }
+
+                // Collect paragraphs
+                const paraTextareas = paragraphsContainer.querySelectorAll('.paragraph-textarea');
+                paraTextareas.forEach(t => {
+                    if (t.value.trim()) {
+                        formData.append('paragraphs', t.value.trim());
+                    }
+                });
+
+                const endpoint = id ? `/api/leadership/${id}` : '/api/leadership';
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    body: formData
+                });
+                const json = await res.json();
+
+                if (json.success) {
+                    showToast('Leader saved successfully!');
+                    closeLeaderModal();
+                    setTimeout(() => window.location.reload(), 600);
+                } else {
+                    alert(json.message || 'Error saving leader');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Failed to save leader');
+            } finally {
+                submitBtn.disabled = false;
+                submitText.textContent = 'Save Leader';
+            }
+        });
+    }
+
+    // 5. Drag-and-Drop / Move Leaders Reordering
+    const sortableLeaderBody = document.getElementById('leadersSortableBody');
+    if (sortableLeaderBody) {
+        let draggedRow = null;
+
+        sortableLeaderBody.addEventListener('dragstart', (e) => {
+            const row = e.target.closest('.leader-row');
+            if (row) {
+                draggedRow = row;
+                row.classList.add('opacity-40', 'bg-blue-50');
+            }
+        });
+
+        sortableLeaderBody.addEventListener('dragend', (e) => {
+            const row = e.target.closest('.leader-row');
+            if (row) {
+                row.classList.remove('opacity-40', 'bg-blue-50');
+            }
+            draggedRow = null;
+        });
+
+        sortableLeaderBody.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            const targetRow = e.target.closest('.leader-row');
+            if (targetRow && targetRow !== draggedRow && draggedRow) {
+                const rect = targetRow.getBoundingClientRect();
+                const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
+                sortableLeaderBody.insertBefore(draggedRow, next ? targetRow.nextSibling : targetRow);
+            }
+        });
+
+        sortableLeaderBody.addEventListener('drop', async (e) => {
+            e.preventDefault();
+            await saveLeadersOrder();
+        });
+
+        // Quick Move Up / Down
+        document.querySelectorAll('.btn-move-leader').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const row = btn.closest('.leader-row');
+                const dir = btn.getAttribute('data-dir');
+                if (dir === 'up' && row.previousElementSibling) {
+                    sortableLeaderBody.insertBefore(row, row.previousElementSibling);
+                    await saveLeadersOrder();
+                } else if (dir === 'down' && row.nextElementSibling) {
+                    sortableLeaderBody.insertBefore(row.nextElementSibling, row);
+                    await saveLeadersOrder();
+                }
+            });
+        });
+
+        async function saveLeadersOrder() {
+            const rows = sortableLeaderBody.querySelectorAll('.leader-row');
+            const leaderIds = [];
+            rows.forEach((r, idx) => {
+                leaderIds.push(r.getAttribute('data-id'));
+                const numSpan = r.querySelector('.leader-order-num');
+                if (numSpan) numSpan.textContent = idx + 1;
+            });
+
+            try {
+                const res = await fetch('/api/leadership/reorder', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ leaderIds })
+                });
+                const json = await res.json();
+                if (json.success) {
+                    showToast('Sequence updated successfully');
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    }
+
+    // 6. Action Cards Modals & CRUD
+    const actionCardModal = document.getElementById('actionCardModal');
+    const btnAddActionCard = document.getElementById('btnAddActionCard');
+    const btnCloseActionModal = document.getElementById('btnCloseActionModal');
+    const btnCancelActionModal = document.getElementById('btnCancelActionModal');
+    const actionCardForm = document.getElementById('actionCardForm');
+    const actionModalTitle = document.getElementById('actionModalTitle');
+
+    function openActionModal(cardData = null) {
+        actionCardForm.reset();
+        if (cardData) {
+            actionModalTitle.textContent = 'Edit Action Card';
+            document.getElementById('cardId').value = cardData.id || '';
+            document.getElementById('cardCategory').value = cardData.category || '';
+            document.getElementById('cardTitle').value = cardData.title || '';
+            document.getElementById('cardDescription').value = cardData.description || '';
+            document.getElementById('cardDisplayOrder').value = cardData.displayOrder || 1;
+            document.getElementById('cardStatus').checked = cardData.status !== 'inactive';
+            if (cardData.image) {
+                document.getElementById('cardImagePreview').src = cardData.image;
+                document.getElementById('cardImageUrl').value = cardData.image;
+            }
+        } else {
+            actionModalTitle.textContent = 'Add Action Card';
+            document.getElementById('cardId').value = '';
+            document.getElementById('cardImagePreview').src = '/images/sp_img1.jpeg';
+        }
+        actionCardModal.classList.remove('hidden');
+    }
+
+    function closeActionModal() {
+        actionCardModal.classList.add('hidden');
+    }
+
+    if (btnAddActionCard) btnAddActionCard.addEventListener('click', () => openActionModal(null));
+    if (btnCloseActionModal) btnCloseActionModal.addEventListener('click', closeActionModal);
+    if (btnCancelActionModal) btnCancelActionModal.addEventListener('click', closeActionModal);
+
+    // Edit Action Card
+    document.querySelectorAll('.btn-edit-card').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-id');
+            try {
+                const res = await fetch(`/api/leadership-action/${id}`);
+                const json = await res.json();
+                if (json.success && json.actionCard) {
+                    openActionModal(json.actionCard);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        });
+    });
+
+    // Delete Action Card
+    document.querySelectorAll('.btn-delete-card').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-id');
+            const title = btn.getAttribute('data-title');
+            if (confirm(`Delete action card "${title}"?`)) {
+                try {
+                    const res = await fetch(`/api/leadership-action/${id}`, { method: 'DELETE' });
+                    const json = await res.json();
+                    if (json.success) {
+                        showToast('Card deleted');
+                        setTimeout(() => window.location.reload(), 500);
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+        });
+    });
+
+    // Toggle Card Status
+    document.querySelectorAll('.btn-toggle-card-status').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-id');
+            const cur = btn.getAttribute('data-status');
+            const newStatus = cur === 'active' ? 'inactive' : 'active';
+            try {
+                const res = await fetch(`/api/leadership-action/${id}/status`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus })
+                });
+                const json = await res.json();
+                if (json.success) {
+                    showToast(`Status updated: ${newStatus}`);
+                    setTimeout(() => window.location.reload(), 500);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        });
+    });
+
+    // Save Action Card Submit
+    if (actionCardForm) {
+        actionCardForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const formData = new FormData();
+                const id = document.getElementById('cardId').value;
+                if (id) formData.append('id', id);
+
+                formData.append('category', document.getElementById('cardCategory').value);
+                formData.append('title', document.getElementById('cardTitle').value);
+                formData.append('description', document.getElementById('cardDescription').value);
+                formData.append('displayOrder', document.getElementById('cardDisplayOrder').value);
+                formData.append('status', document.getElementById('cardStatus').checked ? 'active' : 'inactive');
+
+                const imgInput = document.getElementById('cardImageInput');
+                if (imgInput.files && imgInput.files[0]) {
+                    formData.append('cardImage', imgInput.files[0]);
+                } else {
+                    formData.append('image', document.getElementById('cardImageUrl').value);
+                }
+
+                const endpoint = id ? `/api/leadership-action/${id}` : '/api/leadership-action';
+                const res = await fetch(endpoint, { method: 'POST', body: formData });
+                const json = await res.json();
+
+                if (json.success) {
+                    showToast('Action card saved!');
+                    closeActionModal();
+                    setTimeout(() => window.location.reload(), 600);
+                } else {
+                    alert(json.message || 'Error saving action card');
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Failed to save action card');
+            }
+        });
+    }
+
+    // Save Action Section Headings
+    const btnSaveActionHeaders = document.getElementById('btnSaveActionHeaders');
+    if (btnSaveActionHeaders) {
+        btnSaveActionHeaders.addEventListener('click', async () => {
+            const payload = {
+                actionSubtitle: document.getElementById('actionSubtitleInput').value,
+                actionTitle: document.getElementById('actionTitleInput').value,
+                actionLocationBadge: document.getElementById('actionLocationBadgeInput').value
+            };
+            try {
+                const res = await fetch('/api/leadership-settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const json = await res.json();
+                if (json.success) {
+                    showToast('Section headings saved!');
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        });
+    }
+
+    // 7. Carousel Settings Form Submit
+    const carouselSettingsForm = document.getElementById('carouselSettingsForm');
+    if (carouselSettingsForm) {
+        carouselSettingsForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                carousel: {
+                    autoplay: document.getElementById('settingAutoplay').checked,
+                    autoplaySpeed: Number(document.getElementById('settingAutoplaySpeed').value) || 6000,
+                    pauseOnHover: document.getElementById('settingPauseOnHover').checked,
+                    showArrows: document.getElementById('settingShowArrows').checked,
+                    showDots: document.getElementById('settingShowDots').checked,
+                    showLeaderTabs: document.getElementById('settingShowLeaderTabs').checked,
+                    transitionStyle: document.getElementById('settingTransitionStyle').value,
+                    enableSwipe: document.getElementById('settingEnableSwipe').checked,
+                    defaultActiveSlide: Number(document.getElementById('settingDefaultActiveSlide').value) || 0
+                }
+            };
+            try {
+                const res = await fetch('/api/leadership-settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const json = await res.json();
+                if (json.success) {
+                    showToast('Carousel settings updated!');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error updating carousel settings');
+            }
+        });
+    }
+
+    // 8. Hero Settings Form Submit
+    const heroSettingsForm = document.getElementById('heroSettingsForm');
+    if (heroSettingsForm) {
+        heroSettingsForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                pageTitle: document.getElementById('settingPageTitle').value,
+                tagline: document.getElementById('settingTagline').value,
+                showTagline: document.getElementById('settingShowTagline').checked,
+                breadcrumbHome: document.getElementById('settingBreadcrumbHome').value,
+                breadcrumbAbout: document.getElementById('settingBreadcrumbAbout').value,
+                breadcrumbCurrent: document.getElementById('settingBreadcrumbCurrent').value
+            };
+            try {
+                const res = await fetch('/api/leadership-settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const json = await res.json();
+                if (json.success) {
+                    showToast('Hero banner settings saved!');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error updating hero settings');
+            }
+        });
+    }
+
+});
+</script>
+
+<%- include('partials/admin-footer') %>
+

@@ -1,42 +1,56 @@
 [
   {
+    "_id": "cert-1",
     "title": "BIS Licence",
     "subtitle": "IS 4984:2016",
     "badgeText": "CM/L 9100182616",
     "noteText": "(Water Supply)",
-    "link": "/images/bis4984.pdf",
+    "link": "/images/Catalog Solanki Pipes.pdf",
     "iconType": "shield-check"
   },
   {
+    "_id": "cert-2",
     "title": "BIS Licence",
     "subtitle": "IS 14333:2022",
     "badgeText": "CM/L 9100198114",
-    "noteText": "(Sewerage)",
-    "link": "/images/bis14333.pdf",
+    "noteText": "(Sewerage & Effluent)",
+    "link": "/images/Catalog Solanki Pipes.pdf",
     "iconType": "shield-check"
   },
   {
-    "title": "ISO 9001:2015",
-    "subtitle": "",
-    "badgeText": "Quality Management",
-    "noteText": "(System Certified)",
-    "link": "/images/solanki-industries-iso-9001-2015.pdf",
+    "_id": "cert-3",
+    "title": "BIS Licence",
+    "subtitle": "IS 17425:2020",
+    "badgeText": "CM/L 9100289109",
+    "noteText": "(Sprinkler Irrigation)",
+    "link": "",
+    "iconType": "shield-check"
+  },
+  {
+    "_id": "cert-4",
+    "title": "DHBVN Empanelment",
+    "subtitle": "HDPE Pipes (List-II, Sl. No. 62)",
+    "badgeText": "Empanelled Vendor",
+    "noteText": "(Power Infrastructure)",
+    "link": "/images/dhbvn_empanelment.jpg",
     "iconType": "badge-check"
   },
   {
+    "_id": "cert-5",
     "title": "GST Registration",
-    "subtitle": "",
+    "subtitle": "06ACJFS4876P1Z6",
     "badgeText": "06ACJFS4876P1Z6",
     "noteText": "(Haryana State)",
-    "link": "/images/solanki-industries-gst-registration.pdf",
+    "link": "",
     "iconType": "clipboard-check"
   },
   {
+    "_id": "cert-6",
     "title": "Udyam MSME",
-    "subtitle": "",
+    "subtitle": "Registered Enterprise",
     "badgeText": "Registered",
     "noteText": "(Make in India)",
-    "link": "/images/solanki-industries-msme-udyam.pdf",
+    "link": "",
     "iconType": "office-building"
   }
 ]

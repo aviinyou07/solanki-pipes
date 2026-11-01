@@ -1,0 +1,102 @@
+{
+  "settings": {
+    "pageTitle": "Leadership Messages",
+    "breadcrumbHome": "Home",
+    "breadcrumbAbout": "About Us",
+    "breadcrumbCurrent": "Leadership Messages",
+    "tagline": "PIPES FOR A STRONGER TOMORROW",
+    "showTagline": true,
+    "actionSubtitle": "INFRASTRUCTURE & IMPACT",
+    "actionTitle": "LEADERSHIP IN ACTION",
+    "actionLocationBadge": "• Fatehabad & Bhiwani Facilities",
+    "carousel": {
+      "autoplay": true,
+      "autoplaySpeed": 6000,
+      "pauseOnHover": true,
+      "showArrows": true,
+      "showDots": true,
+      "showLeaderTabs": true,
+      "transitionStyle": "slide",
+      "transitionSpeed": 500,
+      "enableSwipe": true,
+      "defaultActiveSlide": 0
+    }
+  },
+  "leaders": [
+    {
+      "_id": "6ae6fac4ed16d2e7ee6fa936",
+      "id": "sukinder-solanki",
+      "__v": 0,
+      "closing": "Warm regards,",
+      "companyName": "SOLANKI PIPES",
+      "designation": "Founder",
+      "displayOrder": 1,
+      "greeting": "Dear Valued Customers, Partners and Well-wishers,",
+      "headline": "Building a Stronger Tomorrow,",
+      "headlineHighlight": "Metre by Metre",
+      "name": "Sukinder Solanki",
+      "paragraphs": [
+        "Since the inception of Solanki Pipes, our vision has been simple yet powerful — to deliver high-quality, durable and reliable piping solutions that support the infrastructure growth of our country. Over the years, your trust and continuous support have been the foundation of our journey.",
+        "We remain committed to manufacturing excellence, quality assurance and sustainable practices, while continually expanding our capabilities to meet the evolving needs of water supply, sewerage and irrigation projects across India.",
+        "As we look ahead, we aim to build a stronger, more sustainable future — one that is connected, resilient and driven by long-term value for our customers, communities and the nation."
+      ],
+      "portraitImage": "/images/sukinder_solanki.jpg",
+      "quote": "A strong and reliable piping network builds a stronger nation.",
+      "roleLabel": "A MESSAGE FROM THE FOUNDER",
+      "signature": "",
+      "signatureName": "Sukinder Solanki",
+      "signatureType": "typed",
+      "socialLinks": {
+        "linkedin": "",
+        "twitter": "",
+        "email": ""
+      },
+      "status": "active",
+      "supportingImage": "/images/pipe_fittings_render.jpg",
+      "updatedAt": "2026-11-01T08:50:19.877Z"
+    }
+  ],
+  "actionCards": [
+    {
+      "id": "action-1",
+      "category": "MANUFACTURING",
+      "title": "HDPE Pipe up to 1000 mm Dia",
+      "description": "Continuous high-speed extrusion lines conforming to BIS standards.",
+      "image": "/images/sp_img1.jpeg",
+      "displayOrder": 1,
+      "status": "active",
+      "updatedAt": "2026-11-01T12:00:00.000Z"
+    },
+    {
+      "id": "action-2",
+      "category": "QUALITY CONTROL",
+      "title": "In-House Testing Laboratory",
+      "description": "Certified laboratory testing for tensile strength, hydrostatic pressure, and carbon black dispersion.",
+      "image": "/images/Quality.jpeg",
+      "displayOrder": 2,
+      "status": "active",
+      "updatedAt": "2026-11-01T12:00:00.000Z"
+    },
+    {
+      "id": "action-3",
+      "category": "STORAGE & DISPATCH",
+      "title": "Ready Stock, Quick Dispatch",
+      "description": "Sprawling inventory yards ready to service urgent requirements across northern states.",
+      "image": "/images/sp_img2.jpeg",
+      "displayOrder": 3,
+      "status": "active",
+      "updatedAt": "2026-11-01T12:00:00.000Z"
+    },
+    {
+      "id": "action-4",
+      "category": "PROJECT REACH",
+      "title": "From Rajasthan to Ladakh",
+      "description": "Supplying critical drinking water pipelines for challenging terrains and mega irrigation schemes.",
+      "image": "/images/197.jpg.jpeg",
+      "displayOrder": 4,
+      "status": "active",
+      "updatedAt": "2026-11-01T12:00:00.000Z"
+    }
+  ],
+  "updatedAt": "2026-11-01T08:50:19.880Z"
+}

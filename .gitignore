@@ -12,6 +12,7 @@ pnpm-debug.log*
 # Runtime data
 pids/
 *.pid
+data/sessions/
 
 # Build output
 dist/

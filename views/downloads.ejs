@@ -106,13 +106,23 @@
                         <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         Verified
                     </span>
-                    <a href="<%= doc.fileUrl || '#' %>" <%= doc.fileUrl && doc.fileUrl !== '#' ? 'download' : '' %> target="<%= doc.fileUrl && doc.fileUrl !== '#' ? '_blank' : '_self' %>"
+                    <% 
+                       const isCatalogueOrProfile = doc.title && (doc.title.toLowerCase().includes('catalogue') || doc.title.toLowerCase().includes('catalog') || doc.title.toLowerCase().includes('company profile'));
+                       const hasSpecificFile = doc.fileUrl && doc.fileUrl !== '#' && (isCatalogueOrProfile || !doc.fileUrl.includes('Catalog Solanki Pipes.pdf'));
+                    %>
+                    <% if (hasSpecificFile) { %>
+                    <a href="<%= doc.fileUrl %>" download target="_blank"
                        class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white transition-all duration-200 shadow-sm group-hover:bg-blue-600 group-hover:text-white">
                         <span>Download</span>
                         <svg class="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"></path>
                         </svg>
                     </a>
+                    <% } else { %>
+                    <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-500">
+                        <span>Available on Request</span>
+                    </span>
+                    <% } %>
                 </div>
             </div>
         <% }) %>

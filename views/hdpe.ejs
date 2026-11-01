@@ -233,7 +233,7 @@
                                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                             clip-rule="evenodd" />
                                     </svg>
-                                    <span><%= (typeof product !== 'undefined' && product && product.sizeRange) ? ('Sizes: ' + product.sizeRange) : 'Sizes up to DN 1000 mm' %></span>
+                                    <span><strong>PE 80:</strong> DN 200-500 (PN 2.5-4) · <strong>PE 100:</strong> DN 75-500 (PN 3.2-4) &amp; DN 63-1000 (PN 5-10)</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
                                     <svg class="w-4 h-4 text-[#0284c7] shrink-0 mt-0.5" fill="currentColor"
@@ -412,8 +412,7 @@
                     Advanced Manufacturing. Consistent Quality.
                 </h2>
                 <p class="text-sm sm:text-base text-slate-600 max-w-3xl">
-                    Three automated in-house extrusion lines delivering precision-engineered HDPE pipes up to DN 1000
-                    mm.
+                    Three in-house extrusion lines delivering precision-engineered HDPE pipes up to DN 1000 mm.
                 </p>
             </div>
 
@@ -463,8 +462,7 @@
 
             <!-- Capability Note Description -->
             <p class="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-4xl mb-8">
-                Automated in-line process control — melt temperature, line speed and wall thickness are held
-                continuously to spec, for consistent, dimensionally accurate, defect-free pipe on every run.
+                Melt temperature and line speed are controlled, and OD and wall thickness are checked during every production run.
             </p>
 
 
@@ -936,7 +934,7 @@
                         <!-- ========================================== -->
                         <!-- 8B. MEDIA & DEMONSTRATION SHOWCASE -->
                         <!-- ========================================== -->
-                        <% if (typeof product !== 'undefined' && product && (product.videoUrl || product.videoFile || product.videoTitle || product.animationUrl || product.animationFile || product.animationTitle)) { %>
+                        <% if (typeof product !== 'undefined' && product && ((product.videoUrl && product.videoUrl.trim()) || (product.videoFile && product.videoFile.trim()) || (product.animationUrl && product.animationUrl.trim()) || (product.animationFile && product.animationFile.trim()))) { %>
                         <section class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-16">
                             <div class="mb-10 text-left" data-aos="fade-up">
                                 <div class="flex items-center gap-2 mb-2">
@@ -1010,7 +1008,7 @@
                                                     </svg>
                                                 </div>
                                                 <h4 class="text-base font-bold text-white mb-1"><%= product.animationTitle || 'Engineered Flow Dynamics' %></h4>
-                                                <p class="text-xs text-sky-200 max-w-sm"><%= product.animationSubtitle || 'Precision extrusion guarantees minimal friction loss and laminar flow performance.' %></p>
+                                                <p class="text-xs text-sky-200 max-w-sm"><%= product.animationSubtitle || 'High resistance to slow crack growth for long, reliable service' %></p>
                                             </div>
                                         <% } %>
                                     </div>

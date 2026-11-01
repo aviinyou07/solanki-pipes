@@ -20,7 +20,7 @@
     "aboutText": "High Density Polyethylene (HDPE) pipes represent one of the most versatile and durable polymer piping solutions used across water, gas, industrial and infrastructure sectors. Manufactured from PE 80 or PE 100 grade resins, HDPE pipes provide excellent toughness, flexibility and resistance to environmental stress cracking. Their ability to withstand impact, chemicals and cyclic loading makes them especially suitable for both buried and above-ground applications where reliability and longevity are critical.\r\n\r\nAt Solanki Pipes, our HDPE range covers a broad spectrum of diameters and pressure classes to meet diverse engineering requirements. The material's low permeability and smooth internal bore reduce friction losses and improve hydraulic performance, which is particularly important for potable water distribution and long-distance transfer.\r\n\r\nJoining methods for HDPE such as butt fusion, electrofusion and mechanical fittings produce strong, leak-free integrals that often equal or exceed the parent pipe strength when installed correctly. This reliability lowers the need for frequent repairs and contributes to a lower lifecycle cost compared to metallic alternatives.",
     "aboutTitle": "About HDPE Pipes",
     "animationFile": "",
-    "animationSubtitle": "Superior SCGR (Slow Crack Growth Resistance) ensuring 100% leak-proof reliability in seismic and high-load zones.",
+    "animationSubtitle": "High resistance to slow crack growth for long, reliable service",
     "animationTitle": "Engineered Flow Dynamics & High Flexibility",
     "animationUrl": "",
     "applications": [
@@ -239,7 +239,7 @@
         "_id": "6ab4e14e2bb549f60c34861f"
       }
     ],
-    "standards": "IS 17425:2026",
+    "standards": "IS 17425:2020",
     "tagline": "Better pipe, Better life",
     "videoDescription": "A sprinkler line being coupled by hand, pressurised, then drained and moved to the next set.",
     "videoFile": "",

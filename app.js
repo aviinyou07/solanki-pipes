@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
 require('dotenv').config();
-const { mongoose, Project, Admin, Certification, Product, SiteSetting, FounderMessage, PageContent } = require('./db');
+const { mongoose, Project, Admin, Certification, Product, SiteSetting, FounderMessage, PageContent, Leader, LeadershipActionCard, LeadershipPageSetting, PopupSetting } = require('./db');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 
@@ -134,6 +134,29 @@ const defaultFounderMessage = {
     signatureName: 'Sachin Solanki',
     signatureRole: 'Founder',
     signatureCompany: 'Solanki Pipes',
+    leaders: [
+        {
+            name: 'Sukinder Solanki',
+            role: 'Founder, Solanki Pipes',
+            badge: 'Founder',
+            quote: 'Building enduring water infrastructure that powers regional growth across North India.',
+            image: '/images/sukinder_solanki.jpg'
+        },
+        {
+            name: 'Satpal Solanki',
+            role: 'Founder, Solanki Pipes',
+            badge: 'Founder',
+            quote: 'Uncompromising quality, continuous innovation, and trust built into every single pipe.',
+            image: '/images/satpal_solanki.jpg'
+        },
+        {
+            name: 'Sachin Solanki',
+            role: 'Head of Operations, Solanki Pipes',
+            badge: 'Head of Operations',
+            quote: 'A pipe is laid once. It has to be right the first time.',
+            image: '/images/sachin_solanki.jpg'
+        }
+    ],
     pipeFittingsImage: '/images/pipe_fittings_render.jpg',
     galleryImage1: '/images/sp_img1.jpeg',
     galleryTitle1: 'High-Speed HDPE Extrusion',
@@ -149,38 +172,555 @@ const defaultFounderMessage = {
     gallerySubtitle4: 'Farmer Outreach'
 };
 
+// Helper: Read SiteSetting from disk
+function getDefaultSiteSettings() {
+    try {
+        const filePath = path.join(__dirname, 'data', 'site-settings.json');
+        if (fs.existsSync(filePath)) {
+            return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        }
+    } catch (e) {
+        console.error('Error reading default site-settings.json:', e);
+    }
+    return defaultSiteSettings;
+}
+
+// Helper: Save SiteSetting to disk & sync to DB
+async function saveSiteSettings(updatedData) {
+    try {
+        const current = getDefaultSiteSettings();
+        const merged = { ...current, ...updatedData };
+        const filePath = path.join(__dirname, 'data', 'site-settings.json');
+        fs.writeFileSync(filePath, JSON.stringify(merged, null, 2), 'utf8');
+
+        if (mongoose.connection.readyState === 1) {
+            await SiteSetting.findByIdAndUpdate('default', merged, { upsert: true, new: true }).maxTimeMS(2500);
+        }
+        return merged;
+    } catch (err) {
+        console.error('Error saving SiteSettings:', err);
+        return updatedData;
+    }
+}
+
 // Helper: Get or initialize SiteSetting document
 async function getSiteSettings() {
-    if (mongoose.connection.readyState !== 1) {
-        return defaultSiteSettings;
-    }
-    try {
-        let settings = await SiteSetting.findById('default').maxTimeMS(2000);
-        if (!settings) {
-            settings = await SiteSetting.create({ _id: 'default' });
+    const fallback = getDefaultSiteSettings();
+    if (mongoose.connection.readyState === 1) {
+        try {
+            let settings = await SiteSetting.findById('default').maxTimeMS(2500);
+            if (settings) return settings;
+        } catch (err) {
+            console.error('Error fetching SiteSettings from DB:', err.message);
         }
-        return settings;
+    }
+    return fallback;
+}
+
+// Helper: Read FounderMessage from disk
+function getDefaultFounderMessage() {
+    try {
+        const filePath = path.join(__dirname, 'data', 'founder-message.json');
+        if (fs.existsSync(filePath)) {
+            return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        }
+    } catch (e) {
+        console.error('Error reading default founder-message.json:', e);
+    }
+    return defaultFounderMessage;
+}
+
+// Helper: Save FounderMessage to disk & sync to DB
+async function saveFounderMessage(updatedData) {
+    try {
+        const current = getDefaultFounderMessage();
+        const merged = { ...current, ...updatedData, updatedAt: new Date() };
+        const filePath = path.join(__dirname, 'data', 'founder-message.json');
+        fs.writeFileSync(filePath, JSON.stringify(merged, null, 2), 'utf8');
+
+        if (mongoose.connection.readyState === 1) {
+            await FounderMessage.findByIdAndUpdate('default', merged, { upsert: true, new: true }).maxTimeMS(2500);
+        }
+        return merged;
     } catch (err) {
-        console.error('Error fetching SiteSettings:', err);
-        return defaultSiteSettings;
+        console.error('Error saving FounderMessage:', err);
+        throw err;
     }
 }
 
 // Helper: Get or initialize FounderMessage document
 async function getFounderMessage() {
-    if (mongoose.connection.readyState !== 1) {
-        return defaultFounderMessage;
-    }
-    try {
-        let doc = await FounderMessage.findById('default').maxTimeMS(2000);
-        if (!doc) {
-            doc = await FounderMessage.create({ _id: 'default', ...defaultFounderMessage });
+    const fallback = getDefaultFounderMessage();
+    if (mongoose.connection.readyState === 1) {
+        try {
+            let doc = await FounderMessage.findById('default').maxTimeMS(2500);
+            if (doc) return doc;
+        } catch (err) {
+            console.error('Error fetching FounderMessage from DB:', err.message);
         }
-        return doc;
-    } catch (err) {
-        console.error('Error fetching FounderMessage:', err);
-        return defaultFounderMessage;
     }
+    return fallback;
+}
+
+// Helper: Read LeadershipData from disk
+function getDefaultLeadershipData() {
+    try {
+        const filePath = path.join(__dirname, 'data', 'leadership.json');
+        if (fs.existsSync(filePath)) {
+            return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        }
+    } catch (e) {
+        console.error('Error reading default leadership.json:', e);
+    }
+    return {
+        settings: {
+            pageTitle: 'Leadership Messages',
+            breadcrumbHome: 'Home',
+            breadcrumbAbout: 'About Us',
+            breadcrumbCurrent: 'Leadership Messages',
+            tagline: 'PIPES FOR A STRONGER TOMORROW',
+            showTagline: true,
+            actionSubtitle: 'INFRASTRUCTURE & IMPACT',
+            actionTitle: 'LEADERSHIP IN ACTION',
+            actionLocationBadge: '• Fatehabad & Bhiwani Facilities',
+            carousel: {
+                autoplay: true,
+                autoplaySpeed: 6000,
+                pauseOnHover: true,
+                showArrows: true,
+                showDots: true,
+                showLeaderTabs: true,
+                transitionStyle: 'slide',
+                transitionSpeed: 500,
+                enableSwipe: true,
+                defaultActiveSlide: 0
+            }
+        },
+        leaders: [],
+        actionCards: []
+    };
+}
+
+// Helper: Save LeadershipData to disk & sync to DB and fallback files
+async function saveLeadershipData(updatedData) {
+    try {
+        const current = getDefaultLeadershipData();
+        const merged = {
+            settings: { ...current.settings, ...(updatedData.settings || {}) },
+            leaders: updatedData.leaders !== undefined ? updatedData.leaders : current.leaders,
+            actionCards: updatedData.actionCards !== undefined ? updatedData.actionCards : current.actionCards,
+            updatedAt: new Date()
+        };
+        const filePath = path.join(__dirname, 'data', 'leadership.json');
+        fs.writeFileSync(filePath, JSON.stringify(merged, null, 2), 'utf8');
+
+        // Also sync backwards-compatible founder-message.json
+        try {
+            const founderPath = path.join(__dirname, 'data', 'founder-message.json');
+            const primaryLeader = merged.leaders && merged.leaders.length > 0 ? merged.leaders[0] : null;
+            if (primaryLeader) {
+                const fmSync = {
+                    bannerTagline: (merged.settings && merged.settings.tagline) || 'PIPES FOR A STRONGER TOMORROW',
+                    founderName: primaryLeader.name,
+                    founderRole: primaryLeader.designation,
+                    founderQuote: primaryLeader.quote,
+                    founderImage: primaryLeader.portraitImage,
+                    categoryLabel: primaryLeader.roleLabel,
+                    headlinePart1: primaryLeader.headline,
+                    headlinePart2: primaryLeader.headlineHighlight,
+                    letterGreeting: primaryLeader.greeting,
+                    letterParagraph1: (primaryLeader.paragraphs && primaryLeader.paragraphs[0]) || '',
+                    letterParagraph2: (primaryLeader.paragraphs && primaryLeader.paragraphs[1]) || '',
+                    letterParagraph3: (primaryLeader.paragraphs && primaryLeader.paragraphs[2]) || '',
+                    signoffText: primaryLeader.closing,
+                    signatureName: primaryLeader.signatureName || primaryLeader.name,
+                    signatureRole: primaryLeader.designation,
+                    signatureCompany: primaryLeader.companyName,
+                    pipeFittingsImage: primaryLeader.supportingImage,
+                    leaders: merged.leaders.map(l => ({
+                        name: l.name,
+                        role: l.designation,
+                        badge: l.designation,
+                        quote: l.quote,
+                        image: l.portraitImage
+                    })),
+                    updatedAt: new Date()
+                };
+                if (merged.actionCards && merged.actionCards.length > 0) {
+                    merged.actionCards.slice(0, 4).forEach((ac, idx) => {
+                        fmSync[`galleryImage${idx + 1}`] = ac.image;
+                        fmSync[`galleryTitle${idx + 1}`] = ac.title;
+                        fmSync[`gallerySubtitle${idx + 1}`] = ac.category;
+                    });
+                }
+                fs.writeFileSync(founderPath, JSON.stringify(fmSync, null, 2), 'utf8');
+            }
+        } catch (fmErr) {
+            console.error('Error syncing founder-message.json fallback:', fmErr);
+        }
+
+        // Sync to MongoDB in background if connected
+        if (mongoose.connection.readyState === 1) {
+            (async () => {
+                try {
+                    await LeadershipPageSetting.findByIdAndUpdate('default', {
+                        _id: 'default',
+                        ...merged.settings,
+                        updatedAt: new Date()
+                    }, { upsert: true }).maxTimeMS(2500);
+
+                    if (Array.isArray(merged.leaders)) {
+                        for (const ldr of merged.leaders) {
+                            if (ldr.id) {
+                                await Leader.findOneAndUpdate({ id: ldr.id }, ldr, { upsert: true }).maxTimeMS(2500);
+                            }
+                        }
+                    }
+
+                    if (Array.isArray(merged.actionCards)) {
+                        for (const card of merged.actionCards) {
+                            if (card.id) {
+                                await LeadershipActionCard.findOneAndUpdate({ id: card.id }, card, { upsert: true }).maxTimeMS(2500);
+                            }
+                        }
+                    }
+                } catch (dbErr) {
+                    console.warn('MongoDB sync notice for leadership:', dbErr.message);
+                }
+            })().catch(e => console.warn('Background sync warning:', e.message));
+        }
+        return merged;
+    } catch (err) {
+        console.error('Error saving LeadershipData to disk:', err);
+        return getDefaultLeadershipData();
+    }
+}
+
+// Helper: Get LeadershipData
+async function getLeadershipData() {
+    const fallback = getDefaultLeadershipData();
+    if (mongoose.connection.readyState === 1) {
+        try {
+            const [settingsDoc, leadersDocs, actionDocs] = await Promise.all([
+                LeadershipPageSetting.findById('default').maxTimeMS(2500).lean().catch(() => null),
+                Leader.find().sort({ displayOrder: 1 }).maxTimeMS(2500).lean().catch(() => []),
+                LeadershipActionCard.find().sort({ displayOrder: 1 }).maxTimeMS(2500).lean().catch(() => [])
+            ]);
+
+            if (settingsDoc || (leadersDocs && leadersDocs.length > 0) || (actionDocs && actionDocs.length > 0)) {
+                return {
+                    settings: settingsDoc ? { ...fallback.settings, ...settingsDoc } : fallback.settings,
+                    leaders: (leadersDocs && leadersDocs.length > 0) ? leadersDocs : fallback.leaders,
+                    actionCards: (actionDocs && actionDocs.length > 0) ? actionDocs : fallback.actionCards
+                };
+            }
+        } catch (err) {
+            console.warn('DB fetch notice for LeadershipData (using disk fallback):', err.message);
+        }
+    }
+    return fallback;
+}
+
+// --- Leadership CRUD Helpers ---
+
+async function getAllLeaders(onlyActive = false) {
+    const data = await getLeadershipData();
+    let list = Array.isArray(data.leaders) ? data.leaders : [];
+    if (onlyActive) {
+        list = list.filter(l => l.status === 'active');
+    }
+    return list.sort((a, b) => (Number(a.displayOrder) || 0) - (Number(b.displayOrder) || 0));
+}
+
+async function getLeaderById(id) {
+    const data = await getLeadershipData();
+    const list = Array.isArray(data.leaders) ? data.leaders : [];
+    return list.find(l => l.id === id) || null;
+}
+
+async function saveLeaderItem(leaderData, fileMap = {}) {
+    const data = await getLeadershipData();
+    let list = Array.isArray(data.leaders) ? [...data.leaders] : [];
+    const isNew = !leaderData.id;
+    const id = isNew ? `leader-${Date.now()}` : leaderData.id;
+
+    // Process paragraphs: can be array or string separated by newlines
+    let paragraphs = [];
+    if (Array.isArray(leaderData.paragraphs)) {
+        paragraphs = leaderData.paragraphs.map(p => (typeof p === 'string' ? p.trim() : '')).filter(Boolean);
+    } else if (typeof leaderData.paragraphs === 'string') {
+        paragraphs = leaderData.paragraphs.split('\n\n').map(p => p.trim()).filter(Boolean);
+        if (paragraphs.length <= 1 && leaderData.paragraphs.includes('\n')) {
+            paragraphs = leaderData.paragraphs.split('\n').map(p => p.trim()).filter(Boolean);
+        }
+    }
+
+    const existingIndex = list.findIndex(l => l.id === id);
+    const existing = existingIndex !== -1 ? list[existingIndex] : {};
+
+    const item = {
+        id: id,
+        name: leaderData.name !== undefined ? leaderData.name : (existing.name || 'New Leader'),
+        designation: leaderData.designation !== undefined ? leaderData.designation : (existing.designation || ''),
+        roleLabel: leaderData.roleLabel !== undefined ? leaderData.roleLabel : (existing.roleLabel || 'A MESSAGE FROM THE FOUNDER'),
+        headline: leaderData.headline !== undefined ? leaderData.headline : (existing.headline || ''),
+        headlineHighlight: leaderData.headlineHighlight !== undefined ? leaderData.headlineHighlight : (existing.headlineHighlight || ''),
+        greeting: leaderData.greeting !== undefined ? leaderData.greeting : (existing.greeting || 'Dear Valued Customers, Partners and Well-wishers,'),
+        paragraphs: paragraphs.length > 0 ? paragraphs : (existing.paragraphs && existing.paragraphs.length > 0 ? existing.paragraphs : ['Welcome to Solanki Pipes.']),
+        quote: leaderData.quote !== undefined ? leaderData.quote : (existing.quote || ''),
+        closing: leaderData.closing !== undefined ? leaderData.closing : (existing.closing || 'Warm regards,'),
+        signature: fileMap['signatureImage'] || leaderData.signature || existing.signature || '',
+        signatureName: leaderData.signatureName || leaderData.name || existing.signatureName || '',
+        signatureType: leaderData.signatureType || existing.signatureType || 'typed',
+        portraitImage: fileMap['portraitImage'] || leaderData.portraitImage || existing.portraitImage || '/images/sukinder_solanki.jpg',
+        supportingImage: fileMap['supportingImage'] || leaderData.supportingImage || existing.supportingImage || '/images/pipe_fittings_render.jpg',
+        companyName: leaderData.companyName !== undefined ? leaderData.companyName : (existing.companyName || 'SOLANKI PIPES'),
+        socialLinks: {
+            linkedin: leaderData.linkedin || (existing.socialLinks && existing.socialLinks.linkedin) || '',
+            twitter: leaderData.twitter || (existing.socialLinks && existing.socialLinks.twitter) || '',
+            email: leaderData.email || (existing.socialLinks && existing.socialLinks.email) || ''
+        },
+        displayOrder: leaderData.displayOrder !== undefined ? Number(leaderData.displayOrder) : (existing.displayOrder || (list.length + 1)),
+        status: leaderData.status || existing.status || 'active',
+        updatedAt: new Date()
+    };
+
+    if (existingIndex !== -1) {
+        list[existingIndex] = item;
+    } else {
+        list.push(item);
+    }
+
+    list.sort((a, b) => (Number(a.displayOrder) || 0) - (Number(b.displayOrder) || 0));
+    await saveLeadershipData({ leaders: list });
+    return item;
+}
+
+async function removeLeaderItem(id) {
+    const data = await getLeadershipData();
+    let list = Array.isArray(data.leaders) ? [...data.leaders] : [];
+    list = list.filter(l => l.id !== id);
+    list.forEach((l, idx) => { l.displayOrder = idx + 1; });
+    await saveLeadershipData({ leaders: list });
+    if (mongoose.connection.readyState === 1) {
+        try {
+            await Leader.deleteOne({ id }).maxTimeMS(2500);
+        } catch (e) {
+            console.error('DB delete error for leader:', e.message);
+        }
+    }
+    return true;
+}
+
+async function reorderLeadersList(orderedIds) {
+    const data = await getLeadershipData();
+    let list = Array.isArray(data.leaders) ? [...data.leaders] : [];
+    const reordered = [];
+    orderedIds.forEach((id, index) => {
+        const found = list.find(l => l.id === id);
+        if (found) {
+            found.displayOrder = index + 1;
+            reordered.push(found);
+        }
+    });
+    list.forEach(l => {
+        if (!reordered.some(r => r.id === l.id)) {
+            l.displayOrder = reordered.length + 1;
+            reordered.push(l);
+        }
+    });
+    await saveLeadershipData({ leaders: reordered });
+    return reordered;
+}
+
+async function toggleLeaderActiveStatus(id, newStatus) {
+    const data = await getLeadershipData();
+    let list = Array.isArray(data.leaders) ? [...data.leaders] : [];
+    const item = list.find(l => l.id === id);
+    if (!item) return null;
+    item.status = newStatus !== undefined ? newStatus : (item.status === 'active' ? 'inactive' : 'active');
+    item.updatedAt = new Date();
+    await saveLeadershipData({ leaders: list });
+    return item;
+}
+
+// --- Action Cards CRUD Helpers ---
+
+async function getAllActionCards(onlyActive = false) {
+    const data = await getLeadershipData();
+    let list = Array.isArray(data.actionCards) ? data.actionCards : [];
+    if (onlyActive) {
+        list = list.filter(c => c.status === 'active');
+    }
+    return list.sort((a, b) => (Number(a.displayOrder) || 0) - (Number(b.displayOrder) || 0));
+}
+
+async function getActionCardById(id) {
+    const data = await getLeadershipData();
+    const list = Array.isArray(data.actionCards) ? data.actionCards : [];
+    return list.find(c => c.id === id) || null;
+}
+
+async function saveActionCardItem(cardData, fileMap = {}) {
+    const data = await getLeadershipData();
+    let list = Array.isArray(data.actionCards) ? [...data.actionCards] : [];
+    const isNew = !cardData.id;
+    const id = isNew ? `action-${Date.now()}` : cardData.id;
+
+    const existingIndex = list.findIndex(c => c.id === id);
+    const existing = existingIndex !== -1 ? list[existingIndex] : {};
+
+    const item = {
+        id: id,
+        category: cardData.category !== undefined ? cardData.category : (existing.category || 'INFRASTRUCTURE'),
+        title: cardData.title !== undefined ? cardData.title : (existing.title || 'Action Title'),
+        description: cardData.description !== undefined ? cardData.description : (existing.description || ''),
+        image: fileMap['cardImage'] || fileMap['image'] || cardData.image || existing.image || '/images/sp_img1.jpeg',
+        displayOrder: cardData.displayOrder !== undefined ? Number(cardData.displayOrder) : (existing.displayOrder || (list.length + 1)),
+        status: cardData.status || existing.status || 'active',
+        updatedAt: new Date()
+    };
+
+    if (existingIndex !== -1) {
+        list[existingIndex] = item;
+    } else {
+        list.push(item);
+    }
+
+    list.sort((a, b) => (Number(a.displayOrder) || 0) - (Number(b.displayOrder) || 0));
+    await saveLeadershipData({ actionCards: list });
+    return item;
+}
+
+async function removeActionCardItem(id) {
+    const data = await getLeadershipData();
+    let list = Array.isArray(data.actionCards) ? [...data.actionCards] : [];
+    list = list.filter(c => c.id !== id);
+    list.forEach((c, idx) => { c.displayOrder = idx + 1; });
+    await saveLeadershipData({ actionCards: list });
+    if (mongoose.connection.readyState === 1) {
+        try {
+            await LeadershipActionCard.deleteOne({ id }).maxTimeMS(2500);
+        } catch (e) {
+            console.error('DB delete error for action card:', e.message);
+        }
+    }
+    return true;
+}
+
+async function reorderActionCardsList(orderedIds) {
+    const data = await getLeadershipData();
+    let list = Array.isArray(data.actionCards) ? [...data.actionCards] : [];
+    const reordered = [];
+    orderedIds.forEach((id, index) => {
+        const found = list.find(c => c.id === id);
+        if (found) {
+            found.displayOrder = index + 1;
+            reordered.push(found);
+        }
+    });
+    list.forEach(c => {
+        if (!reordered.some(r => r.id === c.id)) {
+            c.displayOrder = reordered.length + 1;
+            reordered.push(c);
+        }
+    });
+    await saveLeadershipData({ actionCards: reordered });
+    return reordered;
+}
+
+async function toggleActionCardActiveStatus(id, newStatus) {
+    const data = await getLeadershipData();
+    let list = Array.isArray(data.actionCards) ? [...data.actionCards] : [];
+    const item = list.find(c => c.id === id);
+    if (!item) return null;
+    item.status = newStatus !== undefined ? newStatus : (item.status === 'active' ? 'inactive' : 'active');
+    item.updatedAt = new Date();
+    await saveLeadershipData({ actionCards: list });
+    return item;
+}
+
+async function updateLeadershipSettingsData(settingsData) {
+    const data = await getLeadershipData();
+    const currentSettings = data.settings || {};
+    const updatedSettings = {
+        ...currentSettings,
+        ...(settingsData || {}),
+        carousel: {
+            ...(currentSettings.carousel || {}),
+            ...((settingsData && settingsData.carousel) || {})
+        }
+    };
+    await saveLeadershipData({ settings: updatedSettings });
+    return updatedSettings;
+}
+
+// --- Promotional Popup Settings Helpers ---
+
+const defaultPopupSettings = {
+    _id: 'default',
+    enabled: true,
+    badgeText: 'Special Announcement',
+    badgeColor: 'rose',
+    title: 'High-Performance HDPE Pipes',
+    titleHighlight: 'at Factory Best Prices!',
+    description: 'Supplying BIS-licensed PE80 & PE100 HDPE water and sewerage pipes up to 1000 mm diameter directly from our Fatehabad & Bhiwani manufacturing plants.',
+    image: '/images/sp_img1.jpeg',
+    ctaText: 'Explore Products',
+    ctaLink: '/hdpe',
+    ctaTarget: '_self',
+    ctaColor: 'emerald',
+    displayFrequency: 'every_refresh',
+    delaySeconds: 0.5,
+    updatedAt: new Date()
+};
+
+function getDefaultPopupSettings() {
+    try {
+        const filePath = path.join(__dirname, 'data', 'popup-settings.json');
+        if (fs.existsSync(filePath)) {
+            return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        }
+    } catch (e) {
+        console.error('Error reading default popup-settings.json:', e);
+    }
+    return defaultPopupSettings;
+}
+
+async function savePopupSettings(updatedData) {
+    try {
+        const current = getDefaultPopupSettings();
+        const merged = { ...current, ...updatedData, updatedAt: new Date() };
+        const filePath = path.join(__dirname, 'data', 'popup-settings.json');
+        fs.writeFileSync(filePath, JSON.stringify(merged, null, 2), 'utf8');
+
+        if (mongoose.connection.readyState === 1) {
+            (async () => {
+                try {
+                    await PopupSetting.findByIdAndUpdate('default', merged, { upsert: true, returnDocument: 'after' }).maxTimeMS(2500);
+                } catch (dbErr) {
+                    console.warn('MongoDB sync notice for PopupSetting:', dbErr.message);
+                }
+            })().catch(e => console.warn('Background sync warning for popup:', e.message));
+        }
+        return merged;
+    } catch (err) {
+        console.error('Error saving PopupSettings:', err);
+        return updatedData;
+    }
+}
+
+async function getPopupSettings() {
+    const fallback = getDefaultPopupSettings();
+    if (mongoose.connection.readyState === 1) {
+        try {
+            const doc = await PopupSetting.findById('default').maxTimeMS(2500).lean();
+            if (doc) return { ...fallback, ...doc };
+        } catch (err) {
+            console.warn('DB fetch notice for PopupSetting (using disk fallback):', err.message);
+        }
+    }
+    return fallback;
 }
 
 // Helper: Get fallback page content from data/page-content.json
@@ -239,14 +779,241 @@ async function savePageContent(pageId, updatedData) {
                 { upsert: true, new: true }
             );
         }
-        return allPages[pageId];
-    } catch (err) {
-        console.error(`Error saving PageContent for ${pageId}:`, err);
-        throw err;
+    } catch (e) {
+        console.error(`Error writing page-content.json for ${pageId}:`, e);
     }
 }
 
-// Helper: Get fallback products from JSON
+// Helper: Read certifications from data/certifications.json
+function getDefaultCertifications() {
+    try {
+        const filePath = path.join(__dirname, 'data', 'certifications.json');
+        if (fs.existsSync(filePath)) {
+            const raw = fs.readFileSync(filePath, 'utf8');
+            return JSON.parse(raw);
+        }
+    } catch (e) {
+        console.error('Error reading default certifications.json:', e);
+    }
+    return [];
+}
+
+// Helper: Sync certifications to file & DB
+async function syncCertificationsToFile(certs) {
+    try {
+        const filePath = path.join(__dirname, 'data', 'certifications.json');
+        fs.writeFileSync(filePath, JSON.stringify(certs, null, 2), 'utf8');
+    } catch (e) {
+        console.error('Error saving certifications to file:', e);
+    }
+}
+
+async function getCertificationsData() {
+    if (mongoose.connection.readyState === 1) {
+        try {
+            const certs = await Certification.find().sort({ createdDate: 1 }).maxTimeMS(2500);
+            if (certs && certs.length > 0) return certs;
+        } catch (e) {
+            console.error('DB Error getting certifications:', e.message);
+        }
+    }
+    return getDefaultCertifications();
+}
+
+async function addCertification(certData) {
+    const certs = getDefaultCertifications();
+    certs.push(certData);
+    await syncCertificationsToFile(certs);
+    if (mongoose.connection.readyState === 1) {
+        try {
+            await Certification.create(certData);
+        } catch (e) {
+            console.error('DB Error adding certification:', e.message);
+        }
+    }
+}
+
+async function updateCertification(id, updateData) {
+    const certs = getDefaultCertifications();
+    const idx = certs.findIndex(c => (c._id === id || c.id === id));
+    if (idx !== -1) {
+        certs[idx] = { ...certs[idx], ...updateData };
+        await syncCertificationsToFile(certs);
+    }
+    if (mongoose.connection.readyState === 1) {
+        try {
+            await Certification.findByIdAndUpdate(id, updateData).maxTimeMS(2500);
+        } catch (e) {
+            console.error('DB Error updating certification:', e.message);
+        }
+    }
+}
+
+async function deleteCertification(id) {
+    let certs = getDefaultCertifications();
+    certs = certs.filter(c => (c._id !== id && c.id !== id));
+    await syncCertificationsToFile(certs);
+    if (mongoose.connection.readyState === 1) {
+        try {
+            await Certification.findByIdAndDelete(id).maxTimeMS(2500);
+        } catch (e) {
+            console.error('DB Error deleting certification:', e.message);
+        }
+    }
+}
+
+// Helper: Read projects from data/projects.json
+function getDefaultProjects() {
+    try {
+        const filePath = path.join(__dirname, 'data', 'projects.json');
+        if (fs.existsSync(filePath)) {
+            const raw = fs.readFileSync(filePath, 'utf8');
+            const data = JSON.parse(raw);
+            return data.map((p, idx) => ({
+                ...p,
+                _id: p._id || p.id,
+                id: p.id || p._id,
+                order: (typeof p.order === 'number') ? p.order : idx
+            }));
+        }
+    } catch (e) {
+        console.error('Error reading default projects.json:', e);
+    }
+    return [];
+}
+
+async function syncProjectsToFile(projects) {
+    try {
+        const filePath = path.join(__dirname, 'data', 'projects.json');
+        fs.writeFileSync(filePath, JSON.stringify(projects, null, 2), 'utf8');
+    } catch (e) {
+        console.error('Error saving projects to file:', e);
+    }
+}
+
+async function getProjectsData() {
+    if (mongoose.connection.readyState === 1) {
+        try {
+            const docs = await Project.find().sort({ order: 1, createdDate: -1 }).maxTimeMS(2500);
+            if (docs && docs.length > 0) return docs;
+        } catch (e) {
+            console.error('DB Error getting projects:', e.message);
+        }
+    }
+    return getDefaultProjects();
+}
+
+async function getProjectById(id) {
+    if (!id) return null;
+    const lowerId = id.toString().toLowerCase();
+    if (mongoose.connection.readyState === 1) {
+        try {
+            const doc = await Project.findOne({
+                $or: [{ _id: id }, { _id: lowerId }]
+            }).maxTimeMS(2500);
+            if (doc) return parseProject(doc);
+        } catch (e) {
+            console.error('DB Error finding project:', e.message);
+        }
+    }
+    const projects = getDefaultProjects();
+    const found = projects.find(p => (p._id === id || p.id === id || (p._id && p._id.toLowerCase() === lowerId)));
+    return found ? parseProject(found) : null;
+}
+
+async function addProject(projectData) {
+    const projects = getDefaultProjects();
+    projects.push(projectData);
+    await syncProjectsToFile(projects);
+    if (mongoose.connection.readyState === 1) {
+        try {
+            await Project.create(projectData);
+        } catch (e) {
+            console.error('DB Error adding project:', e.message);
+        }
+    }
+}
+
+async function updateProject(id, updateData) {
+    const projects = getDefaultProjects();
+    const idx = projects.findIndex(p => (p._id === id || p.id === id));
+    if (idx !== -1) {
+        projects[idx] = { ...projects[idx], ...updateData };
+        await syncProjectsToFile(projects);
+    }
+    if (mongoose.connection.readyState === 1) {
+        try {
+            await Project.findByIdAndUpdate(id, updateData).maxTimeMS(2500);
+        } catch (e) {
+            console.error('DB Error updating project:', e.message);
+        }
+    }
+}
+
+async function deleteProject(id) {
+    let projects = getDefaultProjects();
+    projects = projects.filter(p => (p._id !== id && p.id !== id));
+    await syncProjectsToFile(projects);
+    if (mongoose.connection.readyState === 1) {
+        try {
+            await Project.findByIdAndDelete(id).maxTimeMS(2500);
+        } catch (e) {
+            console.error('DB Error deleting project:', e.message);
+        }
+    }
+}
+
+async function reorderProjects(projectIds) {
+    const projects = getDefaultProjects();
+    const reordered = [];
+    projectIds.forEach((id, index) => {
+        const found = projects.find(p => (p._id === id || p.id === id));
+        if (found) {
+            found.order = index;
+            reordered.push(found);
+        }
+    });
+    // Add any remaining
+    projects.forEach(p => {
+        if (!reordered.some(r => r._id === p._id)) {
+            p.order = reordered.length;
+            reordered.push(p);
+        }
+    });
+    await syncProjectsToFile(reordered);
+    if (mongoose.connection.readyState === 1) {
+        try {
+            const updates = projectIds.map((id, index) => Project.findByIdAndUpdate(id, { order: index }).maxTimeMS(2500));
+            await Promise.all(updates);
+        } catch (e) {
+            console.error('DB Error reordering projects:', e.message);
+        }
+    }
+}
+
+async function moveProject(id, direction) {
+    const projects = getDefaultProjects().sort((a, b) => (a.order || 0) - (b.order || 0));
+    const currentIndex = projects.findIndex(p => (p._id === id || p.id === id));
+    if (currentIndex !== -1) {
+        const targetIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+        if (targetIndex >= 0 && targetIndex < projects.length) {
+            const [removed] = projects.splice(currentIndex, 1);
+            projects.splice(targetIndex, 0, removed);
+            projects.forEach((p, idx) => { p.order = idx; });
+            await syncProjectsToFile(projects);
+            if (mongoose.connection.readyState === 1) {
+                try {
+                    const updates = projects.map((p, idx) => Project.findByIdAndUpdate(p._id, { order: idx }).maxTimeMS(2500));
+                    await Promise.all(updates);
+                } catch (e) {
+                    console.error('DB Error moving project:', e.message);
+                }
+            }
+        }
+    }
+}
+
+// Fallback products parser and helper
 function getDefaultProducts() {
     try {
         const productsFilePath = path.join(__dirname, 'data', 'products.json');
@@ -264,32 +1031,31 @@ function getDefaultProducts() {
     return [];
 }
 
-// Helper: Synchronize product updates to data/products.json for persistent fallback
 function syncProductToFile(productData) {
     try {
         const productsFilePath = path.join(__dirname, 'data', 'products.json');
         let products = [];
         if (fs.existsSync(productsFilePath)) {
-            products = JSON.parse(fs.readFileSync(productsFilePath, 'utf8'));
+            try {
+                products = JSON.parse(fs.readFileSync(productsFilePath, 'utf8'));
+            } catch (e) {
+                products = [];
+            }
         }
-        const id = (productData._id || productData.id || productData.slug || '').toString().toLowerCase();
-        if (!id) return;
-
+        const pid = (productData._id || productData.id || '').toLowerCase();
+        const index = products.findIndex(p => (p.id || p._id || '').toLowerCase() === pid);
         const cleanProduct = { ...productData };
-        cleanProduct.id = id;
-        cleanProduct._id = id;
-        cleanProduct.slug = (cleanProduct.slug || id).toString().toLowerCase();
-        delete cleanProduct.__v;
+        if (cleanProduct._id) delete cleanProduct._id;
+        cleanProduct.id = pid;
 
-        const index = products.findIndex(p => (p.id || p._id || '').toString().toLowerCase() === id);
-        if (index >= 0) {
+        if (index !== -1) {
             products[index] = { ...products[index], ...cleanProduct };
         } else {
             products.push(cleanProduct);
         }
         fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 2), 'utf8');
     } catch (e) {
-        console.error('Error syncing product to file:', e.message);
+        console.error('Error synchronizing product to products.json:', e);
     }
 }
 
@@ -377,11 +1143,30 @@ const uploadSiteMedia = upload.fields([
 
 const uploadFounderMedia = upload.fields([
     { name: 'founderImage', maxCount: 1 },
+    { name: 'leaderImage1', maxCount: 1 },
+    { name: 'leaderImage2', maxCount: 1 },
+    { name: 'leaderImage3', maxCount: 1 },
+    { name: 'leaderImage_0', maxCount: 1 },
+    { name: 'leaderImage_1', maxCount: 1 },
+    { name: 'leaderImage_2', maxCount: 1 },
     { name: 'pipeFittingsImage', maxCount: 1 },
     { name: 'galleryImage1', maxCount: 1 },
     { name: 'galleryImage2', maxCount: 1 },
     { name: 'galleryImage3', maxCount: 1 },
     { name: 'galleryImage4', maxCount: 1 }
+]);
+
+const uploadLeadershipMedia = upload.fields([
+    { name: 'portraitImage', maxCount: 1 },
+    { name: 'signatureImage', maxCount: 1 },
+    { name: 'supportingImage', maxCount: 1 },
+    { name: 'cardImage', maxCount: 1 },
+    { name: 'image', maxCount: 1 }
+]);
+
+const uploadPopupMedia = upload.fields([
+    { name: 'popupImage', maxCount: 1 },
+    { name: 'image', maxCount: 1 }
 ]);
 
 // MongoDB models are imported from ./db
@@ -488,12 +1273,84 @@ function parseProductFormArrays(body) {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Session middleware
+// Persistent Session Store: ensures admin sessions survive server restarts/nodemon reloads
+class FileSessionStore extends session.Store {
+    constructor(options = {}) {
+        super();
+        this.dir = options.dir || path.join(__dirname, 'data', 'sessions');
+        if (!fs.existsSync(this.dir)) {
+            try {
+                fs.mkdirSync(this.dir, { recursive: true });
+            } catch (e) {
+                console.error('Could not create sessions directory:', e);
+            }
+        }
+    }
+
+    _getFilePath(sid) {
+        const safeSid = sid.replace(/[^a-zA-Z0-9_-]/g, '');
+        return path.join(this.dir, `${safeSid}.json`);
+    }
+
+    get(sid, cb) {
+        try {
+            const filePath = this._getFilePath(sid);
+            if (!fs.existsSync(filePath)) {
+                return cb(null, null);
+            }
+            const data = fs.readFileSync(filePath, 'utf8');
+            const sess = JSON.parse(data);
+            if (sess && sess.cookie && sess.cookie.expires) {
+                if (new Date(sess.cookie.expires) <= new Date()) {
+                    this.destroy(sid, () => {});
+                    return cb(null, null);
+                }
+            }
+            return cb(null, sess);
+        } catch (err) {
+            return cb(null, null);
+        }
+    }
+
+    set(sid, sess, cb) {
+        try {
+            const filePath = this._getFilePath(sid);
+            fs.writeFileSync(filePath, JSON.stringify(sess), 'utf8');
+            if (cb) cb(null);
+        } catch (err) {
+            if (cb) cb(err);
+        }
+    }
+
+    destroy(sid, cb) {
+        try {
+            const filePath = this._getFilePath(sid);
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+            if (cb) cb(null);
+        } catch (err) {
+            if (cb) cb(err);
+        }
+    }
+
+    touch(sid, sess, cb) {
+        this.set(sid, sess, cb);
+    }
+}
+
+// Session middleware with persistent FileSessionStore
 app.use(session({
+    store: new FileSessionStore(),
     secret: 'solanki-pipes-secret-key-2026',
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 24 * 60 * 60 * 1000 } // 24 hours
+    cookie: { 
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days persistent session
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: false
+    }
 }));
 
 // Set EJS as the template engine
@@ -515,6 +1372,7 @@ app.get('/', async (req, res) => {
     try {
         const products = await getProductsData();
         const pageData = await getPageContent('home');
+        const popupSettings = await getPopupSettings();
         let projects = [];
         try {
             if (mongoose.connection.readyState === 1) {
@@ -524,10 +1382,10 @@ app.get('/', async (req, res) => {
         } catch (pe) {
             console.error('Home Page Projects Error:', pe);
         }
-        res.render('index', { title: 'Solanki Pipes — HDPE Pipe Manufacturer, Haryana', products, projects, pageData });
+        res.render('index', { title: 'Solanki Pipes — HDPE Pipe Manufacturer, Haryana', products, projects, pageData, popupSettings });
     } catch (err) {
         console.error('Home Page Error:', err);
-        res.render('index', { title: 'Solanki Pipes — HDPE Pipe Manufacturer, Haryana', products: getDefaultProducts(), projects: [], pageData: getDefaultPageData('home') });
+        res.render('index', { title: 'Solanki Pipes — HDPE Pipe Manufacturer, Haryana', products: getDefaultProducts(), projects: [], pageData: getDefaultPageData('home'), popupSettings: getDefaultPopupSettings() });
     }
 });
 // Route for the about page
@@ -541,19 +1399,46 @@ app.get('/about', async (req, res) => {
     }
 });
 
-// Route for founder message page
+// Route for Leadership Messages page
+app.get('/leadership-messages', async (req, res) => {
+    try {
+        const leadershipData = await getLeadershipData();
+        const pageTitle = (leadershipData.settings && leadershipData.settings.pageTitle)
+            ? `${leadershipData.settings.pageTitle} — Solanki Pipes`
+            : "Leadership Messages — Solanki Pipes";
+        res.render('leadership-messages', {
+            title: pageTitle,
+            data: leadershipData
+        });
+    } catch (err) {
+        console.error('Error loading leadership messages:', err);
+        const fallback = getDefaultLeadershipData();
+        res.render('leadership-messages', {
+            title: "Leadership Messages — Solanki Pipes",
+            data: fallback
+        });
+    }
+});
+
+// Route for founder message page (backward compatibility)
 app.get('/founder-message', async (req, res) => {
     try {
-        const founderData = await getFounderMessage();
-        res.render('founder-message', { title: "Founder's Message — Solanki Industries", founderData: founderData || defaultFounderMessage });
+        const leadershipData = await getLeadershipData();
+        const pageTitle = (leadershipData.settings && leadershipData.settings.pageTitle)
+            ? `${leadershipData.settings.pageTitle} — Solanki Pipes`
+            : "Leadership Messages — Solanki Pipes";
+        res.render('leadership-messages', {
+            title: pageTitle,
+            data: leadershipData
+        });
     } catch (err) {
         console.error('Error loading founder message:', err);
-        res.render('founder-message', { title: "Founder's Message — Solanki Industries", founderData: defaultFounderMessage });
+        res.redirect('/leadership-messages');
     }
 });
 
 app.get('/founder', (req, res) => {
-    res.redirect('/founder-message');
+    res.redirect('/leadership-messages');
 });
 
 // Route for HDPE page
@@ -695,7 +1580,10 @@ app.post('/admin/login', async (req, res) => {
             (username === 'sachin' && password === 'sachin@123') || 
             (username === 'hritik' && password === 'hritik@123')) {
             req.session.admin = { id: 'admin-default', username: username };
-            return res.redirect('/admin/founder-message');
+            return req.session.save((err) => {
+                if (err) console.error('Session save error:', err);
+                res.redirect('/admin/leadership-messages');
+            });
         }
 
         if (mongoose.connection.readyState === 1) {
@@ -704,7 +1592,10 @@ app.post('/admin/login', async (req, res) => {
                 const match = await bcrypt.compare(password, admin.password);
                 if (match) {
                     req.session.admin = { id: admin._id, username: admin.username };
-                    return res.redirect('/admin/founder-message');
+                    return req.session.save((err) => {
+                        if (err) console.error('Session save error:', err);
+                        res.redirect('/admin/leadership-messages');
+                    });
                 }
             }
         }
@@ -728,6 +1619,9 @@ function requireAdmin(req, res, next) {
     if (req.session && req.session.admin) {
         return next();
     }
+    if (req.xhr || req.headers.accept?.includes('application/json')) {
+        return res.status(401).json({ success: false, message: 'Session expired. Please log in again.' });
+    }
     res.redirect('/admin/login');
 }
 app.use('/admin', requireAdmin);
@@ -739,12 +1633,13 @@ app.use('/admin', requireAdmin);
 // Admin: List all projects
 app.get('/admin/projects', async (req, res) => {
     try {
-        const docs = await Project.find().sort({ order: 1, createdDate: -1 });
+        const docs = await getProjectsData();
         const projects = docs.map(parseProject);
         res.render('admin-projects', { title: 'Admin — Manage Projects', projects, activeTab: 'projects' });
     } catch (err) {
-        console.error('DB Error:', err);
-        res.render('admin-projects', { title: 'Admin — Manage Projects', projects: [], activeTab: 'projects' });
+        console.error('Admin projects error:', err);
+        const fallback = getDefaultProjects();
+        res.render('admin-projects', { title: 'Admin — Manage Projects', projects: fallback.map(parseProject), activeTab: 'projects' });
     }
 });
 
@@ -753,10 +1648,7 @@ app.post('/admin/projects/reorder', async (req, res) => {
     try {
         const { projectIds } = req.body;
         if (Array.isArray(projectIds) && projectIds.length > 0) {
-            const updates = projectIds.map((id, index) => 
-                Project.findByIdAndUpdate(id, { order: index })
-            );
-            await Promise.all(updates);
+            await reorderProjects(projectIds);
             return res.json({ success: true, message: 'Project sequence updated successfully' });
         }
         res.status(400).json({ success: false, message: 'Invalid project list provided' });
@@ -770,20 +1662,7 @@ app.post('/admin/projects/reorder', async (req, res) => {
 app.post('/admin/projects/move/:id/:direction', async (req, res) => {
     try {
         const { id, direction } = req.params;
-        const projects = await Project.find().sort({ order: 1, createdDate: -1 });
-        const currentIndex = projects.findIndex(p => p._id === id);
-        
-        if (currentIndex !== -1) {
-            const targetIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
-            if (targetIndex >= 0 && targetIndex < projects.length) {
-                const [removed] = projects.splice(currentIndex, 1);
-                projects.splice(targetIndex, 0, removed);
-                const updates = projects.map((p, idx) => 
-                    Project.findByIdAndUpdate(p._id, { order: idx })
-                );
-                await Promise.all(updates);
-            }
-        }
+        await moveProject(id, direction);
         if (req.xhr || req.headers.accept?.includes('application/json')) {
             return res.json({ success: true });
         }
@@ -802,12 +1681,11 @@ app.get('/admin/projects/add', (req, res) => {
 // Admin: Show edit project page
 app.get('/admin/projects/edit/:id', async (req, res) => {
     try {
-        const doc = await Project.findById(req.params.id);
-        if (!doc) return res.status(404).send('Project not found');
-        const project = parseProject(doc);
-        res.render('admin-project-form', { title: 'Edit Project', project, action: `/admin/projects/edit/${project.id}` });
+        const project = await getProjectById(req.params.id);
+        if (!project) return res.status(404).send('Project not found');
+        res.render('admin-project-form', { title: 'Edit Project', project, action: `/admin/projects/edit/${project.id || project._id}` });
     } catch (err) {
-        console.error('DB Error:', err);
+        console.error('Admin Edit Project Error:', err);
         res.status(500).send('Server error');
     }
 });
@@ -815,12 +1693,11 @@ app.get('/admin/projects/edit/:id', async (req, res) => {
 // Admin: Show view project page (read-only detail from admin)
 app.get('/admin/projects/view/:id', async (req, res) => {
     try {
-        const doc = await Project.findById(req.params.id);
-        if (!doc) return res.status(404).send('Project not found');
-        const project = parseProject(doc);
+        const project = await getProjectById(req.params.id);
+        if (!project) return res.status(404).send('Project not found');
         res.render('project-detail', { title: `${project.title} — Solanki Pipes`, project });
     } catch (err) {
-        console.error('DB Error:', err);
+        console.error('Admin View Project Error:', err);
         res.status(500).send('Server error');
     }
 });
@@ -829,42 +1706,40 @@ app.get('/admin/projects/view/:id', async (req, res) => {
 app.post('/admin/projects/add', upload.single('image'), async (req, res) => {
     try {
         const { title, shortDescription, longDescription, category, location, department, segment, execution, specsDescription, specsFootnote, outcomeTitle, outcomeDescription, outcomeBtnText, outcomeBtnLink } = req.body;
-        const id = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        const id = (title || 'project').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || ('project-' + Date.now());
         const image = req.file ? `/images/uploads/${req.file.filename}` : '/images/project_1.jpg';
         const { specifications, executionSteps, inspections } = parseFormArrays(req.body);
 
-        let order = parseInt(req.body.order, 10);
-        if (isNaN(order)) {
-            const highest = await Project.findOne().sort({ order: -1 });
-            order = (highest && typeof highest.order === 'number') ? highest.order + 1 : 0;
-        }
-
-        await Project.create({
+        const currentProjects = getDefaultProjects();
+        const newProject = {
             _id: id,
+            id: id,
             title,
-            shortDescription,
-            longDescription,
+            shortDescription: shortDescription || '',
+            longDescription: longDescription || '',
             image,
-            category,
-            location,
-            department,
-            segment,
-            execution,
-            specsDescription,
+            category: category || '',
+            location: location || '',
+            department: department || '',
+            segment: segment || '',
+            execution: execution || '',
+            specsDescription: specsDescription || '',
             specifications,
-            specsFootnote,
+            specsFootnote: specsFootnote || '',
             executionSteps,
             inspections,
-            outcomeTitle,
-            outcomeDescription,
-            outcomeBtnText,
-            outcomeBtnLink,
-            order,
+            outcomeTitle: outcomeTitle || '',
+            outcomeDescription: outcomeDescription || '',
+            outcomeBtnText: outcomeBtnText || '',
+            outcomeBtnLink: outcomeBtnLink || '',
+            order: currentProjects.length,
             createdDate: new Date()
-        });
+        };
+
+        await addProject(newProject);
         res.redirect('/admin/projects');
     } catch (err) {
-        console.error('DB Error:', err);
+        console.error('Admin Add Project Error:', err);
         res.status(500).send('Failed to add project: ' + err.message);
     }
 });
@@ -875,47 +1750,34 @@ app.post('/admin/projects/edit/:id', upload.single('image'), async (req, res) =>
         const { title, shortDescription, longDescription, category, location, department, segment, execution, specsDescription, specsFootnote, outcomeTitle, outcomeDescription, outcomeBtnText, outcomeBtnLink } = req.body;
         const { specifications, executionSteps, inspections } = parseFormArrays(req.body);
 
-        // Get current image if no new one uploaded
-        let image;
-        if (req.file) {
-            image = `/images/uploads/${req.file.filename}`;
-        } else {
-            const doc = await Project.findById(req.params.id);
-            image = doc ? doc.image : '/images/project_1.jpg';
-        }
-
         let updateData = {
             title,
-            shortDescription,
-            longDescription,
-            image,
-            category,
-            location,
-            department,
-            segment,
-            execution,
-            specsDescription,
+            shortDescription: shortDescription || '',
+            longDescription: longDescription || '',
+            category: category || '',
+            location: location || '',
+            department: department || '',
+            segment: segment || '',
+            execution: execution || '',
+            specsDescription: specsDescription || '',
             specifications,
-            specsFootnote,
+            specsFootnote: specsFootnote || '',
             executionSteps,
             inspections,
-            outcomeTitle,
-            outcomeDescription,
-            outcomeBtnText,
-            outcomeBtnLink
+            outcomeTitle: outcomeTitle || '',
+            outcomeDescription: outcomeDescription || '',
+            outcomeBtnText: outcomeBtnText || '',
+            outcomeBtnLink: outcomeBtnLink || ''
         };
 
-        if (req.body.order !== undefined && req.body.order !== '') {
-            const parsedOrder = parseInt(req.body.order, 10);
-            if (!isNaN(parsedOrder)) {
-                updateData.order = parsedOrder;
-            }
+        if (req.file) {
+            updateData.image = `/images/uploads/${req.file.filename}`;
         }
 
-        await Project.findByIdAndUpdate(req.params.id, updateData);
+        await updateProject(req.params.id, updateData);
         res.redirect('/admin/projects');
     } catch (err) {
-        console.error('DB Error:', err);
+        console.error('Admin Update Project Error:', err);
         res.status(500).send('Failed to update project: ' + err.message);
     }
 });
@@ -923,10 +1785,10 @@ app.post('/admin/projects/edit/:id', upload.single('image'), async (req, res) =>
 // Admin: Handle delete project POST
 app.post('/admin/projects/delete/:id', async (req, res) => {
     try {
-        await Project.findByIdAndDelete(req.params.id);
+        await deleteProject(req.params.id);
         res.redirect('/admin/projects');
     } catch (err) {
-        console.error('DB Error:', err);
+        console.error('Admin Delete Project Error:', err);
         res.status(500).send('Failed to delete project');
     }
 });
@@ -938,11 +1800,11 @@ app.post('/admin/projects/delete/:id', async (req, res) => {
 // Admin: List all certifications
 app.get('/admin/certifications', async (req, res) => {
     try {
-        const certifications = await Certification.find().sort({ createdDate: 1 });
-        res.render('admin-certifications', { title: 'Admin — Manage Certifications', certifications, activeTab: 'certifications' });
+        const certifications = await getCertificationsData();
+        res.render('admin-certifications', { title: 'Admin - Manage Certifications', certifications, activeTab: 'certifications', query: req.query || {} });
     } catch (err) {
-        console.error('DB Error:', err);
-        res.render('admin-certifications', { title: 'Admin — Manage Certifications', certifications: [], activeTab: 'certifications' });
+        console.error('Admin Certifications Error:', err);
+        res.render('admin-certifications', { title: 'Admin - Manage Certifications', certifications: getDefaultCertifications(), activeTab: 'certifications', query: req.query || {} });
     }
 });
 
@@ -954,11 +1816,12 @@ app.get('/admin/certifications/add', (req, res) => {
 // Admin: Show edit certification page
 app.get('/admin/certifications/edit/:id', async (req, res) => {
     try {
-        const certification = await Certification.findById(req.params.id);
+        const certs = await getCertificationsData();
+        const certification = certs.find(c => (c._id === req.params.id || c.id === req.params.id));
         if (!certification) return res.status(404).send('Certification not found');
-        res.render('admin-certification-form', { title: 'Edit Certification', certification, action: `/admin/certifications/edit/${certification._id}`, activeTab: 'certifications' });
+        res.render('admin-certification-form', { title: 'Edit Certification', certification, action: `/admin/certifications/edit/${certification._id || certification.id}`, activeTab: 'certifications' });
     } catch (err) {
-        console.error('DB Error:', err);
+        console.error('Admin Edit Cert Error:', err);
         res.status(500).send('Server error');
     }
 });
@@ -971,18 +1834,22 @@ app.post('/admin/certifications/add', upload.single('file'), async (req, res) =>
         if (req.file) {
             link = `/images/uploads/${req.file.filename}`;
         }
-        await Certification.create({
+        const newCert = {
+            _id: 'cert-' + Date.now(),
+            id: 'cert-' + Date.now(),
             title,
-            subtitle,
-            badgeText,
-            noteText,
-            iconType,
-            link
-        });
+            subtitle: subtitle || '',
+            badgeText: badgeText || '',
+            noteText: noteText || '',
+            iconType: iconType || 'shield-check',
+            link,
+            createdDate: new Date()
+        };
+        await addCertification(newCert);
         res.redirect('/admin/certifications');
     } catch (err) {
-        console.error('DB Error:', err);
-        res.status(500).send('Failed to add certification: ' + err.message);
+        console.error('Admin Add Cert Error:', err);
+        res.redirect('/admin/certifications?error=' + encodeURIComponent(err.message));
     }
 });
 
@@ -990,41 +1857,38 @@ app.post('/admin/certifications/add', upload.single('file'), async (req, res) =>
 app.post('/admin/certifications/edit/:id', upload.single('file'), async (req, res) => {
     try {
         const { title, subtitle, badgeText, noteText, iconType, externalLink } = req.body;
-        
         let link;
         if (req.file) {
             link = `/images/uploads/${req.file.filename}`;
-        } else {
-            const doc = await Certification.findById(req.params.id);
-            link = doc ? doc.link : '';
-            if (externalLink !== undefined) {
-                link = externalLink;
-            }
+        } else if (externalLink !== undefined) {
+            link = externalLink;
         }
 
-        await Certification.findByIdAndUpdate(req.params.id, {
+        let updateData = {
             title,
-            subtitle,
-            badgeText,
-            noteText,
-            iconType,
-            link
-        });
+            subtitle: subtitle || '',
+            badgeText: badgeText || '',
+            noteText: noteText || '',
+            iconType: iconType || 'shield-check'
+        };
+        if (link !== undefined) updateData.link = link;
+
+        await updateCertification(req.params.id, updateData);
         res.redirect('/admin/certifications');
     } catch (err) {
-        console.error('DB Error:', err);
-        res.status(500).send('Failed to update certification: ' + err.message);
+        console.error('Admin Update Cert Error:', err);
+        res.redirect('/admin/certifications?error=' + encodeURIComponent(err.message));
     }
 });
 
 // Admin: Handle delete certification POST
 app.post('/admin/certifications/delete/:id', async (req, res) => {
     try {
-        await Certification.findByIdAndDelete(req.params.id);
+        await deleteCertification(req.params.id);
         res.redirect('/admin/certifications');
     } catch (err) {
-        console.error('DB Error:', err);
-        res.status(500).send('Failed to delete certification');
+        console.error('Admin Delete Cert Error:', err);
+        res.redirect('/admin/certifications?error=' + encodeURIComponent(err.message));
     }
 });
 
@@ -1356,115 +2220,330 @@ app.post('/admin/settings', uploadSiteMedia, async (req, res) => {
 });
 
 // ==========================================
-// ADMIN FOUNDER MESSAGE ROUTES
+// LEADERSHIP MESSAGES & ACTION CARDS API ROUTES
 // ==========================================
 
-// Admin: Show Founder's Message edit page
-app.get('/admin/founder-message', async (req, res) => {
+// Public API: Get Active Leadership Data for public site / client rendering
+app.get('/api/leadership', async (req, res) => {
     try {
-        const founderData = await getFounderMessage();
-        res.render('admin-founder-message', { 
-            title: 'Admin — Manage Founder Message', 
-            data: founderData || defaultFounderMessage, 
-            activeTab: 'founder-message' 
+        const data = await getLeadershipData();
+        const activeLeaders = (Array.isArray(data.leaders) ? data.leaders : [])
+            .filter(l => l.status === 'active')
+            .sort((a, b) => (Number(a.displayOrder) || 0) - (Number(b.displayOrder) || 0));
+        const activeActions = (Array.isArray(data.actionCards) ? data.actionCards : [])
+            .filter(c => c.status === 'active')
+            .sort((a, b) => (Number(a.displayOrder) || 0) - (Number(b.displayOrder) || 0));
+        res.json({
+            success: true,
+            settings: data.settings || {},
+            leaders: activeLeaders,
+            actionCards: activeActions
         });
     } catch (err) {
-        console.error('DB Error:', err);
-        res.status(500).send('Server error');
+        console.error('API /api/leadership error:', err);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
-// Admin: Handle Founder's Message POST
-app.post('/admin/founder-message', uploadFounderMedia, async (req, res) => {
+// Admin / All Leaders API
+app.get('/api/leadership/all', async (req, res) => {
     try {
-        let founderDoc = await FounderMessage.findById('default');
-        if (!founderDoc) {
-            founderDoc = new FounderMessage({ _id: 'default' });
-        }
-
-        const {
-            bannerTagline,
-            founderName,
-            founderRole,
-            founderQuote,
-            categoryLabel,
-            headlinePart1,
-            headlinePart2,
-            cursiveTagline,
-            letterGreeting,
-            letterParagraph1,
-            letterParagraph2,
-            letterParagraph3,
-            signoffText,
-            signatureName,
-            signatureRole,
-            signatureCompany,
-            galleryTitle1,
-            gallerySubtitle1,
-            galleryTitle2,
-            gallerySubtitle2,
-            galleryTitle3,
-            gallerySubtitle3,
-            galleryTitle4,
-            gallerySubtitle4
-        } = req.body;
-
-        if (bannerTagline !== undefined) founderDoc.bannerTagline = bannerTagline;
-        if (founderName !== undefined) founderDoc.founderName = founderName;
-        if (founderRole !== undefined) founderDoc.founderRole = founderRole;
-        if (founderQuote !== undefined) founderDoc.founderQuote = founderQuote;
-        if (categoryLabel !== undefined) founderDoc.categoryLabel = categoryLabel;
-        if (headlinePart1 !== undefined) founderDoc.headlinePart1 = headlinePart1;
-        if (headlinePart2 !== undefined) founderDoc.headlinePart2 = headlinePart2;
-        if (cursiveTagline !== undefined) founderDoc.cursiveTagline = cursiveTagline;
-        if (letterGreeting !== undefined) founderDoc.letterGreeting = letterGreeting;
-        if (letterParagraph1 !== undefined) founderDoc.letterParagraph1 = letterParagraph1;
-        if (letterParagraph2 !== undefined) founderDoc.letterParagraph2 = letterParagraph2;
-        if (letterParagraph3 !== undefined) founderDoc.letterParagraph3 = letterParagraph3;
-        if (signoffText !== undefined) founderDoc.signoffText = signoffText;
-        if (signatureName !== undefined) founderDoc.signatureName = signatureName;
-        if (signatureRole !== undefined) founderDoc.signatureRole = signatureRole;
-        if (signatureCompany !== undefined) founderDoc.signatureCompany = signatureCompany;
-        if (galleryTitle1 !== undefined) founderDoc.galleryTitle1 = galleryTitle1;
-        if (gallerySubtitle1 !== undefined) founderDoc.gallerySubtitle1 = gallerySubtitle1;
-        if (galleryTitle2 !== undefined) founderDoc.galleryTitle2 = galleryTitle2;
-        if (gallerySubtitle2 !== undefined) founderDoc.gallerySubtitle2 = gallerySubtitle2;
-        if (galleryTitle3 !== undefined) founderDoc.galleryTitle3 = galleryTitle3;
-        if (gallerySubtitle3 !== undefined) founderDoc.gallerySubtitle3 = gallerySubtitle3;
-        if (galleryTitle4 !== undefined) founderDoc.galleryTitle4 = galleryTitle4;
-        if (gallerySubtitle4 !== undefined) founderDoc.gallerySubtitle4 = gallerySubtitle4;
-
-        if (req.files) {
-            if (req.files['founderImage']) founderDoc.founderImage = `/images/uploads/${req.files['founderImage'][0].filename}`;
-            if (req.files['pipeFittingsImage']) founderDoc.pipeFittingsImage = `/images/uploads/${req.files['pipeFittingsImage'][0].filename}`;
-            if (req.files['galleryImage1']) founderDoc.galleryImage1 = `/images/uploads/${req.files['galleryImage1'][0].filename}`;
-            if (req.files['galleryImage2']) founderDoc.galleryImage2 = `/images/uploads/${req.files['galleryImage2'][0].filename}`;
-            if (req.files['galleryImage3']) founderDoc.galleryImage3 = `/images/uploads/${req.files['galleryImage3'][0].filename}`;
-            if (req.files['galleryImage4']) founderDoc.galleryImage4 = `/images/uploads/${req.files['galleryImage4'][0].filename}`;
-        }
-
-        // Sync in-memory fallback
-        Object.keys(defaultFounderMessage).forEach(key => {
-            if (req.body[key] !== undefined) defaultFounderMessage[key] = req.body[key];
+        const data = await getLeadershipData();
+        res.json({
+            success: true,
+            settings: data.settings || {},
+            leaders: data.leaders || [],
+            actionCards: data.actionCards || []
         });
-        if (req.files) {
-            if (req.files['founderImage']) defaultFounderMessage.founderImage = `/images/uploads/${req.files['founderImage'][0].filename}`;
-            if (req.files['pipeFittingsImage']) defaultFounderMessage.pipeFittingsImage = `/images/uploads/${req.files['pipeFittingsImage'][0].filename}`;
-            if (req.files['galleryImage1']) defaultFounderMessage.galleryImage1 = `/images/uploads/${req.files['galleryImage1'][0].filename}`;
-            if (req.files['galleryImage2']) defaultFounderMessage.galleryImage2 = `/images/uploads/${req.files['galleryImage2'][0].filename}`;
-            if (req.files['galleryImage3']) defaultFounderMessage.galleryImage3 = `/images/uploads/${req.files['galleryImage3'][0].filename}`;
-            if (req.files['galleryImage4']) defaultFounderMessage.galleryImage4 = `/images/uploads/${req.files['galleryImage4'][0].filename}`;
-        }
-
-        if (mongoose.connection.readyState === 1) {
-            founderDoc.updatedAt = new Date();
-            await founderDoc.save();
-        }
-        res.redirect('/admin/founder-message');
     } catch (err) {
-        console.error('DB Error updating founder message:', err);
-        res.redirect('/admin/founder-message');
+        res.status(500).json({ success: false, message: err.message });
     }
+});
+
+// Reorder Leaders (MUST be defined before /:id)
+app.post('/api/leadership/reorder', async (req, res) => {
+    try {
+        const { leaderIds } = req.body;
+        if (!Array.isArray(leaderIds)) return res.status(400).json({ success: false, message: 'leaderIds array required' });
+        const reordered = await reorderLeadersList(leaderIds);
+        res.json({ success: true, message: 'Leader order updated successfully', leaders: reordered });
+    } catch (err) {
+        console.error('Reorder leaders error:', err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// Single Leader API
+app.get('/api/leadership/:id', async (req, res) => {
+    try {
+        const leader = await getLeaderById(req.params.id);
+        if (!leader) return res.status(404).json({ success: false, message: 'Leader not found' });
+        res.json({ success: true, leader });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// Create Leader
+app.post('/api/leadership', uploadLeadershipMedia, async (req, res) => {
+    try {
+        const fileMap = mapUploadedFiles(req.files ? Object.values(req.files).flat() : []);
+        const saved = await saveLeaderItem(req.body, fileMap);
+        res.json({ success: true, message: 'Leader added successfully', leader: saved });
+    } catch (err) {
+        console.error('Create leader error:', err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// Update Leader (supports PUT and POST)
+const handleUpdateLeader = async (req, res) => {
+    try {
+        const fileMap = mapUploadedFiles(req.files ? Object.values(req.files).flat() : []);
+        const updatePayload = { ...req.body, id: req.params.id };
+        const saved = await saveLeaderItem(updatePayload, fileMap);
+        res.json({ success: true, message: 'Leader updated successfully', leader: saved });
+    } catch (err) {
+        console.error('Update leader error:', err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+app.put('/api/leadership/:id', uploadLeadershipMedia, handleUpdateLeader);
+app.post('/api/leadership/:id', uploadLeadershipMedia, handleUpdateLeader);
+
+// Delete Leader (supports DELETE and POST :id/delete)
+const handleDeleteLeader = async (req, res) => {
+    try {
+        await removeLeaderItem(req.params.id);
+        res.json({ success: true, message: 'Leader deleted successfully' });
+    } catch (err) {
+        console.error('Delete leader error:', err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+app.delete('/api/leadership/:id', handleDeleteLeader);
+app.post('/api/leadership/:id/delete', handleDeleteLeader);
+
+// Toggle Leader Status
+const handleToggleLeaderStatus = async (req, res) => {
+    try {
+        const updated = await toggleLeaderActiveStatus(req.params.id, req.body ? req.body.status : undefined);
+        if (!updated) return res.status(404).json({ success: false, message: 'Leader not found' });
+        res.json({ success: true, message: `Leader is now ${updated.status}`, leader: updated });
+    } catch (err) {
+        console.error('Toggle leader status error:', err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+app.patch('/api/leadership/:id/status', handleToggleLeaderStatus);
+app.post('/api/leadership/:id/status', handleToggleLeaderStatus);
+
+// --- Leadership in Action APIs ---
+
+// Public API: Get Active Action Cards
+app.get('/api/leadership-action', async (req, res) => {
+    try {
+        const cards = await getAllActionCards(true);
+        res.json({ success: true, actionCards: cards });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// All Action Cards (admin)
+app.get('/api/leadership-action/all', async (req, res) => {
+    try {
+        const cards = await getAllActionCards(false);
+        res.json({ success: true, actionCards: cards });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// Reorder Action Cards (MUST be defined before /:id)
+app.post('/api/leadership-action/reorder', async (req, res) => {
+    try {
+        const { cardIds } = req.body;
+        if (!Array.isArray(cardIds)) return res.status(400).json({ success: false, message: 'cardIds array required' });
+        const reordered = await reorderActionCardsList(cardIds);
+        res.json({ success: true, message: 'Action card order updated successfully', actionCards: reordered });
+    } catch (err) {
+        console.error('Reorder action cards error:', err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// Single Action Card
+app.get('/api/leadership-action/:id', async (req, res) => {
+    try {
+        const card = await getActionCardById(req.params.id);
+        if (!card) return res.status(404).json({ success: false, message: 'Card not found' });
+        res.json({ success: true, actionCard: card });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// Create Action Card
+app.post('/api/leadership-action', uploadLeadershipMedia, async (req, res) => {
+    try {
+        const fileMap = mapUploadedFiles(req.files ? Object.values(req.files).flat() : []);
+        const saved = await saveActionCardItem(req.body, fileMap);
+        res.json({ success: true, message: 'Action card added successfully', actionCard: saved });
+    } catch (err) {
+        console.error('Create action card error:', err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// Update Action Card
+const handleUpdateActionCard = async (req, res) => {
+    try {
+        const fileMap = mapUploadedFiles(req.files ? Object.values(req.files).flat() : []);
+        const updatePayload = { ...req.body, id: req.params.id };
+        const saved = await saveActionCardItem(updatePayload, fileMap);
+        res.json({ success: true, message: 'Action card updated successfully', actionCard: saved });
+    } catch (err) {
+        console.error('Update action card error:', err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+app.put('/api/leadership-action/:id', uploadLeadershipMedia, handleUpdateActionCard);
+app.post('/api/leadership-action/:id', uploadLeadershipMedia, handleUpdateActionCard);
+
+// Delete Action Card
+const handleDeleteActionCard = async (req, res) => {
+    try {
+        await removeActionCardItem(req.params.id);
+        res.json({ success: true, message: 'Action card deleted successfully' });
+    } catch (err) {
+        console.error('Delete action card error:', err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+app.delete('/api/leadership-action/:id', handleDeleteActionCard);
+app.post('/api/leadership-action/:id/delete', handleDeleteActionCard);
+
+// Toggle Action Card Status
+const handleToggleActionCardStatus = async (req, res) => {
+    try {
+        const updated = await toggleActionCardActiveStatus(req.params.id, req.body ? req.body.status : undefined);
+        if (!updated) return res.status(404).json({ success: false, message: 'Card not found' });
+        res.json({ success: true, message: `Card is now ${updated.status}`, actionCard: updated });
+    } catch (err) {
+        console.error('Toggle action card status error:', err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+app.patch('/api/leadership-action/:id/status', handleToggleActionCardStatus);
+app.post('/api/leadership-action/:id/status', handleToggleActionCardStatus);
+
+// --- Leadership Page & Carousel Settings API ---
+
+app.get('/api/leadership-settings', async (req, res) => {
+    try {
+        const data = await getLeadershipData();
+        res.json({ success: true, settings: data.settings || {} });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+const handleUpdateLeadershipSettings = async (req, res) => {
+    try {
+        const updated = await updateLeadershipSettingsData(req.body);
+        res.json({ success: true, message: 'Leadership settings updated successfully', settings: updated });
+    } catch (err) {
+        console.error('Update settings error:', err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+app.put('/api/leadership-settings', handleUpdateLeadershipSettings);
+app.post('/api/leadership-settings', handleUpdateLeadershipSettings);
+
+// ==========================================
+// ADMIN LEADERSHIP MESSAGES ROUTES
+// ==========================================
+
+// Admin: Show Leadership Messages Master Management Console
+app.get('/admin/leadership-messages', async (req, res) => {
+    try {
+        const leadershipData = await getLeadershipData();
+        res.render('admin-leadership-messages', {
+            title: 'Admin — Manage Leadership Messages',
+            data: leadershipData,
+            activeTab: 'leadership-messages',
+            query: req.query || {}
+        });
+    } catch (err) {
+        console.error('Leadership admin load error:', err);
+        const fallback = getDefaultLeadershipData();
+        res.render('admin-leadership-messages', {
+            title: 'Admin — Manage Leadership Messages',
+            data: fallback,
+            activeTab: 'leadership-messages',
+            query: { error: err.message }
+        });
+    }
+});
+
+// Admin: Redirect /admin/founder-message to /admin/leadership-messages
+app.get('/admin/founder-message', (req, res) => {
+    const queryStr = req.url.includes('?') ? req.url.substring(req.url.indexOf('?')) : '';
+    res.redirect('/admin/leadership-messages' + queryStr);
+});
+
+// Admin: Handle Full Save from traditional form submission
+app.post('/admin/leadership-messages/save-all', uploadLeadershipMedia, async (req, res) => {
+    try {
+        const currentData = await getLeadershipData();
+        const fileMap = mapUploadedFiles(req.files ? Object.values(req.files).flat() : []);
+
+        // Process Settings updates
+        const updatedSettings = {
+            ...currentData.settings,
+            pageTitle: req.body.pageTitle || currentData.settings.pageTitle,
+            breadcrumbHome: req.body.breadcrumbHome || currentData.settings.breadcrumbHome,
+            breadcrumbAbout: req.body.breadcrumbAbout || currentData.settings.breadcrumbAbout,
+            breadcrumbCurrent: req.body.breadcrumbCurrent || currentData.settings.breadcrumbCurrent,
+            tagline: req.body.tagline !== undefined ? req.body.tagline : currentData.settings.tagline,
+            showTagline: req.body.showTagline === 'true' || req.body.showTagline === true || req.body.showTagline === 'on',
+            actionSubtitle: req.body.actionSubtitle || currentData.settings.actionSubtitle,
+            actionTitle: req.body.actionTitle || currentData.settings.actionTitle,
+            actionLocationBadge: req.body.actionLocationBadge || currentData.settings.actionLocationBadge,
+            carousel: {
+                ...currentData.settings.carousel,
+                autoplay: req.body.carouselAutoplay === 'true' || req.body.carouselAutoplay === true || req.body.carouselAutoplay === 'on',
+                autoplaySpeed: Number(req.body.carouselSpeed) || currentData.settings.carousel.autoplaySpeed,
+                pauseOnHover: req.body.pauseOnHover === 'true' || req.body.pauseOnHover === true || req.body.pauseOnHover === 'on',
+                showArrows: req.body.showArrows === 'true' || req.body.showArrows === true || req.body.showArrows === 'on',
+                showDots: req.body.showDots === 'true' || req.body.showDots === true || req.body.showDots === 'on',
+                showLeaderTabs: req.body.showLeaderTabs === 'true' || req.body.showLeaderTabs === true || req.body.showLeaderTabs === 'on',
+                transitionStyle: req.body.transitionStyle || currentData.settings.carousel.transitionStyle,
+                transitionSpeed: Number(req.body.transitionSpeed) || currentData.settings.carousel.transitionSpeed,
+                enableSwipe: req.body.enableSwipe === 'true' || req.body.enableSwipe === true || req.body.enableSwipe === 'on',
+                defaultActiveSlide: Number(req.body.defaultActiveSlide) || 0
+            }
+        };
+
+        await saveLeadershipData({ settings: updatedSettings });
+
+        if (req.session) {
+            return req.session.save((err) => {
+                if (err) console.error('Session save error on leadership save:', err);
+                res.redirect('/admin/leadership-messages?saved=true');
+            });
+        }
+        res.redirect('/admin/leadership-messages?saved=true');
+    } catch (err) {
+        console.error('Error saving all leadership messages:', err);
+        res.redirect('/admin/leadership-messages?error=' + encodeURIComponent(err.message || 'Error saving changes'));
+    }
+});
+
+// Admin: Also handle legacy POST to /admin/founder-message
+app.post('/admin/founder-message', uploadLeadershipMedia, async (req, res) => {
+    res.redirect(307, '/admin/leadership-messages/save-all');
 });
 
 // ==========================================
@@ -1930,7 +3009,191 @@ app.get('/terms', (req, res) => {
     res.render('terms', { title: 'Terms & Conditions — Solanki Industries' });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`);
+// ==========================================
+// PROMOTIONAL POPUP MODAL ROUTES (API & ADMIN)
+// ==========================================
+
+// Public API: Get current popup configuration
+app.get('/api/popup', async (req, res) => {
+    try {
+        const popup = await getPopupSettings();
+        res.json({ success: true, popup });
+    } catch (err) {
+        console.error('API /api/popup error:', err);
+        res.status(500).json({ success: false, message: err.message, popup: getDefaultPopupSettings() });
+    }
 });
+
+// Admin Web: Show popup management console
+app.get('/admin/popup', async (req, res) => {
+    try {
+        const popup = await getPopupSettings();
+        res.render('admin-popup', {
+            title: 'Admin — Promotional Popup',
+            popup,
+            activeTab: 'popup',
+            query: req.query || {}
+        });
+    } catch (err) {
+        console.error('Admin popup load error:', err);
+        res.render('admin-popup', {
+            title: 'Admin — Promotional Popup',
+            popup: getDefaultPopupSettings(),
+            activeTab: 'popup',
+            query: { error: err.message }
+        });
+    }
+});
+
+// Admin Web: Handle form submit to save popup settings
+app.post('/admin/popup', uploadPopupMedia, async (req, res) => {
+    try {
+        const current = await getPopupSettings();
+        const body = req.body || {};
+
+        let resolvedImage = current.imageUrl || current.image || '/images/sp_img1.jpeg';
+        if (req.files && (req.files.popupImage || req.files.image)) {
+            const uploadedFile = (req.files.popupImage && req.files.popupImage[0]) || (req.files.image && req.files.image[0]);
+            if (uploadedFile && uploadedFile.filename) {
+                resolvedImage = `/uploads/${uploadedFile.filename}`;
+            }
+        } else if (body.imageUrl && typeof body.imageUrl === 'string' && body.imageUrl.trim() !== '') {
+            resolvedImage = body.imageUrl.trim();
+        } else if (body.image && typeof body.image === 'string' && body.image.trim() !== '') {
+            resolvedImage = body.image.trim();
+        }
+
+        const btnText = (body.buttonText || body.ctaText || 'Explore Products').trim();
+        const btnLink = (body.buttonLink || body.ctaLink || '/hdpe').trim();
+        const btnColor = (body.buttonColor || body.ctaColor || 'emerald').trim();
+        const freq = ['every_refresh', 'once_session', 'once_day'].includes(body.frequency || body.displayFrequency) ? (body.frequency || body.displayFrequency) : 'every_refresh';
+
+        const updated = {
+            enabled: body.enabled === 'true' || body.enabled === 'on' || body.enabled === true || body.enabled === '1',
+            badgeText: (body.badgeText || 'Special Offer').trim(),
+            badgeColor: body.badgeColor || 'rose',
+            title: (body.title || 'High-Performance HDPE Pipes').trim(),
+            titleHighlight: (body.titleHighlight || 'at Factory Best Prices!').trim(),
+            description: (body.description || '').trim(),
+            buttonText: btnText,
+            ctaText: btnText,
+            buttonLink: btnLink,
+            ctaLink: btnLink,
+            buttonColor: btnColor,
+            ctaColor: btnColor,
+            ctaTarget: body.ctaTarget || current.ctaTarget || '_self',
+            imageUrl: resolvedImage,
+            image: resolvedImage,
+            imageAlt: (body.imageAlt || 'Special Promotion').trim(),
+            delaySeconds: !isNaN(parseFloat(body.delaySeconds)) ? parseFloat(body.delaySeconds) : 0.5,
+            frequency: freq,
+            displayFrequency: freq,
+            showCloseButton: body.showCloseButton !== 'false' && body.showCloseButton !== false,
+            backdropBlur: body.backdropBlur !== 'false' && body.backdropBlur !== false
+        };
+
+        await savePopupSettings(updated);
+        res.redirect('/admin/popup?saved=true');
+    } catch (err) {
+        console.error('Error saving popup from admin form:', err);
+        res.redirect('/admin/popup?error=' + encodeURIComponent(err.message));
+    }
+});
+
+// API: Save popup settings via JSON or multipart
+app.post('/api/popup', uploadPopupMedia, async (req, res) => {
+    try {
+        const current = await getPopupSettings();
+        const body = req.body || {};
+
+        let resolvedImage = current.imageUrl || current.image || '/images/sp_img1.jpeg';
+        if (req.files && (req.files.popupImage || req.files.image)) {
+            const uploadedFile = (req.files.popupImage && req.files.popupImage[0]) || (req.files.image && req.files.image[0]);
+            if (uploadedFile && uploadedFile.filename) {
+                resolvedImage = `/uploads/${uploadedFile.filename}`;
+            }
+        } else if (body.imageUrl && typeof body.imageUrl === 'string' && body.imageUrl.trim() !== '') {
+            resolvedImage = body.imageUrl.trim();
+        } else if (body.image && typeof body.image === 'string' && body.image.trim() !== '') {
+            resolvedImage = body.image.trim();
+        }
+
+        const btnText = (body.buttonText || body.ctaText || current.buttonText || current.ctaText || 'Explore Products').trim();
+        const btnLink = (body.buttonLink || body.ctaLink || current.buttonLink || current.ctaLink || '/hdpe').trim();
+        const btnColor = (body.buttonColor || body.ctaColor || current.buttonColor || current.ctaColor || 'emerald').trim();
+        const rawFreq = body.frequency || body.displayFrequency || current.frequency || current.displayFrequency;
+        const freq = ['every_refresh', 'once_session', 'once_day'].includes(rawFreq) ? rawFreq : 'every_refresh';
+
+        const updated = {
+            enabled: body.enabled !== undefined ? (body.enabled === 'true' || body.enabled === 'on' || body.enabled === true || body.enabled === '1') : current.enabled,
+            badgeText: (body.badgeText || current.badgeText || 'Special Offer').trim(),
+            badgeColor: body.badgeColor || current.badgeColor || 'rose',
+            title: (body.title || current.title || '').trim(),
+            titleHighlight: (body.titleHighlight || current.titleHighlight || '').trim(),
+            description: (body.description || current.description || '').trim(),
+            buttonText: btnText,
+            ctaText: btnText,
+            buttonLink: btnLink,
+            ctaLink: btnLink,
+            buttonColor: btnColor,
+            ctaColor: btnColor,
+            ctaTarget: body.ctaTarget || current.ctaTarget || '_self',
+            imageUrl: resolvedImage,
+            image: resolvedImage,
+            imageAlt: (body.imageAlt || current.imageAlt || 'Special Promotion').trim(),
+            delaySeconds: body.delaySeconds !== undefined && !isNaN(parseFloat(body.delaySeconds)) ? parseFloat(body.delaySeconds) : current.delaySeconds,
+            frequency: freq,
+            displayFrequency: freq,
+            showCloseButton: body.showCloseButton !== undefined ? (body.showCloseButton === 'true' || body.showCloseButton === true) : (current.showCloseButton !== false),
+            backdropBlur: body.backdropBlur !== undefined ? (body.backdropBlur === 'true' || body.backdropBlur === true) : (current.backdropBlur !== false)
+        };
+
+        const result = await savePopupSettings(updated);
+        res.json({ success: true, message: 'Popup settings updated successfully', popup: result });
+    } catch (err) {
+        console.error('API /api/popup POST error:', err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// Quick toggle status: PATCH or POST /api/popup/status
+const handlePopupStatusToggle = async (req, res) => {
+    try {
+        const current = await getPopupSettings();
+        const enabled = req.body && req.body.enabled !== undefined ? !!req.body.enabled : !current.enabled;
+        const result = await savePopupSettings({ ...current, enabled });
+        res.json({ success: true, enabled: result.enabled, popup: result });
+    } catch (err) {
+        console.error('API /api/popup/status error:', err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+
+app.patch('/api/popup/status', handlePopupStatusToggle);
+app.post('/api/popup/status', handlePopupStatusToggle);
+
+const PORT = process.env.PORT || 3000;
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server is running at http://localhost:${PORT}`);
+    });
+}
+
+module.exports = {
+    app,
+    getFounderMessage,
+    getCertificationsData,
+    getProjectsData,
+    getSiteSettings,
+    getPageContent,
+    getLeadershipData,
+    saveLeadershipData,
+    getAllLeaders,
+    saveLeaderItem,
+    removeLeaderItem,
+    saveFounderMessage,
+    savePageContent,
+    saveSiteSettings,
+    getPopupSettings,
+    savePopupSettings
+};

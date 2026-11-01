@@ -1,0 +1,280 @@
+<%
+  const pData = (typeof popupSettings !== 'undefined' && popupSettings) ? popupSettings : {
+    enabled: true,
+    badgeText: 'Special Announcement',
+    badgeColor: 'rose',
+    title: 'High-Performance HDPE Pipes',
+    titleHighlight: 'at Factory Best Prices!',
+    description: 'Supplying BIS-licensed PE80 & PE100 HDPE water and sewerage pipes up to 1000 mm diameter directly from our Fatehabad & Bhiwani manufacturing plants.',
+    image: '/images/sp_img1.jpeg',
+    imageUrl: '/images/sp_img1.jpeg',
+    ctaText: 'Explore Products',
+    buttonText: 'Explore Products',
+    ctaLink: '/hdpe',
+    buttonLink: '/hdpe',
+    ctaTarget: '_self',
+    ctaColor: 'emerald',
+    buttonColor: 'emerald',
+    displayFrequency: 'every_refresh',
+    delaySeconds: 0.5
+  };
+
+  const isPopupActive = pData.enabled !== false;
+  const popupImg = pData.imageUrl || pData.image || '/images/sp_img1.jpeg';
+  const ctaTitle = pData.buttonText || pData.ctaText || 'Explore Products';
+  const ctaUrl = pData.buttonLink || pData.ctaLink || '/hdpe';
+  const ctaTarget = pData.ctaTarget || '_self';
+  const bColor = pData.badgeColor || 'rose';
+  const delaySec = (pData.delaySeconds !== undefined) ? pData.delaySeconds : 0.5;
+  const freqMode = pData.displayFrequency || pData.frequency || 'every_refresh';
+
+  // Badge tone styles
+  let badgeClasses = 'bg-rose-50 text-rose-600 border-rose-200/80';
+  let badgeIconFill = 'currentColor';
+  if (bColor === 'emerald' || bColor === 'green') {
+    badgeClasses = 'bg-emerald-50 text-emerald-700 border-emerald-200/80';
+  } else if (bColor === 'blue') {
+    badgeClasses = 'bg-blue-50 text-blue-700 border-blue-200/80';
+  } else if (bColor === 'amber' || bColor === 'orange') {
+    badgeClasses = 'bg-amber-50 text-amber-700 border-amber-200/80';
+  } else if (bColor === 'purple') {
+    badgeClasses = 'bg-purple-50 text-purple-700 border-purple-200/80';
+  }
+
+  // CTA button styles
+  const btnColorChoice = pData.buttonColor || pData.ctaColor || 'emerald';
+  let btnClasses = 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20';
+  if (btnColorChoice === 'blue' || btnColorChoice === '#1d4ed8') {
+    btnClasses = 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-600/20';
+  } else if (btnColorChoice === 'dark' || btnColorChoice === '#0f172a') {
+    btnClasses = 'bg-slate-900 hover:bg-slate-800 text-white shadow-slate-900/20';
+  } else if (btnColorChoice.startsWith('#')) {
+    btnClasses = 'text-white shadow-sm';
+  }
+%>
+
+<% if (isPopupActive) { %>
+<!-- Promotional / Announcement Modal -->
+<div id="solanki-promo-modal"
+     class="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-5 md:p-6 transition-all duration-300 opacity-0 pointer-events-none hidden"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="popup-modal-title">
+
+  <!-- Backdrop with blur -->
+  <div id="solanki-modal-backdrop"
+       class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-300"></div>
+
+  <!-- Modal Card Dialog -->
+  <div id="solanki-modal-card"
+       class="relative bg-white rounded-3xl sm:rounded-[32px] shadow-2xl border border-slate-100/90 max-w-[680px] w-full overflow-hidden transform scale-95 transition-all duration-300 ease-out z-10">
+
+    <!-- Top Right Close Button -->
+    <button id="solanki-modal-close"
+            type="button"
+            class="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-100/90 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-all duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+            aria-label="Close Announcement Dialog">
+      <svg class="w-4 h-4 sm:w-4.5 sm:h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <!-- Modal Content Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-12 items-stretch">
+
+      <!-- Left Column: Image -->
+      <div class="md:col-span-5 p-3.5 sm:p-5 flex items-center justify-center bg-slate-50/70 border-b md:border-b-0 md:border-r border-slate-100">
+        <div class="w-full h-48 sm:h-56 md:h-full min-h-[200px] md:min-h-[280px] rounded-2xl sm:rounded-[22px] overflow-hidden bg-white shadow-sm border border-slate-200/60 relative group flex items-center justify-center">
+          <img id="solanki-modal-img"
+               src="<%= popupImg %>"
+               alt="<%= pData.imageAlt || pData.title || 'Special Announcement' %>"
+               class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+               loading="eager" />
+        </div>
+      </div>
+
+      <!-- Right Column: Text & CTA -->
+      <div class="md:col-span-7 p-6 sm:p-7 md:p-8 flex flex-col justify-between relative bg-white overflow-hidden">
+
+        <!-- Top Area: Badge & Heading -->
+        <div class="relative z-10">
+          <!-- Badge Pill -->
+          <% if (pData.badgeText) { %>
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold mb-3 border <%= badgeClasses %>">
+            <!-- Megaphone SVG Icon -->
+            <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+            </svg>
+            <span><%= pData.badgeText %></span>
+          </div>
+          <% } %>
+
+          <!-- Title with Highlight and Decorative Accent -->
+          <h3 id="popup-modal-title" class="text-xl sm:text-2xl md:text-[25px] font-bold text-slate-900 tracking-tight leading-snug mb-3">
+            <span><%= pData.title %></span>
+            <% if (pData.titleHighlight) { %>
+              <span class="relative inline-block text-emerald-600 font-extrabold ml-1">
+                <%= pData.titleHighlight %>
+                <!-- Cheerful 3-line radiating accent SVG -->
+                <svg class="absolute -top-3.5 -right-2 sm:-right-3 w-6 h-4 text-emerald-500" viewBox="0 0 32 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <path d="M4 16 L2 4" />
+                  <path d="M14 14 L16 2" />
+                  <path d="M24 16 L28 6" />
+                </svg>
+              </span>
+            <% } %>
+          </h3>
+
+          <!-- Description -->
+          <% if (pData.description) { %>
+          <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-6 font-normal">
+            <%= pData.description %>
+          </p>
+          <% } %>
+        </div>
+
+        <!-- Bottom Area: CTA Button -->
+        <div class="relative z-10 pt-2 flex items-center">
+          <a id="solanki-modal-cta"
+             href="<%= ctaUrl %>"
+             target="<%= ctaTarget %>"
+             class="inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-full font-semibold text-sm transition-all duration-200 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg group <%= btnClasses %>"
+             <% if (btnColorChoice.startsWith('#')) { %>style="background-color: <%= btnColorChoice %>;"<% } %>>
+            <span><%= ctaTitle %></span>
+            <svg class="w-4 h-4 ml-0.5 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Decorative Soft Wave in Bottom-Right Corner (from reference mockup) -->
+        <div class="pointer-events-none absolute -bottom-3 -right-3 w-40 sm:w-52 h-24 sm:h-28 opacity-60 z-0 overflow-hidden">
+          <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+            <path d="M0,120 C60,90 120,120 180,60 C210,30 220,10 220,120 Z" fill="url(#wave-gradient-1)" opacity="0.4"/>
+            <path d="M20,120 C80,100 140,110 190,40 C215,10 230,0 230,120 Z" fill="url(#wave-gradient-2)" opacity="0.6"/>
+            <defs>
+              <linearGradient id="wave-gradient-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#34d399" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#10b981" stop-opacity="0.8"/>
+              </linearGradient>
+              <linearGradient id="wave-gradient-2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#6ee7b7" stop-opacity="0.2"/>
+                <stop offset="100%" stop-color="#059669" stop-opacity="0.6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Control Script -->
+<script>
+  (function () {
+    const popupCfg = {
+      enabled: <%= isPopupActive ? 'true' : 'false' %>,
+      delaySeconds: <%= delaySec %>,
+      frequency: "<%= freqMode %>"
+    };
+
+    const modal = document.getElementById('solanki-promo-modal');
+    const card = document.getElementById('solanki-modal-card');
+    const backdrop = document.getElementById('solanki-modal-backdrop');
+    const closeBtn = document.getElementById('solanki-modal-close');
+    const ctaBtn = document.getElementById('solanki-modal-cta');
+
+    if (!modal || !popupCfg.enabled) return;
+
+    const STORAGE_KEY_SESSION = 'solanki_popup_seen_session';
+    const STORAGE_KEY_DAY = 'solanki_popup_seen_day';
+
+    function shouldShowPopup() {
+      if (!popupCfg.enabled) return false;
+
+      if (popupCfg.frequency === 'once_session') {
+        try {
+          if (sessionStorage.getItem(STORAGE_KEY_SESSION)) return false;
+        } catch (e) {}
+      } else if (popupCfg.frequency === 'once_day') {
+        try {
+          const lastShown = localStorage.getItem(STORAGE_KEY_DAY);
+          if (lastShown) {
+            const now = Date.now();
+            const elapsed = now - parseInt(lastShown, 10);
+            if (elapsed < 24 * 60 * 60 * 1000) return false;
+          }
+        } catch (e) {}
+      }
+      return true;
+    }
+
+    function markPopupShown() {
+      try {
+        if (popupCfg.frequency === 'once_session') {
+          sessionStorage.setItem(STORAGE_KEY_SESSION, '1');
+        } else if (popupCfg.frequency === 'once_day') {
+          localStorage.setItem(STORAGE_KEY_DAY, Date.now().toString());
+        }
+      } catch (e) {}
+    }
+
+    function openPopup() {
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      // Force repaint
+      void modal.offsetWidth;
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100');
+      if (card) {
+        card.classList.remove('scale-95');
+        card.classList.add('scale-100');
+      }
+      markPopupShown();
+    }
+
+    function closePopup() {
+      if (!modal) return;
+      modal.classList.remove('opacity-100');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      if (card) {
+        card.classList.remove('scale-100');
+        card.classList.add('scale-95');
+      }
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 300);
+    }
+
+    // Event listeners for closing
+    if (closeBtn) closeBtn.addEventListener('click', closePopup);
+    if (backdrop) backdrop.addEventListener('click', closePopup);
+    if (ctaBtn) {
+      ctaBtn.addEventListener('click', () => {
+        closePopup();
+      });
+    }
+
+    // Dismiss with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closePopup();
+      }
+    });
+
+    // Schedule display on window load or DOMContentLoaded
+    if (shouldShowPopup()) {
+      const delayMs = Math.max(100, Math.round((popupCfg.delaySeconds || 0.5) * 1000));
+      window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(openPopup, delayMs);
+      });
+    }
+
+    // Expose preview trigger for admin testing if needed
+    window.__solankiOpenPromoModal = openPopup;
+    window.__solankiClosePromoModal = closePopup;
+  })();
+</script>
+<% } %>
+
